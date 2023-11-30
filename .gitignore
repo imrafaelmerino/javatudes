@@ -1,0 +1,8 @@
+target
+src/.DS_Store
+src/main/.DS_Store
+src/main/java/.DS_Store
+classes
+javatudes.iml
+.idea
+src/main/java/etudes/.DS_Store
