@@ -21,7 +21,7 @@ languages used for each year.
 
 A collection of Java-based projects demonstrating various algorithmic and puzzle-solving concepts.
 
-# Puzzle Implementations
+## Puzzle Implementations
 
 1. **[Four Colour Map](https://en.wikipedia.org/wiki/Four_color_theorem):** Solving the historic Four Color Map Problem,
    a classic conundrum in graph theory and
@@ -50,7 +50,6 @@ A collection of Java-based projects demonstrating various algorithmic and puzzle
 11. **[Task Scheduling](https://en.wikipedia.org/wiki/Task_scheduling):** Implementing algorithms for task scheduling.
 12. **[Wold Goat And Cabbage](https://en.wikipedia.org/wiki/Wolf,_goat,_and_cabbage_problem):** Solving the classic
     river-crossing puzzle with a wolf, goat, and cabbage.
-13. **[Zebra Puzzle](https://en.wikipedia.org/wiki/Zebra_Puzzle):** Another implementation of the Zebra Puzzle.
 
 ## Algorithms Developed
 
