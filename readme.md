@@ -12,10 +12,7 @@ apply concepts, fostering a stronger foundation in both programming and algorith
 - **[2022 (in Java)](https://adventofcode.com/2022)**
 - **[2023 (in Java)](https://adventofcode.com/2023)**
 
-[Advent of Code](https://adventofcode.com/) is an annual coding event with daily programming puzzles. Here, you've
-documented your solutions for the years **[2021](https://adventofcode.com/2021)**, *
-*[2022](https://adventofcode.com/2022)**, and **[2023](https://adventofcode.com/2023)**, indicating the programming
-languages used for each year.
+[Advent of Code](https://adventofcode.com/) is an annual coding event with daily programming puzzles.
 
 # Javatudes
 
@@ -24,8 +21,7 @@ A collection of Java-based projects demonstrating various algorithmic and puzzle
 ## Puzzle Implementations
 
 1. **[Four Colour Map](https://en.wikipedia.org/wiki/Four_color_theorem):** Solving the historic Four Color Map Problem,
-   a classic conundrum in graph theory and
-   cartography. Notably, this problem was first conquered
+   a classic conundrum in graph theory and cartography. Notably, this problem was first conquered
    using [artificial intelligence techniques](https://en.wikipedia.org/wiki/Four_color_theorem#Proof) by mathematicians
    Kenneth Appel and Wolfgang Haken in 1976. The solution involved an exhaustive computer search, marking a pioneering
    application of AI in mathematical problem-solving.
@@ -54,8 +50,7 @@ A collection of Java-based projects demonstrating various algorithmic and puzzle
 ## Algorithms Developed
 
 1. **[Depth First Search (DFS)](https://en.wikipedia.org/wiki/Depth-first_search):** A graph traversal algorithm.
-2. **[Breath First Search (BFS)](https://en.wikipedia.org/wiki/Breadth-first_search):** Another graph traversal
-   algorithm.
+2. **[Breath First Search (BFS)](https://en.wikipedia.org/wiki/Breadth-first_search):** Another graph traversal algorithm.
 3. **[Branch and Bound](https://en.wikipedia.org/wiki/Branch_and_bound):** An algorithm for finding the optimal solution
    to combinatorial problems.
 4. **[A Star (A*)](https://en.wikipedia.org/wiki/A*_search_algorithm):** A popular pathfinding algorithm combining
