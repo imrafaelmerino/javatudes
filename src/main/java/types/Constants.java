@@ -1,19 +1,20 @@
 package types;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Constants {
 
+    public static final List<String> WORD_REPRESENTATIONS_FOR_DIGITS = List.of("zero", "one", "two", "three",
+                                                                               "four", "five", "six", "seven",
+                                                                               "eight", "nine");
     public static String UPPER_CASE_LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
     public static String LOWER_CASE_LETTERS = "abcdefghijklmnopqrstuvwxyz";
-
     public static Map<String, String> HEX_DIGITS_TO_BINARY = initHex2Digits();
 
-
-    static Map<String,String> initHex2Digits(){
-        var map = new HashMap<String,String>();
+    static Map<String, String> initHex2Digits() {
+        var map = new HashMap<String, String>();
         map.put("0", "0000");
         map.put("1", "0001");
         map.put("2", "0010");

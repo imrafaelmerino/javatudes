@@ -21,7 +21,7 @@ public class Day18_1 {
         }
     }
 
-    //static String input = "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code_2022/day18/input_test.txt";
+    //static String input = "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code_2022/day18/input_test_2.txt";
     static String input = "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code_2022/day18/input.txt";
     static List<Cube> cubes = FileParsers.toListOfLines(input)
                                   .stream()

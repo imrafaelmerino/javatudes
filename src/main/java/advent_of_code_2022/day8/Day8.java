@@ -9,7 +9,7 @@ public class Day8 {
 
     public static void main(String[] args) throws IOException {
 
-        //String input = "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code_2022/day8/input_test.txt";
+        //String input = "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code_2022/day8/input_test_2.txt";
         String input = "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code_2022/day8/input.txt";
 
         var grid = PersistentGrid.fromFile(input).mapValues((pos, v) -> Integer.parseInt(v));

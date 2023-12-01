@@ -105,7 +105,7 @@ public class FileParsers {
     }
 
     public static List<List<String>> toListOfSplitLines(String path) {
-        return toListOfSplitLines(path,"",e->false);
+        return toListOfSplitLines(path,"",_->false);
     }
     public static List<List<String>> toListOfSplitLines(String path,
                                                         String separator,

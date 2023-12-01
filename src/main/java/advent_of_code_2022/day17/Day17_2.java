@@ -21,7 +21,7 @@ public class Day17_2 {
     static String MOVE_ROCK = "@";
 
     static String input = "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code_2022/day17/input.txt";
-    //static String input = "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code_2022/day17/input_test.txt";
+    //static String input = "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code_2022/day17/input_test_2.txt";
 
     static String JET_PATTERN = FileParsers.toListOfLines(input)
                                            .get(0)

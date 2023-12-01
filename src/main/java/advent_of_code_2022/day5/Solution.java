@@ -22,7 +22,7 @@ public class Solution {
 
     private static void part1() {
         String input = "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code_2022/day5/input.txt";
-        //String input = "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code_2022/day5/input_test.txt";
+        //String input = "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code_2022/day5/input_test_2.txt";
         List<MutableGrid<String>> grids = MutableGrid.fromGroupsOfLines(FileParsers.toGroupsOfLines(input));
 
 
@@ -69,7 +69,7 @@ public class Solution {
 
     private static void part2() {
         String input = "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code_2022/day5/input.txt";
-        //String input = "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code_2022/day5/input_test.txt";
+        //String input = "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code_2022/day5/input_test_2.txt";
         List<MutableGrid<String>> grids = MutableGrid.fromGroupsOfLines(FileParsers.toGroupsOfLines(input));
 
 

@@ -28,7 +28,7 @@ A collection of Java-based projects demonstrating various algorithmic and puzzle
 2. **[8 Sliding Puzzle](https://en.wikipedia.org/wiki/15_puzzle):** Implementation of the classic 8-puzzle game.
 3. **[15 Sliding Puzzle](https://en.wikipedia.org/wiki/15_puzzle):** A variation using walking distance heuristic
    from [Kenichiro Takahashi](https://computerpuzzle.net/english/15puzzle/wd.gif).
-4. **[Bloxorz](https://en.wikipedia.org/wiki/Bloxorz):** A puzzle game involving a rectangular block that must fall into
+4. **[Bloxorz](https://bloxorz.io/):** A puzzle game involving a rectangular block that must fall into
    a square hole.
 5. **[Bridge And Torch](https://en.wikipedia.org/wiki/Bridge_and_torch_problem):** Solving the classic bridge and torch
    problem.

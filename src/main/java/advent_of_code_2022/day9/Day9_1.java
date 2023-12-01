@@ -16,7 +16,7 @@ public class Day9_1 {
 
     public static void main(String[] args)  {
 
-        //String input = "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code_2022/day9/input_test.txt";
+        //String input = "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code_2022/day9/input_test_2.txt";
         String input = "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code_2022/day9/input.txt";
 
         var moves = FileParsers.toListOfLines(input);

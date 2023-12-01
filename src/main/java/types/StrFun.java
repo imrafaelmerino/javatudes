@@ -9,7 +9,6 @@ import java.util.List;
 public class StrFun {
 
     /**
-     *
      * @param input
      * @return a pair with the index where the pattern starts and the string which is repeated
      */
@@ -29,14 +28,18 @@ public class StrFun {
         return all.isEmpty() ? Pair.of(-1, "") : all.get(all.size() - 1);
     }
 
-    public static Pair<Integer, String> findRepetition(String input,  int window) {
-        for(int i = 0; i <= input.length() - 2*window  ;i++){
-            String w = input.substring(i, window+i);
-            String remaining = input.substring(window+i);
+    public static Pair<Integer, String> findRepetition(String input, int window) {
+        for (int i = 0; i <= input.length() - 2 * window; i++) {
+            String w = input.substring(i, window + i);
+            String remaining = input.substring(window + i);
             String w1 = remaining.substring(0, window);
             if (w.equals(w1)) return Pair.of(i, w);
         }
         return null;
+    }
+
+    public static String reverse(String str){
+        return new StringBuilder(str).reverse().toString();
     }
 
 }

@@ -19,7 +19,7 @@ public class Day13 {
     public static void main(String[] args) {
 
         var input = "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code_2022/day13/input.txt";
-        //var input = "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code_2022/day13/input_test.txt";
+        //var input = "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code_2022/day13/input_test_2.txt";
 
         //[pack1, pack2]   [pack3, pack4] ....
         var packets = FileParsers.toGroupsOfLines(input)

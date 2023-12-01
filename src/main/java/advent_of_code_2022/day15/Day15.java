@@ -18,7 +18,7 @@ public class Day15 {
         var regex = "^Sensor at x=(-?\\d+), y=(-?\\d+): closest beacon is at x=(-?\\d+), y=(-?\\d+)$";
         var pattern = Pattern.compile(regex);
 
-        //var input = "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code_2022/day15/input_test.txt";
+        //var input = "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code_2022/day15/input_test_2.txt";
         var input = "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code_2022/day15/input.txt";
 
         record Sensor(Pos loc, Pos beacon, int d) {}

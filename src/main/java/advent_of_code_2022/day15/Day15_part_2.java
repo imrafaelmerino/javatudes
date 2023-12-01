@@ -17,7 +17,7 @@ public class Day15_part_2 {
 
         //language=RegExp
         var regex = "^Sensor at x=(-?\\d+), y=(-?\\d+): closest beacon is at x=(-?\\d+), y=(-?\\d+)$";
-        //var input = "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code_2022/day15/input_test.txt";
+        //var input = "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code_2022/day15/input_test_2.txt";
         var input = "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code_2022/day15/input.txt";
 
 

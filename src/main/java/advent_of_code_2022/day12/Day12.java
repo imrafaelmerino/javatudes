@@ -14,7 +14,7 @@ public class Day12 {
     public static void main(String[] args) {
 
         String input = "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code_2022/day12/input.txt";
-        //String input = "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code_2022/day12/input_test.txt";
+        //String input = "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code_2022/day12/input_test_2.txt";
 
         Grid<String> grid = MutableGrid.fromFile(new File(input).getPath());
 
