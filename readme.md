@@ -37,28 +37,25 @@ A collection of Java-based projects demonstrating various algorithmic and puzzle
 7. **[Missionaries and Cannibals](https://en.wikipedia.org/wiki/Missionaries_and_cannibals):** Solving the missionaries
    and cannibals river crossing problem.
 8. **[Sudoku](https://en.wikipedia.org/wiki/Sudoku_solving_algorithms):** Implementation of a Sudoku solver.
-9. **[Water Pouring:](https://en.wikipedia.org/wiki/Water_pouring_puzzle)** Solving a problem related to pouring water between jugs to measure a specific quantity.
+9. **[Water Pouring:](https://en.wikipedia.org/wiki/Water_pouring_puzzle)** Solving a problem related to pouring water
+   between jugs to measure a specific quantity.
 10. **[Zebra Puzzle](https://en.wikipedia.org/wiki/Zebra_Puzzle):** The Zebra Puzzle, also known as Einstein's Riddle,
-    is a classic logic puzzle that involves
-    deducing the characteristics of a set of houses and their occupants. The puzzle provides a set of clues, each
-    offering information about the relationships between the houses and the people living in them. The challenge is to
-    use deductive reasoning to solve the puzzle and determine the specific attributes of each house and occupant.
+    is a classic logic puzzle that involves deducing the characteristics of a set of houses and their occupants. The 
+    puzzle provides a set of clues, each offering information about the relationships between the houses and the people 
+    living in them. The challenge is to use deductive reasoning to solve the puzzle and determine the specific attributes 
+    of each house and occupant.
 11. **[Task Scheduling](https://en.wikipedia.org/wiki/Task_scheduling):** Implementing algorithms for task scheduling.
-12. **[Wold Goat And Cabbage](https://en.wikipedia.org/wiki/Wolf,_goat,_and_cabbage_problem):** Solving the classic
-    river-crossing puzzle with a wolf, goat, and cabbage.
+12. **[Wold Goat And Cabbage](https://en.wikipedia.org/wiki/Wolf,_goat,_and_cabbage_problem):** Solving the classic river-crossing puzzle with a wolf, goat, and cabbage.
 
 ## Algorithms Developed
 
-1. **[Depth First Search (DFS)](https://en.wikipedia.org/wiki/Depth-first_search):** A graph traversal algorithm.
-2. **[Breath First Search (BFS)](https://en.wikipedia.org/wiki/Breadth-first_search):** Another graph traversal algorithm.
-3. **[Branch and Bound](https://en.wikipedia.org/wiki/Branch_and_bound):** An algorithm for finding the optimal solution
-   to combinatorial problems.
-4. **[A Star (A*)](https://en.wikipedia.org/wiki/A*_search_algorithm):** A popular pathfinding algorithm combining
-   greedy and Dijkstra's approaches.
-5. **[Floyd and Warshall](https://en.wikipedia.org/wiki/Floyd%E2%80%93Warshall_algorithm):** Algorithms for finding
-   shortest paths in a weighted graph.
-6. **[CSP (Constraint Satisfaction Problem)](https://en.wikipedia.org/wiki/Constraint_satisfaction_problem):**
-   Implementing various techniques such as backtracking and forward checking
+1. **[Depth First Search (DFS)](https://en.wikipedia.org/wiki/Depth-first_search):** A graph traversal algorithm to find the shortest path.
+2. **[Breath First Search (BFS)](https://en.wikipedia.org/wiki/Breadth-first_search):** Another graph traversal algorithm to find the shortest path.
+3. **[Branch and Bound](https://en.wikipedia.org/wiki/Branch_and_bound):** An algorithm for finding the optimal path
+   (not necessarily the shortest).
+4. **[A Star (A*)](https://en.wikipedia.org/wiki/A*_search_algorithm):** A* is an informed search algorithm based in heuristics.
+5. **[Floyd and Warshall](https://en.wikipedia.org/wiki/Floyd%E2%80%93Warshall_algorithm):** Algorithms for finding the shortest paths in a weighted graph.
+6. **[CSP (Constraint Satisfaction Problem)](https://en.wikipedia.org/wiki/Constraint_satisfaction_problem):** Implementing various techniques such as backtracking and forward checking
    for solving CSPs.
 
 Feel free to explore the individual projects and algorithms to gain insights into their implementations and usage!

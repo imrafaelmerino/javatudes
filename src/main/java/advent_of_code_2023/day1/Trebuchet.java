@@ -30,6 +30,9 @@ public class Trebuchet {
     }
 
 
+    /**
+     * valid for part1 too!
+     */
     private static int getNumberPart2(String line) {
         var digits = findAllDigitsIncludingOverlaps(line);
         String result = "%d%d".formatted(ListFun.head(digits),
@@ -39,14 +42,14 @@ public class Trebuchet {
         return Integer.parseInt(result);
     }
 
-    private static int getNumberPart1(String line){
-        return  Integer.parseInt("%d%d".formatted(findFirstDigit(line),
-                                                  findFirstDigit(StrFun.reverse(line))
-                                                 )
-                                );
+    private static int getNumberPart1(String line) {
+        return Integer.parseInt("%d%d".formatted(findFirstDigit(line),
+                                                 findFirstDigit(StrFun.reverse(line))
+                                                )
+                               );
     }
 
-    private static int findFirstDigit(String line){
+    private static int findFirstDigit(String line) {
         return line.chars()
                    .filter(Character::isDigit)
                    .findFirst()
@@ -54,9 +57,8 @@ public class Trebuchet {
     }
 
     /**
-     * twoneight -> [two, one, eight]
+     * this method handles overlaps. It's ok since we just want the last one twoneight -> [two, one, eight]
      *
-     * @param line the line to be processed
      * @return all digits including word overlaps
      */
     private static List<Integer> findAllDigitsIncludingOverlaps(String line) {
@@ -82,7 +84,7 @@ public class Trebuchet {
                 ? findAllDigitsIncludingOverlaps(tail,
                                                  xs, // tricky! and not "" because otherwise we leave out overlaps
                                                  ListFun.add(digits,
-                                            opt.getAsInt())
+                                                             opt.getAsInt())
                                                 )
                 : findAllDigitsIncludingOverlaps(tail,
                                                  xs,
