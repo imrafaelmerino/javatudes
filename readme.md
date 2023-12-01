@@ -37,7 +37,7 @@ A collection of Java-based projects demonstrating various algorithmic and puzzle
 7. **[Missionaries and Cannibals](https://en.wikipedia.org/wiki/Missionaries_and_cannibals):** Solving the missionaries
    and cannibals river crossing problem.
 8. **[Sudoku](https://en.wikipedia.org/wiki/Sudoku_solving_algorithms):** Implementation of a Sudoku solver.
-9. **Water Pouring Problem:** Solving a problem related to pouring water between jugs to measure a specific quantity.
+9. **[Water Pouring:](https://en.wikipedia.org/wiki/Water_pouring_puzzle)** Solving a problem related to pouring water between jugs to measure a specific quantity.
 10. **[Zebra Puzzle](https://en.wikipedia.org/wiki/Zebra_Puzzle):** The Zebra Puzzle, also known as Einstein's Riddle,
     is a classic logic puzzle that involves
     deducing the characteristics of a set of houses and their occupants. The puzzle provides a set of clues, each
