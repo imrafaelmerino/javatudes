@@ -33,44 +33,41 @@ public class GearRatios {
     private static List<Integer> getAdjacentParts(Grid<String> grid, Pos pos) {
         List<Integer> gears = new ArrayList<>();
 
+        gears.addAll(getHorizontalEngineParts(grid, pos));
 
+        gears.addAll(getVerticalEnginePart(pos.up(), grid));
+
+        gears.addAll(getVerticalEnginePart(pos.down(), grid));
+
+        return gears;
+    }
+
+    private static List<Integer> getVerticalEnginePart(Pos pos, Grid<String> grid) {
+        var gears = new ArrayList<Integer>();
+        if (grid.containsPos(pos)) {
+            String val = grid.getVal(pos);
+            if (isDigit(val)) gears.add(joinDigits(findLeftDigits(pos, grid),
+                                                   val,
+                                                   findRightDigits(pos, grid))
+                                       );
+            else gears.addAll(getHorizontalEngineParts(grid, pos));
+
+        }
+        return gears;
+    }
+
+    private static List<Integer> getHorizontalEngineParts(Grid<String> grid, Pos pos) {
+        var gears = new ArrayList<Integer>();
         Pos right = pos.right();
         if (grid.containsPos(right)) {
             var rightDigits = findRightDigits(pos, grid);
-            if (!rightDigits.isEmpty())
-                gears.add(toInt(rightDigits));
+            if (!rightDigits.isEmpty()) gears.add(toInt(rightDigits));
         }
         Pos left = pos.left();
         if (grid.containsPos(left)) {
             var leftDigits = findLeftDigits(pos, grid);
-            if (!leftDigits.isEmpty())
-                gears.add(toInt(leftDigits));
+            if (!leftDigits.isEmpty()) gears.add(toInt(leftDigits));
         }
-
-        Pos up = pos.up();
-        if (grid.containsPos(up)) {
-            var leftDigits = findLeftDigits(up, grid);
-            var rightDigits = findRightDigits(up, grid);
-            String val = grid.getVal(up);
-            if (isDigit(val)) gears.add(joinDigits(leftDigits, val, rightDigits));
-            else {
-                if (!leftDigits.isEmpty()) gears.add(toInt(leftDigits));
-                if (!rightDigits.isEmpty()) gears.add(toInt(rightDigits));
-            }
-        }
-
-        Pos down = pos.down();
-        if (grid.containsPos(down)) {
-            var leftDigits = findLeftDigits(down, grid);
-            var rightDigits = findRightDigits(down, grid);
-            String val = grid.getVal(down);
-            if (isDigit(val)) gears.add(joinDigits(leftDigits, val, rightDigits));
-            else {
-                if (!leftDigits.isEmpty()) gears.add(toInt(leftDigits));
-                if (!rightDigits.isEmpty()) gears.add(toInt(rightDigits));
-            }
-        }
-
         return gears;
     }
 
@@ -85,15 +82,21 @@ public class GearRatios {
                                                         .anyMatch(p -> isSymbol(grid.getVal(p)))
                                   );
 
+        //explored contains candidates that has already been taken account with another symbol.
+        //For example, in the following example 1 and 3 are candidates, but we want to count
+        //  123 just once and not twice
+        //  *123*
         var explored = new HashSet<Pos>();
         var acc = 0;
         for (var candidate : candidates) {
             if (!explored.contains(candidate.pos())) {
-                var leftCellDigits = findLeftDigits(candidate.pos(), grid);
-                var rightCellDigits = findRightDigits(candidate.pos(), grid);
-                explored.addAll(leftCellDigits.stream().map(Cell::pos).collect(Collectors.toSet()));
-                explored.addAll(rightCellDigits.stream().map(Cell::pos).collect(Collectors.toSet()));
-                var number = joinDigits(leftCellDigits, candidate.value(), rightCellDigits);
+                var left = findLeftDigits(candidate.pos(), grid);
+                var right = findRightDigits(candidate.pos(), grid);
+                explored.addAll(left.stream().map(Cell::pos).collect(Collectors.toSet()));
+                explored.addAll(right.stream().map(Cell::pos).collect(Collectors.toSet()));
+                var number = joinDigits(left,
+                                        candidate.value(),
+                                        right);
                 acc += number;
             }
         }
@@ -102,7 +105,8 @@ public class GearRatios {
 
     private static int joinDigits(List<Cell<String>> leftCellDigits,
                                   String digit,
-                                  List<Cell<String>> rightCellDigits) {
+                                  List<Cell<String>> rightCellDigits
+                                 ) {
         return Integer.parseInt("%s%s%s".formatted(joinDigits(leftCellDigits),
                                                    digit,
                                                    joinDigits(rightCellDigits)
@@ -123,26 +127,39 @@ public class GearRatios {
         return !Character.isDigit(val) && val != '.';
     }
 
-    public static List<Cell<String>> findRightDigits(Pos pos, Grid<String> grid) {
+    public static List<Cell<String>> findRightDigits(Pos pos,
+                                                     Grid<String> grid
+                                                    ) {
 
         return findRightDigits(pos, grid, new ArrayList<>());
     }
 
-    public static List<Cell<String>> findRightDigits(Pos pos, Grid<String> grid, List<Cell<String>> result) {
+    public static List<Cell<String>> findRightDigits(Pos pos,
+                                                     Grid<String> grid,
+                                                     List<Cell<String>> result
+                                                    ) {
         var next = pos.right();
         if (!grid.containsPos(next)) return result;
         var val = grid.getVal(next);
-        if (isDigit(val)) return findRightDigits(next, grid, ListFun.append(result, new Cell<>(next, val)));
+        if (isDigit(val)) return findRightDigits(next,
+                                                 grid,
+                                                 ListFun.append(result,
+                                                                new Cell<>(next, val)));
         return result;
 
     }
 
-    public static List<Cell<String>> findLeftDigits(Pos pos, Grid<String> grid, List<Cell<String>> result) {
+    public static List<Cell<String>> findLeftDigits(Pos pos,
+                                                    Grid<String> grid,
+                                                    List<Cell<String>> result
+                                                   ) {
         var next = pos.left();
         if (!grid.containsPos(next)) return result;
         var val = grid.getVal(next);
-        if (isDigit(val)) return findLeftDigits(next, grid,
-                                                ListFun.prepend(result, new Cell<>(next, val)));
+        if (isDigit(val)) return findLeftDigits(next,
+                                                grid,
+                                                ListFun.prepend(result,
+                                                                new Cell<>(next, val)));
         return result;
 
     }
