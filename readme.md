@@ -6,6 +6,14 @@ the challenge of implementing solutions from scratch. This hands-on approach not
 programming language but also hones my problem-solving skills. It's a gratifying process that allows me to explore and
 apply concepts, fostering a stronger foundation in both programming and algorithmic thinking.
 
+"An étude (a French word meaning study) is an instrumental musical composition, usually short, of considerable
+difficulty, and designed to provide practice material for perfecting a particular musical skill." — Wikipedia
+
+This project contains javatudes—Java programs, usually short, for perfecting particular programming skills.
+
+Admittedly, this idea isn't original; I borrowed it from Peter Norvig's Github repository. I simply swapped Java for
+Python :)
+
 # Advent of Code
 
 - **[2021 (in Scala)](https://adventofcode.com/2021)**
