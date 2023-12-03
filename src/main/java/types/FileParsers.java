@@ -31,21 +31,22 @@ public class FileParsers {
     public static List<Matcher> toListOfLineMatchers(String input,
                                                      String regex
                                                     ) {
-       return toListOfLineMatchers(input,
-                                   regex,
-                                   e->false);
+        return toListOfLineMatchers(input,
+                                    regex,
+                                    _ -> false);
     }
 
     /**
-     * parse a file returning a list with all the lines. Blank lines are ignored
-     * depending on the given ignoreBlank parameter
+     * parse a file returning a list with all the lines. Blank lines are ignored depending on the given ignoreBlank
+     * parameter
      *
      * @param input    the absolute file path
      * @param skipLine if true, lines are ignored
      * @return a list of string
      */
     public static List<String> toListOfLines(String input,
-                                             Predicate<String> skipLine) {
+                                             Predicate<String> skipLine
+                                            ) {
         try {
             List<String> xs = Files.readAllLines(new File(input).toPath());
             return
@@ -57,14 +58,14 @@ public class FileParsers {
         }
     }
 
-    public static List<String> toListOfLines(String input){
-         return toListOfLines(input,e->false);
+    public static List<String> toListOfLines(String input) {
+        return toListOfLines(input, _ -> false);
     }
 
 
     /**
-     * Parse a file into a list of groups, being a group a bunch of consecutive
-     * lines without any blank line between them. Example:
+     * Parse a file into a list of groups, being a group a bunch of consecutive lines without any blank line between
+     * them. Example:
      *
      * <pre>
      * AAAA
@@ -93,20 +94,20 @@ public class FileParsers {
             if (lineIsGroupSeparator.test(line)) {
                 if (!group.isEmpty()) result.add(group);
                 group = new ArrayList<>();
-            }
-            else group.add(line);
+            } else group.add(line);
         }
         if (!lines.isEmpty()) result.add(group);
         return result;
     }
 
-    public static List<List<String>> toGroupsOfLines(String input){
-        return toGroupsOfLines(input, e->e.isEmpty() || e.isBlank());
+    public static List<List<String>> toGroupsOfLines(String input) {
+        return toGroupsOfLines(input, e -> e.isEmpty() || e.isBlank());
     }
 
     public static List<List<String>> toListOfSplitLines(String path) {
-        return toListOfSplitLines(path,"",_->false);
+        return toListOfSplitLines(path, "", _ -> false);
     }
+
     public static List<List<String>> toListOfSplitLines(String path,
                                                         String separator,
                                                         Predicate<String> skipLine
