@@ -100,6 +100,7 @@ public record Range(int min,
      * @return true if the given range is contained
      */
     public boolean contain(final Range other) {
+
         return min <= Objects.requireNonNull(other).min && max >= other.max;
     }
 
@@ -180,9 +181,9 @@ public record Range(int min,
 
     public static void main(String[] args) {
         var xs = new ArrayList<Range>();
-        Range e = new Range(20, 100);
+        var e = new Range(20, 100);
         xs.add(e);
-        Range f = new Range(100, 200);
+        var f = new Range(100, 200);
         xs.add(f);
 
         xs.sort(Range::compareTo);
@@ -191,7 +192,7 @@ public record Range(int min,
 
         System.out.println(e.union(f));
 
-        List<Range> range = new ArrayList<>();
+        var range = new ArrayList<Range>();
         range.add(new Range(200, 300));
         range.add(new Range(30, 100));
         range.add(new Range(20, 30));

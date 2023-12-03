@@ -31,7 +31,7 @@ public class StringParsers {
                 .first();
     }
 
-    @SuppressWarnings({"raw","unchecked"})
+    @SuppressWarnings({"raw", "unchecked"})
     static Pair<List, String> toList(String input,
                                      List result
                                     ) {
@@ -42,10 +42,9 @@ public class StringParsers {
                                         input.substring(1)
                                        );
         if (head == '[') {
-            Pair<List, String> pair =
-                    toList(input.substring(1),
-                           new ArrayList<>()
-                          );
+            var pair = toList(input.substring(1),
+                              new ArrayList<>()
+                             );
             result.add(pair.first());
 
 
@@ -59,8 +58,9 @@ public class StringParsers {
                          );
 
 
-        Pair<String, String> pair = readAlphanumeric(input);
-        if(pair.first().isEmpty()) return Pair.of(result,pair.second());
+        var pair = readAlphanumeric(input);
+        if (pair.first().isEmpty()) return Pair.of(result,
+                                                   pair.second());
 
         result.add(pair.first());
 
@@ -83,8 +83,8 @@ public class StringParsers {
      */
     public static Pair<Integer, String> readInt(String input) {
 
-        String n = "";
-        int j = 0;
+        var n = "";
+        var j = 0;
         for (int i = 0; i < input.length(); i++) {
             if (Character.isDigit(input.charAt(i))) {
                 n += input.charAt(i);
@@ -95,7 +95,7 @@ public class StringParsers {
         return n.isEmpty() ?
                 Pair.of(null, input) :
                 Pair.of(Integer.parseInt(n),
-                       input.substring(j)
+                        input.substring(j)
                        );
     }
 
@@ -113,8 +113,8 @@ public class StringParsers {
      */
     public static Pair<String, String> readAlphanumeric(String input) {
 
-        String n = "";
-        int j = 0;
+        var n = "";
+        var j = 0;
         for (int i = 0; i < input.length(); i++) {
             char character = input.charAt(i);
             if (Character.isDigit(character) || Character.isAlphabetic(character)) {
@@ -132,19 +132,18 @@ public class StringParsers {
 
     public static Pair<Integer, String> readInteger(String input) {
 
-        String n = "";
-        int j = 0;
+        var n = "";
+        var j = 0;
         for (int i = 0; i < input.length(); i++) {
-            if (Character.isDigit(input.charAt(i))) {
-                n += input.charAt(i);
-            } else {
+            if (Character.isDigit(input.charAt(i))) n += input.charAt(i);
+            else {
                 j = i;
                 break;
             }
         }
-        return Pair.of(Integer.parseInt(n), input.substring(j + 1));
+        return Pair.of(Integer.parseInt(n),
+                       input.substring(j + 1));
     }
-
 
 
 }

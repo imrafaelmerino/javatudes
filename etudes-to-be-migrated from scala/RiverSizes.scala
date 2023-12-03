@@ -1,4 +1,4 @@
-package etudes
+package javatudes
 import decorators.d
 import scala.collection.immutable.Seq
 import scala.collection.mutable

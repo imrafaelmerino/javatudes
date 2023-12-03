@@ -1,4 +1,4 @@
-package etudes
+package javatudes
 
 import scala.collection.immutable.Seq
 
