@@ -23,14 +23,14 @@ public class GearRatios {
     private static long solve_part2(Grid<String> grid) {
         return grid.find((pos, val) -> val.equals("*"))
                    .stream()
-                   .map(cell -> getAdjacentParts(grid, cell.pos()))
+                   .map(cell -> getAdjacentEngineParts(grid, cell.pos()))
                    .filter(parts -> parts.size() == 2)
                    .map(parts -> parts.get(0) * parts.get(1))
                    .reduce(Integer::sum)
                    .get();
     }
 
-    private static List<Integer> getAdjacentParts(Grid<String> grid, Pos pos) {
+    private static List<Integer> getAdjacentEngineParts(Grid<String> grid, Pos pos) {
         List<Integer> gears = new ArrayList<>();
 
         gears.addAll(getHorizontalEngineParts(grid, pos));
