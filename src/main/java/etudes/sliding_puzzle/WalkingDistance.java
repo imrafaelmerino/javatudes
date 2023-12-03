@@ -301,6 +301,7 @@ public class WalkingDistance {
                     distanceFromMB.apply(MultiBag.fromRows(grid)) +
                             distanceFromMB.apply(MultiBag.fromColumns(grid));
 
+    @SafeVarargs
     public static List<String> diff(List<String> xs, List<String>... ys) {
         var xsc = new ArrayList<>(xs);
         for (var zs : ys) for (String y : zs) ListFun.removeFirst(xsc, y::equals);

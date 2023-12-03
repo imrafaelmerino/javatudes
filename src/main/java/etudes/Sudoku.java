@@ -111,7 +111,7 @@ public class Sudoku {
 
 
                 neighbors.put(pos,
-                              ListFun.remove(ListFun.addAll(sameColumn, sameRow, sameRec),
+                              ListFun.remove(ListFun.appendAll(sameColumn, sameRow, sameRec),
                                              pos
                                             )
                              );

@@ -14,10 +14,10 @@ public class ConstraintChecker<Variable,Value> implements BiPredicate<Variable, 
     public ConstraintChecker(Iterable<? extends Constraint<Variable,Value>> constraints) {
         for (Constraint<Variable,Value> constraint : constraints) {
                 if(constraint instanceof BasicConstraint<Variable,Value> bc)
-                    basic.compute(bc.variable,(v,list) -> list == null ? ListFun.mutableOf(bc) : ListFun.add(list, bc));
+                    basic.compute(bc.variable,(v,list) -> list == null ? ListFun.mutableOf(bc) : ListFun.append(list, bc));
                 else if(constraint instanceof BinaryConstraint<Variable,Value> bc){
-                    binary.compute(bc.var1,(v,list) -> list == null ? ListFun.mutableOf(bc) : ListFun.add(list, bc));
-                    binary.compute(bc.var2,(v,list) -> list == null ? ListFun.mutableOf(bc) : ListFun.add(list, bc));
+                    binary.compute(bc.var1,(v,list) -> list == null ? ListFun.mutableOf(bc) : ListFun.append(list, bc));
+                    binary.compute(bc.var2,(v,list) -> list == null ? ListFun.mutableOf(bc) : ListFun.append(list, bc));
                 }
             }
 

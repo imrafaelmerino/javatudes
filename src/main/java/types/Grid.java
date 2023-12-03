@@ -405,10 +405,14 @@ public sealed interface Grid<T> extends Iterable<Cell<T>> permits MutableGrid, P
     default Grid<T> tiles(Iterable<Pos> centers,
                           BiFunction<Pos, Cell<T>, T> map
                          ) {
-        Grid<T> acc = switch (this) {
-            case PersistentGrid<T> p -> PersistentGrid.empty();
-            case MutableGrid<T> m -> MutableGrid.empty();
-        };
+        Grid<T> acc;
+        if (this instanceof PersistentGrid<T>) {
+            acc = PersistentGrid.empty();
+        } else if (this instanceof MutableGrid<T>) {
+            acc = MutableGrid.empty();
+        } else {
+            throw new IllegalArgumentException();
+        }
         for (Pos center : centers) {
             int x = (xmax() - xmin() + 1) * center.x();
             int y = (ymax() - ymin() + 1) * center.y();

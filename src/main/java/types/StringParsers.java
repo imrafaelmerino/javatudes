@@ -31,6 +31,7 @@ public class StringParsers {
                 .first();
     }
 
+    @SuppressWarnings({"raw","unchecked"})
     static Pair<List, String> toList(String input,
                                      List result
                                     ) {

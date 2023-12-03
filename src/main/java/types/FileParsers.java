@@ -33,7 +33,7 @@ public class FileParsers {
                                                     ) {
         return toListOfLineMatchers(input,
                                     regex,
-                                    _ -> false);
+                                    pos -> false);
     }
 
     /**
@@ -59,7 +59,7 @@ public class FileParsers {
     }
 
     public static List<String> toListOfLines(String input) {
-        return toListOfLines(input, _ -> false);
+        return toListOfLines(input, str -> false);
     }
 
 
@@ -105,7 +105,7 @@ public class FileParsers {
     }
 
     public static List<List<String>> toListOfSplitLines(String path) {
-        return toListOfSplitLines(path, "", _ -> false);
+        return toListOfSplitLines(path, "", e -> false);
     }
 
     public static List<List<String>> toListOfSplitLines(String path,

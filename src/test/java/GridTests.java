@@ -97,7 +97,7 @@ public class GridTests {
         PersistentGrid.fromGen(new Range(0, 2), new Range(0, 2), pos -> Optional.of(1))
                       .merge(PersistentGrid.fromGen(new Range(0, 2),
                                                     new Range(3, 5),
-                                                    _ -> Optional.of(2)
+                                                    e -> Optional.of(2)
                                                    )
                             )
                       .printRows();

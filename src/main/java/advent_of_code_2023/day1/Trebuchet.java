@@ -74,7 +74,7 @@ public class Trebuchet {
         var head = remainder.charAt(0);
         var tail = remainder.substring(1);
         if (Character.isDigit(head))
-            return findAllDigitsIncludingOverlaps(tail, "", ListFun.add(digits, head - '0'));
+            return findAllDigitsIncludingOverlaps(tail, "", ListFun.append(digits, head - '0'));
         var xs = letters + head;
         var opt = IntStream.rangeClosed(0, 9)
                            .filter(d -> xs.endsWith(WORD_REPRESENTATIONS_FOR_DIGITS.get(d)))
@@ -83,8 +83,8 @@ public class Trebuchet {
         return opt.isPresent()
                 ? findAllDigitsIncludingOverlaps(tail,
                                                  xs, // tricky! and not "" because otherwise we leave out overlaps
-                                                 ListFun.add(digits,
-                                                             opt.getAsInt())
+                                                 ListFun.append(digits,
+                                                                opt.getAsInt())
                                                 )
                 : findAllDigitsIncludingOverlaps(tail,
                                                  xs,

@@ -65,13 +65,13 @@ public class TaskScheduling {
 
     public static void main(String[] args) {
 
-        List<Constraint<String, Integer>> constraints = ListFun.addAll(Constraint.allDifferent(PHYSICISTS),
-                                                                      Constraint.allDifferent(MATHEMATICIANS),
-                                                                      Constraint.allDifferent(ANCIENT_GREEKS),
-                                                                      Constraint.allDifferent(FEMALE),
-                                                                      Constraint.allDifferent(ENGLISH),
-                                                                      Constraint.allDifferent(MY_FAV_SPEAKERS)
-                                                                     );
+        List<Constraint<String, Integer>> constraints = ListFun.appendAll(Constraint.allDifferent(PHYSICISTS),
+                                                                          Constraint.allDifferent(MATHEMATICIANS),
+                                                                          Constraint.allDifferent(ANCIENT_GREEKS),
+                                                                          Constraint.allDifferent(FEMALE),
+                                                                          Constraint.allDifferent(ENGLISH),
+                                                                          Constraint.allDifferent(MY_FAV_SPEAKERS)
+                                                                         );
 
         var sol = new FindFirst<>(DOMAIN.keySet(),
                                   DOMAIN,

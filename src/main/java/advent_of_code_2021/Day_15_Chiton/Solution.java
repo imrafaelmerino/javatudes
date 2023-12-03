@@ -30,7 +30,7 @@ public class Solution {
                              grid.ymax()
         );
 
-        BiFunction<Pos, Pos, Integer> stepFun = (_, b) -> grid.getVal(b);
+        BiFunction<Pos, Pos, Integer> stepFun = (pos, b) -> grid.getVal(b);
         var bb = AStarSearch.fromStates(successorGen,
                                         stepFun,
                                         b -> b.manhattanDistance(target));
@@ -52,7 +52,7 @@ public class Solution {
     private static void part2() {
         var input = "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code_2021/Day_15_Chiton/input.txt";
         Grid<Integer> tile = MutableGrid.fromFile(input)
-                                        .mapValues((_, v) -> Integer.parseInt(v));
+                                        .mapValues((pos, v) -> Integer.parseInt(v));
 
 
         List<Pos> centers = Pos.rows(new Range(0, 4),
@@ -80,7 +80,7 @@ public class Solution {
 
 
         SearchPathCost<Pos> pathCost = AStarSearch.fromStates(successorGen,
-                                                              (_, b) -> grid.getVal(b),
+                                                              (pos, b) -> grid.getVal(b),
                                                               b -> b.manhattanDistance(target)
                                                              )
                                                   .findFirst(new Pos(0, 0),
@@ -90,7 +90,7 @@ public class Solution {
 
         grid.color(
                     ControlChar.RED,
-                    (pos, _) -> pathCost.path()
+                    (pos, val) -> pathCost.path()
                                         .states()
                                         .contains(pos)
                   )

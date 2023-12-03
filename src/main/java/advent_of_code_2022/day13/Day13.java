@@ -8,6 +8,7 @@ import types.StringParsers;
 import java.util.*;
 import java.util.stream.IntStream;
 
+@SuppressWarnings("raw")
 public class Day13 {
 
     /**
@@ -47,10 +48,10 @@ public class Day13 {
         String D1 = "[[2]]";
         String D2 = "[[6]]";
 
-        var allpackets = ListFun.add(FileParsers.toListOfLines(input, String::isEmpty),
-                                     D1,
-                                     D2
-                                    );
+        var allpackets = ListFun.append(FileParsers.toListOfLines(input, String::isEmpty),
+                                        D1,
+                                        D2
+                                       );
 
 
         var sorted = allpackets.stream()
@@ -66,6 +67,7 @@ public class Day13 {
 
     }
 
+    @SuppressWarnings("unchecked")
     static int compare(List left,
                        List right
                       ) {

@@ -46,8 +46,8 @@ public class NPuzzle {
      * instance is not solvable.
      */
     private boolean isSolvable() {
-        var xs = board.getRows((_, val) -> Long.parseLong(val),
-                               (_, val) -> !val.equals("X")
+        var xs = board.getRows((pos, val) -> Long.parseLong(val),
+                               (pos, val) -> !val.equals("X")
                               )
                       .stream()
                       .flatMap(Collection::stream)
@@ -68,7 +68,7 @@ public class NPuzzle {
             };
 
     private Pos getEmptySquare(Grid<String> p_board) {
-        return p_board.findOne((_, val) -> val.equals("X")).pos();
+        return p_board.findOne((pos, val) -> val.equals("X")).pos();
     }
 
     public List<Action<Grid<String>>> getSuccessors(Grid<String> p_board) {

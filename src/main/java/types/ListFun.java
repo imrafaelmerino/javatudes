@@ -46,13 +46,19 @@ public final class ListFun {
         return list;
     }
 
-    public static <T> List<T> add(List<T> list, T a, T... others) {
+    public static <T> List<T> append(List<T> list, T a, T... others) {
         list.add(Objects.requireNonNull(a));
         list.addAll(Arrays.asList(Objects.requireNonNull(others)));
         return list;
     }
 
-    public static <T> List<T> addAll(List<T> list, List<T> a, List<T>... others) {
+    public static <T> List<T> prepend(List<T> list, T a, T... others) {
+        list.addAll(0,Arrays.asList(Objects.requireNonNull(others)));
+        list.add(0,Objects.requireNonNull(a));
+        return list;
+    }
+
+    public static <T> List<T> appendAll(List<T> list, List<T> a, List<T>... others) {
         list.addAll(Objects.requireNonNull(a));
         for (List<T> other : others) list.addAll(other);
         return list;

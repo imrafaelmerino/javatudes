@@ -70,13 +70,13 @@ class Wolf_Goat_And_Cabbage {
         Function<List<String>, String> action = s -> "Boat carry " + String.join(" and ", s);
 
         Function<List<String>, List<List<String>>> combinations = bank ->
-                ListFun.add(
+                ListFun.append(
                         ListFun.allPairs(bank)
                                .stream()
                                .filter(pair -> pair.contains("FARMER")) //only pairs with a farmer
                                .collect(Collectors.toList()),
                         List.of("FARMER") //farmer  can cross alone
-                           );
+                              );
 
         Function<State, List<Action<State>>> succ = s -> {
             if (s.farmerHere() && (s.containsAcross("WOLF","GOAT")

@@ -71,15 +71,15 @@ public class DinnerTable {
 
         var variables = DOMAIN.keySet();
         List<Constraint<String, String>> constraints =
-                ListFun.addAll(Constraint.allDifferent(variables),
-                               BinaryConstraint.all(PALIN, MCCAIN, NEXT_TO_EACH_OTHER,
+                ListFun.appendAll(Constraint.allDifferent(variables),
+                                  BinaryConstraint.all(PALIN, MCCAIN, NEXT_TO_EACH_OTHER,
                                                     BIDEN, OBAMA, NEXT_TO_EACH_OTHER,
                                                     MCCAIN, OBAMA, NEXT_TO_EACH_OTHER.negate(),
                                                     PALIN, OBAMA, NEXT_TO_EACH_OTHER.negate(),
                                                     PALIN, BIDEN, NEXT_TO_EACH_OTHER.negate(),
                                                     MOOSE, PALIN, NEXT_TO_EACH_OTHER.negate()
                                                    )
-                              );
+                                 );
 
         var sol = new FindFirst<>(variables, DOMAIN, constraints).findFirst();
 
