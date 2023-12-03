@@ -33,10 +33,13 @@ public class GearRatios {
     private static List<Integer> getAdjacentEngineParts(Grid<String> grid, Pos pos) {
         List<Integer> gears = new ArrayList<>();
 
+        //pos is a gear
         gears.addAll(getHorizontalEngineParts(grid, pos));
 
+        //pos up doesn't have to be a gear
         gears.addAll(getVerticalEnginePart(pos.up(), grid));
 
+        //pos down doesn't have to be a gear
         gears.addAll(getVerticalEnginePart(pos.down(), grid));
 
         return gears;
@@ -58,7 +61,7 @@ public class GearRatios {
 
     private static List<Integer> getHorizontalEngineParts(Grid<String> grid, Pos pos) {
         var gears = new ArrayList<Integer>();
-        Pos right = pos.right();
+        var right = pos.right();
         if (grid.containsPos(right)) {
             var rightDigits = findRightDigits(pos, grid);
             if (!rightDigits.isEmpty()) gears.add(toInt(rightDigits));
@@ -83,8 +86,7 @@ public class GearRatios {
                                   );
 
         //explored contains candidates that has already been taken account with another symbol.
-        //For example, in the following example 1 and 3 are candidates, but we want to count
-        //  123 just once and not twice
+        //For example, in the following example 1 and 3 are candidates, but we want to count 123 just once and not twice
         //  *123*
         var explored = new HashSet<Pos>();
         var acc = 0;
@@ -123,7 +125,7 @@ public class GearRatios {
     }
 
     public static boolean isSymbol(String str) {
-        char val = str.charAt(0);
+        var val = str.charAt(0);
         return !Character.isDigit(val) && val != '.';
     }
 
