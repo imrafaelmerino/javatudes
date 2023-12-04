@@ -2,14 +2,19 @@ package advent_of_code.advent_of_code_2023.day4;
 
 import types.FileParsers;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 
 public class Scratchcards {
+
+    static final Pattern LINE =
+            Pattern.compile("Card\\s+(?<id>\\d+): (?<winning>[\\s\\d]+) \\| (?<numbers>[\\s\\d]+)");
+
     public static void main(String[] args) {
 
 
@@ -22,62 +27,64 @@ public class Scratchcards {
 
 
         var sol_part1 = cards.stream()
-                             .map(Card::value)
+                             .map(card -> ((long) Math.pow(2, card.winningIHave.size() - 1)))
                              .reduce(Long::sum)
                              .get();
 
         System.out.println(sol_part1);
 
-        Map<Long, Card> map = cards.stream().collect(Collectors.toMap(c -> (long) c.number, c -> c));
+        var cardsByNumber = cards.stream()
+                                 .collect(Collectors.toMap(e -> e.number, e -> e));
 
-        System.out.println(pileCards(map).size() + map.size());
+        var counters = cards.stream().collect(Collectors.toMap(c -> c, c -> 1L));
+
+        System.out.println(getPileSize(counters, cardsByNumber));
 
     }
 
-    private static List<Card> pileCards(Map<Long, Card> originals) {
-        return originals.entrySet().stream().flatMap(e -> getWonCards(originals, e.getValue()).stream()).toList();
+    private static Long getPileSize(Map<Card, Long> counters, Map<Long, Card> cards) {
+
+        counters.forEach((card, n) -> updateCardCounter(counters,
+                                                        cards,
+                                                        card));
+        return counters.values()
+                       .stream()
+                       .reduce(Long::sum)
+                       .get();
     }
 
-    private static List<Card> getWonCards(Map<Long, Card> originals, Card card) {
+    private static void updateCardCounter(Map<Card, Long> counters, Map<Long, Card> cards, Card card) {
 
-        if (card.value == 0) return List.of();
-        List<Card> wonCards = LongStream.range(card.number + 1, card.number + 1 + card.value)
-                                        .mapToObj(originals::get).toList();
-        var result = new ArrayList<>(wonCards);
-        for (Card wonCard : wonCards) result.addAll(getWonCards(originals, wonCard));
-        return result;
+        if (!card.winningIHave.isEmpty()) {
+            for (var wonCard : LongStream.range(card.number + 1,
+                                                card.number + 1 + card.winningIHave.size())
+                                         .mapToObj(cards::get)
+                                         .toList()) {
+                counters.compute(wonCard, (c, n) -> n + 1);
+                updateCardCounter(counters, cards, wonCard);
+            }
+
+        }
     }
 
     private static Card toCard(String line) {
-        var card_numbers = line.split(":");
-        var id = Integer.parseInt(card_numbers[0].split(" +")[1]);
-        var numbers_wining_numbers = card_numbers[1].split("\\|");
-        var str_wining_numbers = numbers_wining_numbers[0].trim().split(" +");
-        var str_numbers = numbers_wining_numbers[1].trim().split(" +");
-        var numbers = Arrays.stream(str_numbers)
-                            .mapToInt(Integer::parseInt)
-                            .boxed()
-                            .toList();
-        var wining_numbers = Arrays.stream(str_wining_numbers)
-                                   .mapToInt(Integer::parseInt)
-                                   .boxed()
-                                   .toList();
+        Matcher matcher = LINE.matcher(line);
+        if (!matcher.matches()) throw new RuntimeException(line);
+        var id = Integer.parseInt(matcher.group("id"));
+        var numbers = toListOfInt(matcher.group("numbers"));
+        var winning = toListOfInt(matcher.group("winning"));
 
-        long size =
-                wining_numbers
-                        .stream()
-                        .filter(numbers::contains)
-                        .count();
-        //part 1
-        //return new Card(id,
-        //                ((int) Math.pow(2, size - 1))
-        //);
 
         return new Card(id,
-                        size);
+                        winning.stream().filter(numbers::contains).toList());
+    }
+
+    private static List<Integer> toListOfInt(String numbers) {
+        return Arrays.stream(numbers.trim().split("\\s+"))
+                     .map(Integer::parseInt).toList();
     }
 
 
-    record Card(int number, long value) {
+    record Card(long number, List<Integer> winningIHave) {
     }
 }
