@@ -116,8 +116,8 @@ public class GearRatios {
                                );
     }
 
-    private static String joinDigits(List<Cell<String>> leftCellDigits) {
-        return leftCellDigits.stream().map(Cell::value).collect(Collectors.joining());
+    private static String joinDigits(List<Cell<String>> cells) {
+        return cells.stream().map(Cell::value).collect(Collectors.joining());
     }
 
     public static boolean isDigit(String str) {
