@@ -148,6 +148,11 @@ public record Range(long min,
         return min <= Objects.requireNonNull(other).min && max >= other.max;
     }
 
+    public boolean contain(final long s) {
+
+        return s >= min && s <= max;
+    }
+
     /**
      * Returns true if this and the given ranges overlap
      *
@@ -210,9 +215,14 @@ public record Range(long min,
         return 1;
     }
 
-    boolean contain(long s) {
-        return s >= min && s <= max;
+
+    public long length() {
+        return max - min + 1;
     }
+
+
+
+
 
     public Range intersection(Range other) {
         var min = Math.max(this.min, other.min);
@@ -221,22 +231,6 @@ public record Range(long min,
         // Return null or some special value to indicate no intersection
         return min <= max ? new Range(min, max) : null;
     }
-
-
-    public List<Range> intersectAndDifference(Range other) {
-        var result = new ArrayList<Range>();
-        if (this.equals(other)) result.add(other);
-        else {
-            var intersection = this.intersection(other);
-            if (intersection != null) {
-                result.add(intersection);
-                result.addAll(this.difference(intersection));
-            }
-        }
-        return result;
-
-    }
-
 
     public List<Range> intersection(Set<Range> others) {
         return others.stream()
@@ -256,10 +250,6 @@ public record Range(long min,
         return result;
     }
 
-    public long length() {
-        return max - min + 1;
-    }
-
 
     public List<Range> difference(Range other) {
         List<Range> result = new ArrayList<>();
@@ -277,20 +267,10 @@ public record Range(long min,
         return result;
     }
 
-    public boolean contained(Range other) {
-        return this.min >= other.min && this.max <= other.max;
-    }
 
 
-    public Range translate(Range from, Range to) {
-        if (from.length() != to.length())
-            throw new IllegalArgumentException("source and target different length");
-        if (!this.contained(from)) throw new IllegalArgumentException("this not contained in source");
-        Range result = new Range(to.min + this.min - from.min,
-                                 to.max - (from.max - this.max
-                                 )
-        );
-        return result;
+    public Range translate(long d) {
+        return new Range(min + d, max + d);
     }
 
 
