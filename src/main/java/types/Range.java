@@ -1,7 +1,8 @@
 package types;
 
 import java.util.*;
-import java.util.stream.IntStream;
+import java.util.stream.Collectors;
+import java.util.stream.LongStream;
 
 /**
  * Represents a closed range between min and max
@@ -9,8 +10,8 @@ import java.util.stream.IntStream;
  * @param min the lower bound of the range
  * @param max the upper bound of the range
  */
-public record Range(int min,
-                    int max
+public record Range(long min,
+                    long max
 ) implements Comparable<Range> {
     public Range {
         if (max < min)
@@ -40,9 +41,11 @@ public record Range(int min,
      */
     public static List<Pos> columns(Range xs, Range ys) {
         List<Pos> positions = new ArrayList<>();
-        for (int x = xs.min(); x <= xs.max(); x++)
-            for (int y = ys.min(); y <= ys.max(); y++)
-                positions.add(new Pos(x, y));
+        for (var x = xs.min(); x <= xs.max(); x++)
+            for (var y = ys.min(); y <= ys.max(); y++)
+                positions.add(new Pos(x,
+                                      y)
+                             );
         return positions;
     }
 
@@ -68,16 +71,17 @@ public record Range(int min,
      */
     public static List<Pos> rows(Range xs, Range ys) {
         List<Pos> positions = new ArrayList<>();
-        for (int y = ys.min(); y <= ys.max(); y++)
-            for (int x = xs.min(); x <= xs.max(); x++)
-                positions.add(new Pos(x, y));
+        for (var y = ys.min(); y <= ys.max(); y++)
+            for (var x = xs.min(); x <= xs.max(); x++)
+                positions.add(new Pos(x,
+                                      y));
         return positions;
     }
 
 
     /**
-     * Returns the cartesian product of the given ranges xs and ys. Since the method returns a set, it returns
-     * the positions in an arbitrary order.
+     * Returns the cartesian product of the given ranges xs and ys. Since the method returns a set, it returns the
+     * positions in an arbitrary order.
      *
      * @param xs x range
      * @param ys y range
@@ -87,10 +91,50 @@ public record Range(int min,
      */
     public static Set<Pos> cartesian_product(Range xs, Range ys) {
         Set<Pos> positions = new HashSet<>();
-        for (int y = ys.min(); y <= ys.max(); y++)
-            for (int x = xs.min(); x <= xs.max(); x++)
-                positions.add(new Pos(x, y));
+        for (var y = ys.min(); y <= ys.max(); y++)
+            for (var x = xs.min(); x <= xs.max(); x++)
+                positions.add(new Pos(x,
+                                      y));
         return positions;
+    }
+
+    public static List<Range> union(List<Range> range) {
+        if (range.size() <= 1) return range;
+        var result = new ArrayList<Range>();
+        range.sort(Range::compareTo);
+        Range a = range.get(0);
+        Range b = range.get(1);
+        result.addAll(a.union(b));
+        for (int i = 2; i < range.size(); i++) {
+            Range c = range.get(i);
+            Range last = result.remove(result.size() - 1);
+            result.addAll(last.union(c));
+        }
+
+        return result;
+
+    }
+
+    public static void main(String[] args) {
+        var xs = new ArrayList<Range>();
+        var e = new Range(20, 100);
+        xs.add(e);
+        var f = new Range(100, 200);
+        xs.add(f);
+
+        xs.sort(Range::compareTo);
+
+        //System.out.println(xs);
+
+        System.out.println(e.union(f));
+
+        var range = new ArrayList<Range>();
+        range.add(new Range(200, 300));
+        range.add(new Range(30, 100));
+        range.add(new Range(20, 30));
+        range.add(new Range(-10, 20));
+        System.out.println(Range.union(range));
+
     }
 
     /**
@@ -131,22 +175,6 @@ public record Range(int min,
         return String.format("[%s,%s]", min, max);
     }
 
-    public static List<Range> union(List<Range> range) {
-        if (range.size() <= 1) return range;
-        var result = new ArrayList<Range>();
-        range.sort(Range::compareTo);
-        Range a = range.get(0);
-        Range b = range.get(1);
-        result.addAll(a.union(b));
-        for (int i = 2; i < range.size(); i++) {
-            Range c = range.get(i);
-            Range last = result.remove(result.size() - 1);
-            result.addAll(last.union(c));
-        }
-
-        return result;
-
-    }
 
     public List<Range> union(Range range) {
         var result = new ArrayList<Range>();
@@ -156,10 +184,10 @@ public record Range(int min,
             result.add(range);
         else if (range.min >= min && range.max <= max)
             result.add(this);
-       //no overlap but consecutive
-       else if(range.max - min ==1) result.add(new Range(range.min,max));
-       else if(range.min - max ==1) result.add(new Range(min,range.max));
-       //no overlap and not consecutive
+            //no overlap but consecutive
+        else if (range.max - min == 1) result.add(new Range(range.min, max));
+        else if (range.min - max == 1) result.add(new Range(min, range.max));
+            //no overlap and not consecutive
         else if (max < range.min || min > range.max) {
             result.add(this);
             result.add(range);
@@ -174,33 +202,6 @@ public record Range(int min,
         return result;
     }
 
-    //TODO lo mismos con intersection
-
-
-
-
-    public static void main(String[] args) {
-        var xs = new ArrayList<Range>();
-        var e = new Range(20, 100);
-        xs.add(e);
-        var f = new Range(100, 200);
-        xs.add(f);
-
-        xs.sort(Range::compareTo);
-
-        //System.out.println(xs);
-
-        System.out.println(e.union(f));
-
-        var range = new ArrayList<Range>();
-        range.add(new Range(200, 300));
-        range.add(new Range(30, 100));
-        range.add(new Range(20, 30));
-        range.add(new Range(-10, 20));
-        System.out.println(Range.union(range));
-
-    }
-
     @Override
     public int compareTo(Range o2) {
         if (this.equals(o2)) return 0;
@@ -209,7 +210,91 @@ public record Range(int min,
         return 1;
     }
 
-    public IntStream stream(){
-        return IntStream.rangeClosed(min,max);
+    boolean contain(long s) {
+        return s >= min && s <= max;
+    }
+
+    public Range intersection(Range other) {
+        var min = Math.max(this.min, other.min);
+        var max = Math.min(this.max, other.max);
+        // Check if there is a valid intersection
+        // Return null or some special value to indicate no intersection
+        return min <= max ? new Range(min, max) : null;
+    }
+
+
+    public List<Range> intersectAndDifference(Range other) {
+        var result = new ArrayList<Range>();
+        if (this.equals(other)) result.add(other);
+        else {
+            var intersection = this.intersection(other);
+            if (intersection != null) {
+                result.add(intersection);
+                result.addAll(this.difference(intersection));
+            }
+        }
+        return result;
+
+    }
+
+
+    public List<Range> intersection(Set<Range> others) {
+        return others.stream()
+                     .map(this::intersection)
+                     .filter(Objects::nonNull)
+                     .collect(Collectors.toList());
+    }
+
+    public List<Range> difference(List<Range> others) {
+        List<Range> result = ListFun.append(new ArrayList<>(), this);
+
+        for (var other : others)
+            result = result.stream()
+                           .flatMap(current -> current.difference(other).stream())
+                           .toList();
+
+        return result;
+    }
+
+    public long length() {
+        return max - min + 1;
+    }
+
+
+    public List<Range> difference(Range other) {
+        List<Range> result = new ArrayList<>();
+
+        var min = Math.max(this.min, other.min);
+        var max = Math.min(this.max, other.max);
+
+        if (min <= max) {
+            // There is an intersection, split into two ranges
+            if (this.min < min) result.add(new Range(this.min, min - 1));
+            if (this.max > max) result.add(new Range(max + 1, this.max));
+        } else result.add(this);            // No intersection, the entire range is retained
+
+
+        return result;
+    }
+
+    public boolean contained(Range other) {
+        return this.min >= other.min && this.max <= other.max;
+    }
+
+
+    public Range translate(Range from, Range to) {
+        if (from.length() != to.length())
+            throw new IllegalArgumentException("source and target different length");
+        if (!this.contained(from)) throw new IllegalArgumentException("this not contained in source");
+        Range result = new Range(to.min + this.min - from.min,
+                                 to.max - (from.max - this.max
+                                 )
+        );
+        return result;
+    }
+
+
+    public LongStream stream() {
+        return LongStream.rangeClosed(min, max);
     }
 }

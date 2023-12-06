@@ -169,9 +169,9 @@ public final class PersistentGrid<T> implements Grid<T> {
                                                 Function<Pos, Optional<T>> gen
                                                ) {
         var acc = HashMap.<Pos, T>empty();
-        for (int i = xrange.min(); i <= xrange.max(); i++) {
-            for (int j = yrange.min(); j <= yrange.max(); j++) {
-                Pos pos = new Pos(i, j);
+        for (var i = xrange.min(); i <= xrange.max(); i++) {
+            for (var j = yrange.min(); j <= yrange.max(); j++) {
+                var pos = new Pos(i, j);
                 Optional<T> opt = gen.apply(new Pos(i, j));
                 if (opt.isPresent()) acc = acc.put(pos, opt.get());
             }

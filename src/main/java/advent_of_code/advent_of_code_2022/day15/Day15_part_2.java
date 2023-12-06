@@ -51,7 +51,7 @@ public class Day15_part_2 {
 
                               var sorted = Range.union(intervals);
 
-                              var x = 0;
+                              var x = 0L;
                               for (var interval : sorted) {
                                   if (interval.min() > x) {
                                       System.out.println("(" + x + ", " + y + ")");

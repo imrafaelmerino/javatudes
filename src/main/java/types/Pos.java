@@ -5,19 +5,26 @@ import java.util.List;
 
 public record Pos(int x, int y) {
 
+    public Pos(long i, long j) {
+        this(Math.toIntExact(i),Math.toIntExact(j));
+    }
+
     public static List<Pos> columns(Range xs, Range ys) {
         List<Pos> positions = new ArrayList<>();
-        for (int x = xs.min(); x <= xs.max(); x++)
-            for (int y = ys.min(); y <= ys.max(); y++)
-                positions.add(new Pos(x, y));
+        for (var x = xs.min(); x <= xs.max(); x++)
+            for (var y = ys.min(); y <= ys.max(); y++)
+                positions.add(new Pos(x,
+                                      y)
+                             );
         return positions;
     }
 
     public static List<Pos> rows(Range xs, Range ys) {
         List<Pos> positions = new ArrayList<>();
-        for (int y = ys.min(); y <= ys.max(); y++)
-            for (int x = xs.min(); x <= xs.max(); x++)
-                positions.add(new Pos(x, y));
+        for (var y = ys.min(); y <= ys.max(); y++)
+            for (var x = xs.min(); x <= xs.max(); x++)
+                positions.add(new Pos(x,
+                                      y));
         return positions;
     }
 

@@ -186,8 +186,8 @@ public final class MutableGrid<T> implements Grid<T> {
                                              Function<Pos, Optional<T>> gen
                                             ) {
         var acc = new HashMap<Pos, T>();
-        for (int i = xrange.min(); i <= xrange.max(); i++) {
-            for (int j = yrange.min(); j <= yrange.max(); j++) {
+        for (var i = xrange.min(); i <= xrange.max(); i++) {
+            for (var j = yrange.min(); j <= yrange.max(); j++) {
                 Pos pos = new Pos(i, j);
                 gen.apply(new Pos(i, j)).ifPresent(t -> acc.put(pos, t));
             }

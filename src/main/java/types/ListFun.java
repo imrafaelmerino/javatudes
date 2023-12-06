@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -106,6 +107,10 @@ public final class ListFun {
             }
         }
         return result;
+    }
+
+    public static List<Integer> toListOfInt(List<String> input){
+        return input.stream().map(Integer::parseInt).collect(Collectors.toList());
     }
 
     public static void main(String[] args) {
