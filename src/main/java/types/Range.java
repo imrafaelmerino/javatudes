@@ -177,7 +177,7 @@ public record Range(long min,
 
     @Override
     public String toString() {
-        return String.format("[%s,%s]", min, max);
+        return String.format("(%s,%s)", min, max);
     }
 
 
@@ -221,15 +221,12 @@ public record Range(long min,
     }
 
 
-
-
-
     public Range intersection(Range other) {
         var min = Math.max(this.min, other.min);
         var max = Math.min(this.max, other.max);
         // Check if there is a valid intersection
         // Return null or some special value to indicate no intersection
-        return min <= max ? new Range(min, max) : null;
+        return min < max ? new Range(min, max) : null;
     }
 
     public List<Range> intersection(Set<Range> others) {
@@ -254,19 +251,20 @@ public record Range(long min,
     public List<Range> difference(Range other) {
         List<Range> result = new ArrayList<>();
 
-        var min = Math.max(this.min, other.min);
-        var max = Math.min(this.max, other.max);
+        var min = Math.max(this.min,
+                           other.min);
+        var max = Math.min(this.max,
+                           other.max);
 
-        if (min <= max) {
-            // There is an intersection, split into two ranges
-            if (this.min < min) result.add(new Range(this.min, min - 1));
-            if (this.max > max) result.add(new Range(max + 1, this.max));
-        } else result.add(this);            // No intersection, the entire range is retained
-
+        if (min < max) {
+            if (this.min < min) result.add(new Range(this.min,
+                                                     min));
+            if (this.max > max) result.add(new Range(max,
+                                                     this.max));
+        } else result.add(this);
 
         return result;
     }
-
 
 
     public Range translate(long d) {

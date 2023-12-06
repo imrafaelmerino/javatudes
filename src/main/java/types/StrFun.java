@@ -85,7 +85,7 @@ public class StrFun {
         return new StringBuilder(str).reverse().toString();
     }
 
-    public static List<Integer> toListOfInt(String str){
+    public static List<Integer> toListOfInt(String str) {
         return Arrays.stream(Objects.requireNonNull(str)
                                     .trim()
                                     .split("\\s"))
@@ -94,9 +94,10 @@ public class StrFun {
     }
 
 
-
-    public static List<Long> toListOfLong(String str){
-        return Arrays.stream(Objects.requireNonNull(str).trim().split("\\s"))
+    public static List<Long> toListOfLong(String str) {
+        return Arrays.stream(Objects.requireNonNull(str)
+                                    .trim()
+                                    .split("\\s"))
                      .map(Long::parseLong)
                      .collect(Collectors.toList());
     }
