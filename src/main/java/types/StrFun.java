@@ -2,9 +2,8 @@ package types;
 
 import fun.tuple.Pair;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class StrFun {
 
@@ -86,4 +85,15 @@ public class StrFun {
         return new StringBuilder(str).reverse().toString();
     }
 
+    public static List<Integer> toListOfInt(String str){
+        return Arrays.stream(Objects.requireNonNull(str).trim().split("\\s"))
+                     .map(Integer::parseInt)
+                     .collect(Collectors.toList());
+    }
+
+    public static List<Long> toListOfLong(String str){
+        return Arrays.stream(Objects.requireNonNull(str).trim().split("\\s"))
+                     .map(Long::parseLong)
+                     .collect(Collectors.toList());
+    }
 }
