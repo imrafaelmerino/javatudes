@@ -3,7 +3,7 @@ package advent_of_code.advent_of_code_2023.day5;
 import fun.tuple.Pair;
 import types.FileParsers;
 import types.ListFun;
-import types.Range;
+import types.LongRange;
 import types.StrFun;
 
 import java.util.ArrayList;
@@ -36,15 +36,15 @@ public class Seeds {
         System.out.println(sol_1.get());
 
 
-        List<Range> sources = new ArrayList<>();
+        List<LongRange> sources = new ArrayList<>();
         for (int i = 0; i < seeds.size(); i++)
-            if (i % 2 != 0) sources.add(new Range(seeds.get(i - 1),
+            if (i % 2 != 0) sources.add(new LongRange(seeds.get(i - 1),
                                                   seeds.get(i - 1) + seeds.get(i) - 1));
 
 
-        List<Range> xs = txAllStages(sources, stages);
+        List<LongRange> xs = txAllStages(sources, stages);
         System.out.println(xs.stream()
-                             .map(Range::min)
+                             .map(LongRange::min)
                              .sorted(Long::compareTo)
                              .findFirst()
                              .get());
@@ -52,27 +52,27 @@ public class Seeds {
 
     }
 
-    private static long txAllStages(long input, List<Map<Range, Range>> txss) {
+    private static long txAllStages(long input, List<Map<LongRange, LongRange>> txss) {
         if (txss.isEmpty()) return input;
         return txAllStages(txStage(input,
                                    ListFun.head(txss)),
                            ListFun.tail(txss));
     }
 
-    private static Map<Range, Range> getBlockTxs(List<List<String>> groupsOfLines, int index) {
+    private static Map<LongRange, LongRange> getBlockTxs(List<List<String>> groupsOfLines, int index) {
         return ListFun.tail(groupsOfLines.get(index))
                       .stream()
                       .map(StrFun::toListOfLong)
-                      .collect(Collectors.toMap(ns -> new Range(ns.get(1),
+                      .collect(Collectors.toMap(ns -> new LongRange(ns.get(1),
                                                                 ns.get(1) + ns.get(2) - 1),
-                                                ns -> new Range(ns.get(0),
+                                                ns -> new LongRange(ns.get(0),
                                                                 ns.get(0) + ns.get(2) - 1)
                                                )
                               );
 
     }
 
-    private static long txStage(long input, Map<Range, Range> ranges) {
+    private static long txStage(long input, Map<LongRange, LongRange> ranges) {
         return ranges.entrySet().stream()
                      .filter(e -> e.getKey().contain(input))
                      .map(e -> input + e.getValue().min() - e.getKey().min())
@@ -80,7 +80,7 @@ public class Seeds {
                      .orElse(input);
     }
 
-    private static List<Range> txAllStages(List<Range> inputs, List<Map<Range, Range>> stages) {
+    private static List<LongRange> txAllStages(List<LongRange> inputs, List<Map<LongRange, LongRange>> stages) {
         if (stages.isEmpty()) return inputs;
         var stage = ListFun.head(stages);
         return txAllStages(txStage(inputs,
@@ -91,10 +91,10 @@ public class Seeds {
                           );
     }
 
-    private static List<Range> txStage(List<Range> inputs,
-                                       List<Range> outputs,
-                                       Map<Range, Range> stage
-                                      ) {
+    private static List<LongRange> txStage(List<LongRange> inputs,
+                                           List<LongRange> outputs,
+                                           Map<LongRange, LongRange> stage
+                                          ) {
         if (inputs.isEmpty()) return outputs;
         var input = inputs.remove(0);
         var output = stage.entrySet()

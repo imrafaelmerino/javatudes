@@ -1,7 +1,7 @@
 package advent_of_code.advent_of_code_2022.day4;
 
 import types.FileParsers;
-import types.Range;
+import types.LongRange;
 
 import java.util.List;
 
@@ -18,11 +18,11 @@ public class Solution {
                      .map(sections -> {
                               var sections1 = sections[0].split("-");
                               var sections2 = sections[1].split("-");
-                              return List.of(new Range(Integer.parseInt(sections1[0]),
-                                                       Integer.parseInt(sections1[1])
+                              return List.of(new LongRange(Integer.parseInt(sections1[0]),
+                                                           Integer.parseInt(sections1[1])
                                              ),
-                                             new Range(Integer.parseInt(sections2[0]),
-                                                       Integer.parseInt(sections2[1])
+                                             new LongRange(Integer.parseInt(sections2[0]),
+                                                           Integer.parseInt(sections2[1])
                                              )
                                             );
 
@@ -44,13 +44,13 @@ public class Solution {
 
     }
 
-    private static boolean isFullyOverlap(Range a, Range b) {
+    private static boolean isFullyOverlap(LongRange a, LongRange b) {
         if (a.min() > b.min()) return a.max() <= b.max();
         if (a.min() == b.min()) return true;
         return b.max() <= a.max();
     }
 
-    private static boolean isOverlapAtAll(Range a, Range b) {
+    private static boolean isOverlapAtAll(LongRange a, LongRange b) {
         return !((a.min() < b.min() && a.max() < b.min()) ||
                  a.max() > b.max() && a.min() > b.max());
     }

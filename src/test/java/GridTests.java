@@ -94,9 +94,9 @@ public class GridTests {
     @Test
     public void merge() {
 
-        PersistentGrid.fromGen(new Range(0, 2), new Range(0, 2), pos -> Optional.of(1))
-                      .merge(PersistentGrid.fromGen(new Range(0, 2),
-                                                    new Range(3, 5),
+        PersistentGrid.fromGen(new LongRange(0, 2), new LongRange(0, 2), pos -> Optional.of(1))
+                      .merge(PersistentGrid.fromGen(new LongRange(0, 2),
+                                                    new LongRange(3, 5),
                                                     e -> Optional.of(2)
                                                    )
                             )

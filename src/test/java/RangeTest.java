@@ -6,7 +6,7 @@ import jio.test.pbt.TestFailure;
 import jio.test.pbt.TestResult;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import types.Range;
+import types.LongRange;
 
 import java.util.List;
 
@@ -16,29 +16,29 @@ public class RangeTest {
     public void test_Difference_Intervals() {
 
 
-        Assertions.assertEquals(List.of(new Range(62, 69)),
-                                new Range(61, 69).difference(new Range(61, 61)));
-        Assertions.assertEquals(List.of(new Range(61, 68)),
-                                new Range(61, 69).difference(new Range(69, 69)));
+        Assertions.assertEquals(List.of(new LongRange(62, 69)),
+                                new LongRange(61, 69).difference(new LongRange(61, 61)));
+        Assertions.assertEquals(List.of(new LongRange(61, 68)),
+                                new LongRange(61, 69).difference(new LongRange(69, 69)));
 
-        Assertions.assertEquals(List.of(new Range(1,2)),
-                                new Range(1,4).difference(new Range(3,4)));
-        Assertions.assertEquals(List.of(new Range(3,4)),
-                                new Range(1,4).difference(new Range(1,2)));
+        Assertions.assertEquals(List.of(new LongRange(1, 2)),
+                                new LongRange(1, 4).difference(new LongRange(3, 4)));
+        Assertions.assertEquals(List.of(new LongRange(3, 4)),
+                                new LongRange(1, 4).difference(new LongRange(1, 2)));
 
         Assertions.assertEquals(List.of(),
-                                new Range(1,2).difference(new Range(1,2)));
+                                new LongRange(1, 2).difference(new LongRange(1, 2)));
     }
 
     @Test
     public void test_Overlap_Intersection() {
 
-        Gen<Range> rangeGen =
+        Gen<LongRange> rangeGen =
                 PairGen.of(IntGen.arbitrary(0, 10),
                            IntGen.arbitrary(0, 10)
                           )
                        .suchThat(p -> p.first() <= p.second())
-                       .map(p -> new Range(p.first(), p.second()));
+                       .map(p -> new LongRange(p.first(), p.second()));
 
 
         var builder = PropBuilder.of("intersection must be coherent with overlap",

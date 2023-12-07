@@ -5,29 +5,6 @@ import java.util.List;
 
 public record Pos(int x, int y) {
 
-    public Pos(long i, long j) {
-        this(Math.toIntExact(i),Math.toIntExact(j));
-    }
-
-    public static List<Pos> columns(Range xs, Range ys) {
-        List<Pos> positions = new ArrayList<>();
-        for (var x = xs.min(); x <= xs.max(); x++)
-            for (var y = ys.min(); y <= ys.max(); y++)
-                positions.add(new Pos(x,
-                                      y)
-                             );
-        return positions;
-    }
-
-    public static List<Pos> rows(Range xs, Range ys) {
-        List<Pos> positions = new ArrayList<>();
-        for (var y = ys.min(); y <= ys.max(); y++)
-            for (var x = xs.min(); x <= xs.max(); x++)
-                positions.add(new Pos(x,
-                                      y));
-        return positions;
-    }
-
     /**
      * todo poner examples
      *
@@ -37,6 +14,92 @@ public record Pos(int x, int y) {
      */
     public static List<Pos> line(Pos start, Pos end) {
         return line(start, end, new ArrayList<>());
+    }
+
+    /**
+     * Returns the cartesian product of the given ranges xs and ys:
+     * <pre>
+     *
+     *     xs = (0,2)
+     *     ys = (0,3)
+     *
+     *     p00  p10  p20
+     *     p01  p11  p21
+     *     p02  p12  p22
+     *     p03  p13  p33
+     *
+     *     result = [ p00, p01, p02, p03, p10, p11, p12, p13, p20, p21, p22, p33]
+     *
+     *
+     * </pre>
+     *
+     * @param xs x range
+     * @param ys y range
+     * @return a list of positions
+     */
+    public static List<Pos> columns(IntRange xs, IntRange ys) {
+        List<Pos> positions = new ArrayList<>();
+        for (var x = xs.min(); x <= xs.max(); x++)
+            for (var y = ys.min(); y <= ys.max(); y++)
+                positions.add(new Pos(x,
+                                      y)
+                             );
+        return positions;
+    }
+
+    /**
+     * Returns the cartesian product of the given ranges xs and ys:
+     * <pre>
+     *
+     *     xs = (0,2)
+     *     ys = (0,2)
+     *
+     *     p00  p10  p20
+     *     p01  p11  p21
+     *     p02  p12  p22
+     *
+     *     result = [ p00, p10, p20, p01, p11, p21, p02, p12, p22]
+     *
+     *
+     * </pre>
+     *
+     * @param xs x range
+     * @param ys y range
+     * @return a list of positions
+     */
+    public static List<Pos> rows(IntRange xs,
+                                 IntRange ys
+                                ) {
+        List<Pos> positions = new ArrayList<>();
+        for (var y = ys.min(); y <= ys.max(); y++)
+            for (var x = xs.min(); x <= xs.max(); x++)
+                positions.add(new Pos(x, y));
+        return positions;
+    }
+
+
+    /**
+     * Returns the cartesian product of the given ranges xs and ys.
+     *
+     * @param xs x range
+     * @param ys y range
+     * @return a set of positions
+     * <p>
+     * Example:
+     * <pre>
+     *     Range xs = new Range(0, 2);
+     *     Range ys = new Range(0, 2);
+     *     List<Pos> result = Range.cartesian_product(xs, ys);
+     * </pre>
+     * @see #rows(IntRange, IntRange) to return the positions arranged in rows ( → ): 00 10 20 01 11 21 02 12 22
+     * @see #rows(IntRange, IntRange) to return the positions arranged in columns ( ↓ ) : 00 01 02 10 11 12 20 21 22
+     */
+    public static List<Pos> cartesian_product(IntRange xs, IntRange ys) {
+        List<Pos> positions = new ArrayList<>();
+        for (var y = ys.min(); y <= ys.max(); y++)
+            for (var x = xs.min(); x <= xs.max(); x++)
+                positions.add(new Pos(x, y));
+        return positions;
     }
 
     static List<Pos> line(Pos start, Pos end, List<Pos> result) {
@@ -90,24 +153,22 @@ public record Pos(int x, int y) {
     }
 
     public List<Pos> getNeighbors() {
-        return List.of(
-                right(),
-                left(),
-                down(),
-                up(),
-                up().left(),
-                up().right(),
-                down().left(),
-                down().right()
+        return List.of(right(),
+                       left(),
+                       down(),
+                       up(),
+                       up().left(),
+                       up().right(),
+                       down().left(),
+                       down().right()
                       );
     }
 
     public List<Pos> neighborsVH() {
-        return List.of(
-                right(),
-                left(),
-                down(),
-                up()
+        return List.of(right(),
+                       left(),
+                       down(),
+                       up()
                       );
     }
 

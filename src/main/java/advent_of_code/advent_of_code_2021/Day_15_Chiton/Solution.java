@@ -55,8 +55,8 @@ public class Solution {
                                         .mapValues((pos, v) -> Integer.parseInt(v));
 
 
-        List<Pos> centers = Pos.rows(new Range(0, 4),
-                                     new Range(0, 4)
+        List<Pos> centers = Pos.rows(new IntRange(0, 4),
+                                     new IntRange(0, 4)
                                     );
 
         tile.printRows();
@@ -91,8 +91,8 @@ public class Solution {
         grid.color(
                     ControlChar.RED,
                     (pos, val) -> pathCost.path()
-                                        .states()
-                                        .contains(pos)
+                                          .states()
+                                          .contains(pos)
                   )
             .printRows();
 

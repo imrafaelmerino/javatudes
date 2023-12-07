@@ -2,7 +2,7 @@ package advent_of_code.advent_of_code_2022.day15;
 
 import types.FileParsers;
 import types.Pos;
-import types.Range;
+import types.LongRange;
 
 import java.math.BigInteger;
 import java.util.stream.Collectors;
@@ -49,7 +49,7 @@ public class Day15_part_2 {
                                                      .map(sensor -> getXInterval(sensor, y))
                                                      .collect(Collectors.toList());
 
-                              var sorted = Range.union(intervals);
+                              var sorted = LongRange.union(intervals);
 
                               var x = 0L;
                               for (var interval : sorted) {
@@ -70,12 +70,12 @@ public class Day15_part_2 {
 
     }
 
-    static Range getXInterval(Sensor sensor,
-                              int y
-                             ) {
+    static LongRange getXInterval(Sensor sensor,
+                                  int y
+                                 ) {
         var wide = sensor.d - Math.abs(sensor.loc.y() - y);
 
-        return new Range(sensor.loc.x() - wide,
+        return new LongRange(sensor.loc.x() - wide,
                          sensor.loc.x() + wide
         );
     }
