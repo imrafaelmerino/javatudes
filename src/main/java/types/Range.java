@@ -4,6 +4,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * Represents a closed range between min and max
  *
@@ -69,12 +71,13 @@ public record Range(long min,
      * @param ys y range
      * @return a list of positions
      */
-    public static List<Pos> rows(Range xs, Range ys) {
+    public static List<Pos> rows(Range xs,
+                                 Range ys
+                                ) {
         List<Pos> positions = new ArrayList<>();
         for (var y = ys.min(); y <= ys.max(); y++)
             for (var x = xs.min(); x <= xs.max(); x++)
-                positions.add(new Pos(x,
-                                      y));
+                positions.add(new Pos(x, y));
         return positions;
     }
 
@@ -115,27 +118,6 @@ public record Range(long min,
 
     }
 
-    public static void main(String[] args) {
-        var xs = new ArrayList<Range>();
-        var e = new Range(20, 100);
-        xs.add(e);
-        var f = new Range(100, 200);
-        xs.add(f);
-
-        xs.sort(Range::compareTo);
-
-        //System.out.println(xs);
-
-        System.out.println(e.union(f));
-
-        var range = new ArrayList<Range>();
-        range.add(new Range(200, 300));
-        range.add(new Range(30, 100));
-        range.add(new Range(20, 30));
-        range.add(new Range(-10, 20));
-        System.out.println(Range.union(range));
-
-    }
 
     /**
      * Returns true if the given range is contained in this one
@@ -144,8 +126,8 @@ public record Range(long min,
      * @return true if the given range is contained
      */
     public boolean contain(final Range other) {
-
-        return min <= Objects.requireNonNull(other).min && max >= other.max;
+        return min <= requireNonNull(other).min
+               && max >= other.max;
     }
 
     public boolean contain(final long s) {
@@ -224,9 +206,7 @@ public record Range(long min,
     public Range intersection(Range other) {
         var min = Math.max(this.min, other.min);
         var max = Math.min(this.max, other.max);
-        // Check if there is a valid intersection
-        // Return null or some special value to indicate no intersection
-        return min < max ? new Range(min, max) : null;
+        return min <= max ? new Range(min, max) : null;
     }
 
     public List<Range> intersection(Set<Range> others) {
@@ -257,10 +237,10 @@ public record Range(long min,
                            other.max);
 
         if (min < max) {
-            if (this.min < min) result.add(new Range(this.min,
-                                                     min));
-            if (this.max > max) result.add(new Range(max,
-                                                     this.max));
+            if (this.min < min)
+                result.add(new Range(this.min, min));
+            if (this.max > max)
+                result.add(new Range(max, this.max));
         } else result.add(this);
 
         return result;

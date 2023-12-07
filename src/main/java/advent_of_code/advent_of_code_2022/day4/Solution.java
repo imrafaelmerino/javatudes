@@ -3,10 +3,6 @@ package advent_of_code.advent_of_code_2022.day4;
 import types.FileParsers;
 import types.Range;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.List;
 
 public class Solution {
@@ -38,7 +34,8 @@ public class Solution {
                          Range r2 = ranges.get(1);
                          return r1.contain(r2) || r2.contain(r1);
                      })*/
-                     .filter(ranges -> ranges.get(0).overlap(ranges.get(1)))
+                     .filter(ranges -> ranges.get(0)
+                                             .intersection(ranges.get(1)) != null)
                      .peek(System.out::println)
                      .count();
 
@@ -55,6 +52,6 @@ public class Solution {
 
     private static boolean isOverlapAtAll(Range a, Range b) {
         return !((a.min() < b.min() && a.max() < b.min()) ||
-                a.max() > b.max() && a.min() > b.max());
+                 a.max() > b.max() && a.min() > b.max());
     }
 }
