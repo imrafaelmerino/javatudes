@@ -16,7 +16,7 @@ public class Seeds {
 
     public static void main(String[] args) {
 
-        var path = "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code/advent_of_code_2023/day5/input_test.txt";
+        var path = "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code/advent_of_code_2023/day5/input.txt";
 
         List<List<String>> groupsOfLines = FileParsers.toGroupsOfLines(path);
         var seeds = StrFun.toListOfLong(groupsOfLines.get(0)
@@ -41,6 +41,7 @@ public class Seeds {
             if (i % 2 != 0) sources.add(new Range(seeds.get(i - 1),
                                                   seeds.get(i - 1) + seeds.get(i) - 1));
 
+
         List<Range> xs = txAllStages(sources, stages);
         System.out.println(xs.stream()
                              .map(Range::min)
@@ -63,9 +64,9 @@ public class Seeds {
                       .stream()
                       .map(StrFun::toListOfLong)
                       .collect(Collectors.toMap(ns -> new Range(ns.get(1),
-                                                                ns.get(1) + ns.get(2)),
+                                                                ns.get(1) + ns.get(2) - 1),
                                                 ns -> new Range(ns.get(0),
-                                                                ns.get(0) + ns.get(2))
+                                                                ns.get(0) + ns.get(2) - 1)
                                                )
                               );
 
@@ -94,7 +95,6 @@ public class Seeds {
                                        List<Range> outputs,
                                        Map<Range, Range> stage
                                       ) {
-        System.out.println(inputs);
         if (inputs.isEmpty()) return outputs;
         var input = inputs.remove(0);
         var output = stage.entrySet()
@@ -117,7 +117,8 @@ public class Seeds {
                         stage) :
                 txStage(ListFun.appendAll(inputs,
                                           input.difference(output.second())),
-                        ListFun.append(outputs, output.second().translate(output.first())),
+                        ListFun.append(outputs, output.second()
+                                                      .translate(output.first())),
                         stage);
 
     }

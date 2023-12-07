@@ -17,7 +17,7 @@ public record Range(long min,
 ) implements Comparable<Range> {
     public Range {
         if (max < min)
-            throw new IllegalArgumentException("max < min");
+            throw new IllegalArgumentException("max (%s) < min (%s)".formatted(max, min));
     }
 
 
@@ -126,8 +126,7 @@ public record Range(long min,
      * @return true if the given range is contained
      */
     public boolean contain(final Range other) {
-        return min <= requireNonNull(other).min
-               && max >= other.max;
+        return min <= requireNonNull(other).min && max >= other.max;
     }
 
     public boolean contain(final long s) {
@@ -206,7 +205,8 @@ public record Range(long min,
     public Range intersection(Range other) {
         var min = Math.max(this.min, other.min);
         var max = Math.min(this.max, other.max);
-        return min <= max ? new Range(min, max) : null;
+        var result = min <= max ? new Range(min, max) : null;
+        return result;
     }
 
     public List<Range> intersection(Set<Range> others) {
@@ -230,6 +230,7 @@ public record Range(long min,
 
     public List<Range> difference(Range other) {
         List<Range> result = new ArrayList<>();
+        if (other.equals(this)) return result;
 
         var min = Math.max(this.min,
                            other.min);
@@ -238,10 +239,16 @@ public record Range(long min,
 
         if (min < max) {
             if (this.min < min)
-                result.add(new Range(this.min, min));
+                result.add(new Range(this.min, min - 1));
             if (this.max > max)
-                result.add(new Range(max, this.max));
+                result.add(new Range(max + 1, this.max));
+
+        } else if (min == max) {
+            // Case when min is equal to max (single point)
+            if (min == this.min) result.add(new Range(min + 1, this.max));
+            else if (max == this.max) result.add(new Range(this.min, max - 1));
         } else result.add(this);
+
 
         return result;
     }

@@ -27,7 +27,8 @@ public class CamelCard {
     // in the second part the J has the lowest strength to break the ties
     static Comparator<Hand> getHandComparator(List<Character> CARDS) {
         return (hand1, hand2) -> {
-            var n = Integer.compare(hand1.rank, hand2.rank);
+            var n = Integer.compare(hand1.rank,
+                                    hand2.rank);
             return n == 0 ? breakTie(hand1.cards,
                                      hand2.cards,
                                      CARDS
