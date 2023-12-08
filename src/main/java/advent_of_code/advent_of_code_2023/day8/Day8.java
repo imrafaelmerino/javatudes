@@ -85,8 +85,8 @@ public class Day8 {
         while (cycles.size() != starts.size()) {
             for (var in : instructions) {
                 steps += 1;
-                List<Node> ends = new ArrayList<>();
-                for (Node start : starts) {
+                var ends = new ArrayList<Node>();
+                for (var start : starts) {
                     var xs = network.get(start.name);
                     var end = in.equals("L") ? xs.first() : xs.second();
                     ends.add(end);
