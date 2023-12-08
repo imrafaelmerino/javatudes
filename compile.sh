@@ -15,13 +15,12 @@ OUTPUT="$DIR/classes"
 
 SOURCE="$DIR/src/main/java"
 
-mkdir -p $OUTPUT | (rm -r $OUTPUT/* & echo "")
+LIB_DIR="$DIR/libs"
 
-javac -d $OUTPUT \
-$SOURCE/types/*.java \
-$SOURCE/etudes/*.java \
-$SOURCE/search/*.java \
-$SOURCE/advent_of_code_2021/Day_15_Chiton/*.java
+mkdir -p $OUTPUT | (rm -r $OUTPUT/* && echo "")
+
+find $SOURCE/. -name "*.java" -print | xargs javac -cp "$LIB_DIR/*" -d $OUTPUT
+
 }
 
 main "$@"

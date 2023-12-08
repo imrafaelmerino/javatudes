@@ -1,9 +1,9 @@
-package advent_of_code.advent_of_code_2023.day1;
+package advent_of_code._2023.day1;
 
+import advent_of_code.Puzzle;
 import types.ListFun;
 import types.StrFun;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -12,22 +12,7 @@ import java.util.stream.IntStream;
 
 import static types.Constants.WORD_REPRESENTATIONS_FOR_DIGITS;
 
-public class Trebuchet {
-
-
-    public static void main(String[] args) throws IOException {
-
-        var path = "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code/advent_of_code_2023/day1/input.txt";
-
-        var solution = Files.readAllLines(Path.of(path))
-                            .stream()
-                            .map(Trebuchet::getNumberPart2)
-                            .reduce(0, Integer::sum);
-
-        System.out.println(solution);
-
-
-    }
+public final class Trebuchet implements Puzzle {
 
 
     /**
@@ -91,6 +76,38 @@ public class Trebuchet {
                                                  digits);
 
 
+    }
+
+
+    @Override
+    public Object solveFirst() throws Exception {
+        return Files.readAllLines(Path.of(getInputPath()))
+                    .stream()
+                    .map(Trebuchet::getNumberPart2)
+                    .reduce(0, Integer::sum);
+    }
+
+    @Override
+    public Object solveSecond() throws Exception{
+        return Files.readAllLines(Path.of(getInputPath()))
+                    .stream()
+                    .map(Trebuchet::getNumberPart1)
+                    .reduce(0, Integer::sum);
+    }
+
+    @Override
+    public String name() {
+        return "Trebuchet";
+    }
+
+    @Override
+    public int day() {
+        return 1;
+    }
+
+    @Override
+    public String getInputPath() {
+        return "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code/_2023/day1/input.txt";
     }
 
 

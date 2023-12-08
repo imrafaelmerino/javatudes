@@ -1,4 +1,4 @@
-package advent_of_code.advent_of_code_2023.day4;
+package advent_of_code._2023.day4;
 
 import types.FileParsers;
 

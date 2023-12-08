@@ -124,6 +124,14 @@ public class FileParsers {
             throw new UncheckedIOException(e);
         }
     }
+
+    public static String read(String path) {
+        try {
+            return Files.readString(Path.of(path));
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
+    }
 }
 
 
