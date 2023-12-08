@@ -1,6 +1,6 @@
 package advent_of_code._2023.day4;
 
-import advent_of_code.Puzzle;
+import advent_of_code._2023._2023_Puzzle;
 import types.FileParsers;
 
 import java.util.Arrays;
@@ -10,7 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-public final class ScratchCards implements Puzzle {
+public final class ScratchCards implements _2023_Puzzle {
 
     static final Pattern LINE =
             Pattern.compile("Card\\s+(?<id>\\d+): (?<winning>[\\s\\d]+) \\| (?<numbers>[\\s\\d]+)");
@@ -102,11 +102,6 @@ public final class ScratchCards implements Puzzle {
     @Override
     public int day() {
         return 4;
-    }
-
-    @Override
-    public String getInputPath() {
-        return "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code/_2023/day4/input.txt";
     }
 
     @Override

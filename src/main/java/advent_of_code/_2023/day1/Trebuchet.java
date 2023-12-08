@@ -1,6 +1,6 @@
 package advent_of_code._2023.day1;
 
-import advent_of_code.Puzzle;
+import advent_of_code._2023._2023_Puzzle;
 import types.ListFun;
 import types.StrFun;
 
@@ -12,7 +12,7 @@ import java.util.stream.IntStream;
 
 import static types.Constants.WORD_REPRESENTATIONS_FOR_DIGITS;
 
-public final class Trebuchet implements Puzzle {
+public final class Trebuchet implements _2023_Puzzle {
 
 
     /**
@@ -88,7 +88,7 @@ public final class Trebuchet implements Puzzle {
     }
 
     @Override
-    public Object solveSecond() throws Exception{
+    public Object solveSecond() throws Exception {
         return Files.readAllLines(Path.of(getInputPath()))
                     .stream()
                     .map(Trebuchet::getNumberPart1)
@@ -105,10 +105,6 @@ public final class Trebuchet implements Puzzle {
         return 1;
     }
 
-    @Override
-    public String getInputPath() {
-        return "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code/_2023/day1/input.txt";
-    }
 
     @Override
     public String outputUnitsPart1() {

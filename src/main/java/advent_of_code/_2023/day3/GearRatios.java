@@ -1,6 +1,7 @@
 package advent_of_code._2023.day3;
 
-import advent_of_code.Puzzle;
+
+import advent_of_code._2023._2023_Puzzle;
 import types.*;
 
 import java.util.ArrayList;
@@ -8,7 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public final class GearRatios implements Puzzle {
+public final class GearRatios implements _2023_Puzzle {
 
     private static List<Integer> getAdjacentEngineParts(Grid<String> grid, Pos pos) {
         List<Integer> gears = new ArrayList<>();
@@ -155,7 +156,7 @@ public final class GearRatios implements Puzzle {
     }
 
     @Override
-    public Object solveSecond()  {
+    public Object solveSecond() {
         var grid = MutableGrid.fromFile(getInputPath());
 
         return grid.find((pos, val) -> val.equals("*"))
@@ -177,10 +178,9 @@ public final class GearRatios implements Puzzle {
         return 3;
     }
 
-    @Override
-    public String getInputPath() {
-        return "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code/_2023/day3/input.txt";
-    }
+
+
+
 
     @Override
     public String outputUnitsPart1() {

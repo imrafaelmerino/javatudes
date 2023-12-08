@@ -1,6 +1,7 @@
 package advent_of_code._2023.day7;
 
 import advent_of_code.Puzzle;
+import advent_of_code._2023._2023_Puzzle;
 import types.FileParsers;
 
 import java.util.Arrays;
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public final class CamelCard implements Puzzle {
+public final class CamelCard implements _2023_Puzzle {
 
 
     private static int breakTie(String cards1, String cards2, List<Character> cards) {
@@ -139,10 +140,6 @@ public final class CamelCard implements Puzzle {
         return 7;
     }
 
-    @Override
-    public String getInputPath() {
-        return "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code/_2023/day7/input.txt";
-    }
 
     @Override
     public String outputUnitsPart1() {

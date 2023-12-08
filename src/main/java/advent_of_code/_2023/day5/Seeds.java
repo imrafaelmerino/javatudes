@@ -1,6 +1,6 @@
 package advent_of_code._2023.day5;
 
-import advent_of_code.Puzzle;
+import advent_of_code._2023._2023_Puzzle;
 import fun.tuple.Pair;
 import types.FileParsers;
 import types.ListFun;
@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public final class Seeds implements Puzzle {
+public final class Seeds implements _2023_Puzzle {
 
 
     private static long txAllStages(long input, List<Map<LongRange, LongRange>> txss) {
@@ -144,11 +144,6 @@ public final class Seeds implements Puzzle {
     @Override
     public int day() {
         return 5;
-    }
-
-    @Override
-    public String getInputPath() {
-        return "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code/_2023/day5/input.txt";
     }
 
     @Override

@@ -1,8 +1,8 @@
 package advent_of_code._2023.day9;
 
-import advent_of_code.Puzzle;
+import advent_of_code._2023._2023_Puzzle;
 
-public final class Day9 implements Puzzle {
+public final class Day9 implements _2023_Puzzle {
     @Override
     public Object solveFirst() throws Exception {
         return null;
@@ -23,10 +23,6 @@ public final class Day9 implements Puzzle {
         return 9;
     }
 
-    @Override
-    public String getInputPath() {
-        return "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code/_2023/day9/input.txt";
-    }
 
     @Override
     public String outputUnitsPart1() {

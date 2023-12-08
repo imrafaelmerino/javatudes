@@ -2,6 +2,7 @@ package advent_of_code._2023.day2;
 
 
 import advent_of_code.Puzzle;
+import advent_of_code._2023._2023_Puzzle;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public final class CubeConundrum implements Puzzle {
+public final class CubeConundrum implements _2023_Puzzle {
     static Map<String, Integer> BAG =
             Map.of("blue", 14,
                    "green", 13,
@@ -103,11 +104,6 @@ public final class CubeConundrum implements Puzzle {
     @Override
     public int day() {
         return 2;
-    }
-
-    @Override
-    public String getInputPath() {
-        return "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code/_2023/day2/input.txt";
     }
 
     @Override

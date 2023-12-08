@@ -1,6 +1,7 @@
 package advent_of_code._2023.day6;
 
 import advent_of_code.Puzzle;
+import advent_of_code._2023._2023_Puzzle;
 import types.FileParsers;
 
 import java.util.Arrays;
@@ -11,7 +12,7 @@ import java.util.stream.LongStream;
 import static types.ListFun.tail;
 import static types.ListFun.toListOfInt;
 
-public final class WaitForIt implements Puzzle {
+public final class WaitForIt implements _2023_Puzzle {
 
 
     private static long allWins(long raceTime, long recordDistance) {
@@ -73,10 +74,6 @@ public final class WaitForIt implements Puzzle {
         return 6;
     }
 
-    @Override
-    public String getInputPath() {
-        return "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code/_2023/day6/input.txt";
-    }
 
     @Override
     public String outputUnitsPart1() {

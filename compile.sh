@@ -17,7 +17,7 @@ SOURCE="$DIR/src/main/java"
 
 LIB_DIR="$DIR/libs"
 
-mkdir -p $OUTPUT | (rm -r $OUTPUT/* && echo "")
+mkdir -p $OUTPUT | (rm -r $OUTPUT/* & echo "")
 
 find $SOURCE/. -name "*.java" -print | xargs javac -cp "$LIB_DIR/*" -d $OUTPUT
 

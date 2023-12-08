@@ -1,6 +1,7 @@
 package advent_of_code._2023.day8;
 
 import advent_of_code.Puzzle;
+import advent_of_code._2023._2023_Puzzle;
 import fun.tuple.Pair;
 import types.FileParsers;
 import types.MathFun;
@@ -8,7 +9,7 @@ import types.MathFun;
 import java.util.*;
 import java.util.regex.Pattern;
 
-public final class HauntedWasteland implements Puzzle {
+public final class HauntedWasteland implements _2023_Puzzle {
 
 
     private static List<String> getInstructions(String line) {
@@ -109,10 +110,6 @@ public final class HauntedWasteland implements Puzzle {
         return 8;
     }
 
-    @Override
-    public String getInputPath() {
-        return "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code/_2023/day8/input.txt";
-    }
 
     @Override
     public String outputUnitsPart1() {
