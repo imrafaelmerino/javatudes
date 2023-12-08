@@ -1,5 +1,6 @@
 package advent_of_code._2023.day8;
 
+import advent_of_code.Puzzle;
 import fun.tuple.Pair;
 import types.FileParsers;
 import types.MathFun;
@@ -7,21 +8,17 @@ import types.MathFun;
 import java.util.*;
 import java.util.regex.Pattern;
 
-public class Day8 {
+public final class HauntedWasteland implements Puzzle {
 
 
-    public static void main(String[] args) {
+    private static List<String> getInstructions(String line) {
+        return Arrays.stream(line.split("")).toList();
+    }
 
-        var input = "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code/advent_of_code_2023/day8/input.txt";
-
-        var groups = FileParsers.toGroupsOfLines(input);
-
-        List<String> instructions = Arrays.stream(groups.get(0).get(0).split("")).toList();
-
+    private static List<Node> getNodes(List<String> lines) {
         var regex = Pattern.compile("^(?<name>[A-Z]{3}) += +\\((?<left>[A-Z]{3}), (?<right>[A-Z]{3})\\)$");
-        var network = new HashMap<String, Pair<Node, Node>>();
         var nodes = new ArrayList<Node>();
-        for (var line : groups.get(1)) {
+        for (var line : lines) {
             var matcher = regex.matcher(line);
             if (matcher.matches()) {
                 var node = new Node(matcher.group("name"),
@@ -30,6 +27,11 @@ public class Day8 {
                 nodes.add(node);
             }
         }
+        return nodes;
+    }
+
+    private static Map<String, Pair<Node, Node>> getNetwork(List<Node> nodes) {
+        var network = new HashMap<String, Pair<Node, Node>>();
         for (var node : nodes) {
             network.put(node.name,
                         Pair.of(nodes.stream().filter(n -> n.name.equals(node.left)).findFirst().get(),
@@ -37,24 +39,21 @@ public class Day8 {
                                )
                        );
         }
-
-        System.out.println(part1(network,
-                                 nodes,
-                                 instructions)
-                          );
-        System.out.println(part2(network,
-                                 nodes,
-                                 instructions)
-                          );
-
-
+        return network;
     }
 
-    private static String part1(Map<String, Pair<Node, Node>> network,
-                                List<Node> nodes,
-                                List<String> instructions
-                               ) {
-        var start = nodes.stream().filter(n -> n.name.equals("AAA")).findFirst().get();
+    @Override
+    public Object solveFirst() throws Exception {
+        var groups = FileParsers.toGroupsOfLines(getInputPath());
+        var instructions = getInstructions(groups.get(0).get(0));
+        var nodes = getNodes(groups.get(1));
+        var network = getNetwork(nodes);
+
+
+        var start = nodes.stream()
+                         .filter(n -> n.name.equals("AAA"))
+                         .findFirst()
+                         .get();
         var steps = 0;
         var end = start;
         while (!end.name.equals("ZZZ")) {
@@ -65,16 +64,16 @@ public class Day8 {
                 start = end;
             }
         }
-        return steps + "";
+        return steps;
+
     }
 
-    /**
-     * input is cooked, no way to brute force this.
-     */
-    private static String part2(Map<String, Pair<Node, Node>> network,
-                                List<Node> nodes,
-                                List<String> instructions
-                               ) {
+    @Override
+    public Object solveSecond() throws Exception {
+        var groups = FileParsers.toGroupsOfLines(getInputPath());
+        var instructions = getInstructions(groups.get(0).get(0));
+        var nodes = getNodes(groups.get(1));
+        var network = getNetwork(nodes);
 
         var starts = nodes.stream()
                           .filter(n -> n.name.endsWith("A"))
@@ -97,8 +96,32 @@ public class Day8 {
             }
         }
 
-        return MathFun.lcm(cycles.values()).toString();
+        return MathFun.lcm(cycles.values());
+    }
 
+    @Override
+    public String name() {
+        return "Haunted Wasteland";
+    }
+
+    @Override
+    public int day() {
+        return 8;
+    }
+
+    @Override
+    public String getInputPath() {
+        return "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code/_2023/day8/input.txt";
+    }
+
+    @Override
+    public String outputUnitsPart1() {
+        return "steps";
+    }
+
+    @Override
+    public String outputUnitsPart2() {
+        return outputUnitsPart1();
     }
 
     record Node(String name, String left, String right) {

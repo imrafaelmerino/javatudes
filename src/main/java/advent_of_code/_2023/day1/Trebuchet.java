@@ -97,7 +97,7 @@ public final class Trebuchet implements Puzzle {
 
     @Override
     public String name() {
-        return "Trebuchet";
+        return "Trebuchet?!";
     }
 
     @Override
@@ -111,8 +111,13 @@ public final class Trebuchet implements Puzzle {
     }
 
     @Override
-    public String outputUnits() {
+    public String outputUnitsPart1() {
         return "calibration values";
+    }
+
+    @Override
+    public String outputUnitsPart2() {
+        return outputUnitsPart1();
     }
 
 

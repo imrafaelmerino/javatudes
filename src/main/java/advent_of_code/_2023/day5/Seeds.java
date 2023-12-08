@@ -1,5 +1,6 @@
 package advent_of_code._2023.day5;
 
+import advent_of_code.Puzzle;
 import fun.tuple.Pair;
 import types.FileParsers;
 import types.ListFun;
@@ -12,45 +13,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class Seeds {
+public final class Seeds implements Puzzle {
 
-    public static void main(String[] args) {
-
-        var path = "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code/advent_of_code_2023/day5/input.txt";
-
-        List<List<String>> groupsOfLines = FileParsers.toGroupsOfLines(path);
-        var seeds = StrFun.parseSpacedLongs(groupsOfLines.get(0)
-                                                         .get(0)
-                                                         .split(":")[1]
-                                           );
-
-        var stages = IntStream.rangeClosed(1, 7)
-                              .mapToObj(n -> getBlockTxs(groupsOfLines, n))
-                              .toList();
-
-
-        var sol_1 = seeds.stream()
-                         .map(seed -> txAllStages(seed, stages))
-                         .min(Long::compareTo);
-
-        System.out.println(sol_1.get());
-
-
-        List<LongRange> sources = new ArrayList<>();
-        for (int i = 0; i < seeds.size(); i++)
-            if (i % 2 != 0) sources.add(new LongRange(seeds.get(i - 1),
-                                                  seeds.get(i - 1) + seeds.get(i) - 1));
-
-
-        List<LongRange> xs = txAllStages(sources, stages);
-        System.out.println(xs.stream()
-                             .map(LongRange::min)
-                             .sorted(Long::compareTo)
-                             .findFirst()
-                             .get());
-
-
-    }
 
     private static long txAllStages(long input, List<Map<LongRange, LongRange>> txss) {
         if (txss.isEmpty()) return input;
@@ -64,9 +28,9 @@ public class Seeds {
                       .stream()
                       .map(StrFun::parseSpacedLongs)
                       .collect(Collectors.toMap(ns -> new LongRange(ns.get(1),
-                                                                ns.get(1) + ns.get(2) - 1),
+                                                                    ns.get(1) + ns.get(2) - 1),
                                                 ns -> new LongRange(ns.get(0),
-                                                                ns.get(0) + ns.get(2) - 1)
+                                                                    ns.get(0) + ns.get(2) - 1)
                                                )
                               );
 
@@ -124,4 +88,76 @@ public class Seeds {
     }
 
 
+    @Override
+    public Object solveFirst() {
+
+        List<List<String>> groupsOfLines = FileParsers.toGroupsOfLines(getInputPath());
+        var seeds = StrFun.parseSpacedLongs(groupsOfLines.get(0)
+                                                         .get(0)
+                                                         .split(":")[1]
+                                           );
+
+        var stages = IntStream.rangeClosed(1, 7)
+                              .mapToObj(n -> getBlockTxs(groupsOfLines, n))
+                              .toList();
+
+
+        return seeds.stream()
+                    .map(seed -> txAllStages(seed, stages))
+                    .min(Long::compareTo)
+                    .orElse(0L);
+
+    }
+
+    @Override
+    public Object solveSecond() {
+        List<List<String>> groupsOfLines = FileParsers.toGroupsOfLines(getInputPath());
+        var seeds = StrFun.parseSpacedLongs(groupsOfLines.get(0)
+                                                         .get(0)
+                                                         .split(":")[1]
+                                           );
+
+        var stages = IntStream.rangeClosed(1, 7)
+                              .mapToObj(n -> getBlockTxs(groupsOfLines, n))
+                              .toList();
+
+
+        List<LongRange> sources = new ArrayList<>();
+        for (int i = 0; i < seeds.size(); i++)
+            if (i % 2 != 0) sources.add(new LongRange(seeds.get(i - 1),
+                                                      seeds.get(i - 1) + seeds.get(i) - 1));
+
+
+        List<LongRange> xs = txAllStages(sources, stages);
+        return xs.stream()
+                 .map(LongRange::min)
+                 .min(Long::compareTo)
+                 .orElse(0L);
+
+    }
+
+    @Override
+    public String name() {
+        return "If You Give A Seed A Fertilizer";
+    }
+
+    @Override
+    public int day() {
+        return 5;
+    }
+
+    @Override
+    public String getInputPath() {
+        return "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code/_2023/day5/input.txt";
+    }
+
+    @Override
+    public String outputUnitsPart1() {
+        return "lowest location number";
+    }
+
+    @Override
+    public String outputUnitsPart2() {
+        return outputUnitsPart1();
+    }
 }

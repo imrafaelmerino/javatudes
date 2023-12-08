@@ -1,5 +1,6 @@
 package advent_of_code._2023.day3;
 
+import advent_of_code.Puzzle;
 import types.*;
 
 import java.util.ArrayList;
@@ -7,28 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class GearRatios {
-
-    public static void main(String[] args) {
-        var path = "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code/advent_of_code_2023/day3/input.txt";
-        var grid = MutableGrid.fromFile(path);
-
-
-        System.out.println(solve_part1(grid));
-
-        System.out.println(solve_part2(grid));
-
-    }
-
-    private static long solve_part2(Grid<String> grid) {
-        return grid.find((pos, val) -> val.equals("*"))
-                   .stream()
-                   .map(cell -> getAdjacentEngineParts(grid, cell.pos()))
-                   .filter(parts -> parts.size() == 2)
-                   .map(parts -> parts.get(0) * parts.get(1))
-                   .reduce(Integer::sum)
-                   .get();
-    }
+public final class GearRatios implements Puzzle {
 
     private static List<Integer> getAdjacentEngineParts(Grid<String> grid, Pos pos) {
         List<Integer> gears = new ArrayList<>();
@@ -76,33 +56,6 @@ public class GearRatios {
 
     private static int toInt(List<Cell<String>> rightDigits) {
         return Integer.parseInt(joinDigits(rightDigits));
-    }
-
-    private static int solve_part1(Grid<String> grid) {
-        var candidates = grid.find((pos, val) -> isDigit(val)
-                                                 && grid.getNeighbors(pos)
-                                                        .stream()
-                                                        .anyMatch(p -> isSymbol(grid.getVal(p)))
-                                  );
-
-        //explored contains candidates that has already been taken account processing another symbol.
-        //For example, in the following example 1 and 3 are candidates, but we want to count 123 just once and not twice
-        //  *123*
-        var explored = new HashSet<Pos>();
-        var acc = 0;
-        for (var candidate : candidates) {
-            if (!explored.contains(candidate.pos())) {
-                var left = findLeftDigits(candidate.pos(), grid);
-                var right = findRightDigits(candidate.pos(), grid);
-                explored.addAll(left.stream().map(Cell::pos).toList());
-                explored.addAll(right.stream().map(Cell::pos).toList());
-                var number = joinDigits(left,
-                                        candidate.value(),
-                                        right);
-                acc += number;
-            }
-        }
-        return acc;
     }
 
     private static int joinDigits(List<Cell<String>> leftCellDigits,
@@ -169,5 +122,73 @@ public class GearRatios {
     public static List<Cell<String>> findLeftDigits(Pos pos, Grid<String> grid) {
         return findLeftDigits(pos, grid, new ArrayList<>());
 
+    }
+
+    @Override
+    public Object solveFirst() {
+        var grid = MutableGrid.fromFile(getInputPath());
+
+        var candidates = grid.find((pos, val) -> isDigit(val)
+                                                 && grid.getNeighbors(pos)
+                                                        .stream()
+                                                        .anyMatch(p -> isSymbol(grid.getVal(p)))
+                                  );
+
+        //explored contains candidates that has already been taken account processing another symbol.
+        //For example, in the following example 1 and 3 are candidates, but we want to count 123 just once and not twice
+        //  *123*
+        var explored = new HashSet<Pos>();
+        var acc = 0;
+        for (var candidate : candidates) {
+            if (!explored.contains(candidate.pos())) {
+                var left = findLeftDigits(candidate.pos(), grid);
+                var right = findRightDigits(candidate.pos(), grid);
+                explored.addAll(left.stream().map(Cell::pos).toList());
+                explored.addAll(right.stream().map(Cell::pos).toList());
+                var number = joinDigits(left,
+                                        candidate.value(),
+                                        right);
+                acc += number;
+            }
+        }
+        return acc;
+    }
+
+    @Override
+    public Object solveSecond()  {
+        var grid = MutableGrid.fromFile(getInputPath());
+
+        return grid.find((pos, val) -> val.equals("*"))
+                   .stream()
+                   .map(cell -> getAdjacentEngineParts(grid, cell.pos()))
+                   .filter(parts -> parts.size() == 2)
+                   .map(parts -> parts.get(0) * parts.get(1))
+                   .reduce(Integer::sum)
+                   .get();
+    }
+
+    @Override
+    public String name() {
+        return "Gear Ratios";
+    }
+
+    @Override
+    public int day() {
+        return 3;
+    }
+
+    @Override
+    public String getInputPath() {
+        return "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code/_2023/day3/input.txt";
+    }
+
+    @Override
+    public String outputUnitsPart1() {
+        return "sum of all of the part numbers";
+    }
+
+    @Override
+    public String outputUnitsPart2() {
+        return "sum of all of the gear ratios";
     }
 }

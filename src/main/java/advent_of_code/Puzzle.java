@@ -12,7 +12,8 @@ public interface Puzzle {
 
     String getInputPath();
 
-    String outputUnits();
+    String outputUnitsPart1();
+    String outputUnitsPart2();
 
 
 }

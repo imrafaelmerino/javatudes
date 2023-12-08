@@ -14,10 +14,10 @@ class AbstractDebug {
     }
 
     public String getTimeStats() {
-        return "avg: %s | acc: %s | min: %s | max: %s | times: %s".formatted(stats.getAvgTime(),
-                                                                             stats.getAccTime(),
+        return "avg: %s | min: %s | max: %s | acc: %s | times: %s".formatted(stats.getAvgTime(),
                                                                              stats.getMinTime(),
                                                                              stats.getMaxTime(),
+                                                                             stats.getAccTime(),
                                                                              stats.calls);
     }
 

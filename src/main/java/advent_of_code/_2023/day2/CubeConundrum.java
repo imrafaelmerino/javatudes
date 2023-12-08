@@ -1,38 +1,20 @@
 package advent_of_code._2023.day2;
 
 
-import java.io.IOException;
+import advent_of_code.Puzzle;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class CubeConundrum {
+public final class CubeConundrum implements Puzzle {
     static Map<String, Integer> BAG =
             Map.of("blue", 14,
                    "green", 13,
                    "red", 12);
 
-    public static void main(String[] args) throws IOException {
-        var path = "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code/advent_of_code_2023/day2/input_test.txt";
-        var lines = Files.readAllLines(Path.of(path));
-        var games = parse(lines);
-        var solution_part_1 =
-                games.stream()
-                     .filter(CubeConundrum::isValid)
-                     .map(Game::id)
-                     .reduce(Integer::sum);
-        var solution_part_2 = games.stream()
-                                   .map(CubeConundrum::getBagWithFewest)
-                                   .map(bag -> bag.get("green") * bag.get("blue") * bag.get("red"))
-                                   .reduce(Integer::sum);
-
-        System.out.println(solution_part_1.get());
-        System.out.println(solution_part_2.get());
-
-
-    }
 
     private static Map<String, Integer> getBagWithFewest(Game game) {
         return Map.of("green", maxNumberCubesPerGame(game, "green"),
@@ -88,6 +70,56 @@ public class CubeConundrum {
         }
         return cubes;
     }
+
+    @Override
+    public Object solveFirst() throws Exception {
+        var lines = Files.readAllLines(Path.of(getInputPath()));
+        var games = parse(lines);
+        return
+                games.stream()
+                     .filter(CubeConundrum::isValid)
+                     .map(Game::id)
+                     .reduce(0,Integer::sum);
+
+    }
+
+    @Override
+    public Object solveSecond() throws Exception {
+        var lines = Files.readAllLines(Path.of(getInputPath()));
+        var games = parse(lines);
+        return games.stream()
+                    .map(CubeConundrum::getBagWithFewest)
+                    .map(bag -> bag.get("green") * bag.get("blue") * bag.get("red"))
+                    .reduce(0,Integer::sum);
+
+
+    }
+
+    @Override
+    public String name() {
+        return "Cube Conundrum";
+    }
+
+    @Override
+    public int day() {
+        return 2;
+    }
+
+    @Override
+    public String getInputPath() {
+        return "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code/_2023/day2/input.txt";
+    }
+
+    @Override
+    public String outputUnitsPart1() {
+        return "sum of IDs";
+    }
+
+    @Override
+    public String outputUnitsPart2() {
+        return "cubes";
+    }
+
 
     public record Game(int id, List<Round> rounds) {
     }

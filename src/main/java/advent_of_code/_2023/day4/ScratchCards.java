@@ -1,5 +1,6 @@
 package advent_of_code._2023.day4;
 
+import advent_of_code.Puzzle;
 import types.FileParsers;
 
 import java.util.Arrays;
@@ -10,37 +11,10 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 
-public class Scratchcards {
+public final class ScratchCards implements Puzzle {
 
     static final Pattern LINE =
             Pattern.compile("Card\\s+(?<id>\\d+): (?<winning>[\\s\\d]+) \\| (?<numbers>[\\s\\d]+)");
-
-    public static void main(String[] args) {
-
-
-        var path = "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code/advent_of_code_2023/day4/input.txt";
-
-        var cards = FileParsers.toListOfLines(path)
-                               .stream()
-                               .map(Scratchcards::toCard)
-                               .toList();
-
-
-        var sol_part1 = cards.stream()
-                             .map(card -> ((long) Math.pow(2, card.winningIHave.size() - 1)))
-                             .reduce(Long::sum)
-                             .get();
-
-        System.out.println(sol_part1);
-
-        var cardsByNumber = cards.stream()
-                                 .collect(Collectors.toMap(e -> e.number, e -> e));
-
-        var counters = cards.stream().collect(Collectors.toMap(c -> c, c -> 1L));
-
-        System.out.println(getPileSize(counters, cardsByNumber));
-
-    }
 
     private static Long getPileSize(Map<Card, Long> counters, Map<Long, Card> cards) {
 
@@ -49,8 +23,7 @@ public class Scratchcards {
                                                         card));
         return counters.values()
                        .stream()
-                       .reduce(Long::sum)
-                       .get();
+                       .reduce(0L, Long::sum);
     }
 
     private static void updateCardCounter(Map<Card, Long> counters, Map<Long, Card> cards, Card card) {
@@ -82,6 +55,61 @@ public class Scratchcards {
     private static List<Integer> toListOfInt(String numbers) {
         return Arrays.stream(numbers.trim().split("\\s+"))
                      .map(Integer::parseInt).toList();
+    }
+
+    @Override
+    public Object solveFirst() throws Exception {
+
+        var cards = FileParsers.toListOfLines(getInputPath())
+                               .stream()
+                               .map(ScratchCards::toCard)
+                               .toList();
+
+
+        return cards.stream()
+                    .map(card -> ((long) Math.pow(2, card.winningIHave.size() - 1)))
+                    .reduce(0L, Long::sum);
+
+    }
+
+    @Override
+    public Object solveSecond() throws Exception {
+        var cards = FileParsers.toListOfLines(getInputPath())
+                               .stream()
+                               .map(ScratchCards::toCard)
+                               .toList();
+
+        var cardsByNumber = cards.stream()
+                                 .collect(Collectors.toMap(e -> e.number, e -> e));
+
+        var counters = cards.stream().collect(Collectors.toMap(c -> c, c -> 1L));
+
+        return getPileSize(counters, cardsByNumber);
+    }
+
+    @Override
+    public String name() {
+        return "ScratchCards";
+    }
+
+    @Override
+    public int day() {
+        return 4;
+    }
+
+    @Override
+    public String getInputPath() {
+        return "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code/_2023/day4/input.txt";
+    }
+
+    @Override
+    public String outputUnitsPart1() {
+        return "points";
+    }
+
+    @Override
+    public String outputUnitsPart2() {
+        return "scratchcards";
     }
 
 

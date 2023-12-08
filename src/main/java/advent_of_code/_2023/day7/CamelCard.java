@@ -1,5 +1,6 @@
 package advent_of_code._2023.day7;
 
+import advent_of_code.Puzzle;
 import types.FileParsers;
 
 import java.util.Arrays;
@@ -8,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class CamelCard {
+public final class CamelCard implements Puzzle {
 
 
     private static int breakTie(String cards1, String cards2, List<Character> cards) {
@@ -37,69 +38,6 @@ public class CamelCard {
         };
     }
 
-    public static void main(String[] args) {
-
-        var input = "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code/advent_of_code_2023/day7/input.txt";
-
-        System.out.println(solvePart1(input));
-        System.out.println(solvePart2(input));
-    }
-
-
-    private static long solvePart1(String input) {
-        //sorted by strength
-        var cards =
-                Arrays.stream("A,K,Q,J,T,9,8,7,6,5,4,3,2".split(","))
-                      .map(it -> it.charAt(0))
-                      .toList();
-
-        var sortedByRanK = FileParsers.toListOfLines(input)
-                                      .stream()
-                                      .map(line -> line.split("\\s"))
-                                      .map(tokens -> {
-                                          var hand = tokens[0];
-                                          var bid = Integer.parseInt(tokens[1]);
-                                          var rank = getRank(hand);
-                                          return new Hand(hand, bid, rank);
-                                      })
-                                      .sorted(getHandComparator(cards))
-                                      .toList();
-
-        return IntStream.range(0, sortedByRanK.size())
-                        .mapToObj(n -> (n + 1) * sortedByRanK.get(n).bid)
-                        .reduce(0L,
-                                Long::sum);
-    }
-
-    private static long solvePart2(String input) {
-        //sorted by strength, notice the J at the end
-        var cards =
-                Arrays.stream("A,K,Q,T,9,8,7,6,5,4,3,2,J".split(","))
-                      .map(it -> it.charAt(0))
-                      .toList();
-
-        var comparator = getHandComparator(cards);
-
-        var sortedByRanK = FileParsers.toListOfLines(input)
-                                      .stream()
-                                      .map(line -> line.split("\\s"))
-                                      .map(tokens -> {
-                                          var hand = new Hand(tokens[0], Integer.parseInt(tokens[1]), getRank(tokens[0]));
-                                          return hand.cards.contains("J") ?
-                                                  getBestHand(hand,
-                                                              cards,
-                                                              comparator
-                                                             ) :
-                                                  hand;
-
-                                      })
-                                      .sorted(comparator)
-                                      .toList();
-        return IntStream.range(0, sortedByRanK.size())
-                        .mapToObj(n -> (n + 1) * sortedByRanK.get(n).bid)
-                        .reduce(0L,
-                                Long::sum);
-    }
 
     private static Hand getBestHand(Hand hand,
                                     List<Character> alternativeCards,
@@ -136,9 +74,86 @@ public class CamelCard {
         throw new IllegalArgumentException();
     }
 
+    @Override
+    public Object solveFirst()  {
+        var cards =
+                Arrays.stream("A,K,Q,J,T,9,8,7,6,5,4,3,2".split(","))
+                      .map(it -> it.charAt(0))
+                      .toList();
+
+        var sortedByRanK = FileParsers.toListOfLines(getInputPath())
+                                      .stream()
+                                      .map(line -> line.split("\\s"))
+                                      .map(tokens -> {
+                                          var hand = tokens[0];
+                                          var bid = Integer.parseInt(tokens[1]);
+                                          var rank = getRank(hand);
+                                          return new Hand(hand, bid, rank);
+                                      })
+                                      .sorted(getHandComparator(cards))
+                                      .toList();
+
+        return IntStream.range(0, sortedByRanK.size())
+                        .mapToObj(n -> (n + 1) * sortedByRanK.get(n).bid)
+                        .reduce(0L,
+                                Long::sum);
+    }
+
+    @Override
+    public Object solveSecond()  {
+        var cards =
+                Arrays.stream("A,K,Q,T,9,8,7,6,5,4,3,2,J".split(","))
+                      .map(it -> it.charAt(0))
+                      .toList();
+
+        var comparator = getHandComparator(cards);
+
+        var sortedByRanK = FileParsers.toListOfLines(getInputPath())
+                                      .stream()
+                                      .map(line -> line.split("\\s"))
+                                      .map(tokens -> {
+                                          var hand = new Hand(tokens[0], Integer.parseInt(tokens[1]), getRank(tokens[0]));
+                                          return hand.cards.contains("J") ?
+                                                  getBestHand(hand,
+                                                              cards,
+                                                              comparator
+                                                             ) :
+                                                  hand;
+
+                                      })
+                                      .sorted(comparator)
+                                      .toList();
+        return IntStream.range(0, sortedByRanK.size())
+                        .mapToObj(n -> (n + 1) * sortedByRanK.get(n).bid)
+                        .reduce(0L,
+                                Long::sum);
+    }
+
+    @Override
+    public String name() {
+        return "Camel Cards";
+    }
+
+    @Override
+    public int day() {
+        return 7;
+    }
+
+    @Override
+    public String getInputPath() {
+        return "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code/_2023/day7/input.txt";
+    }
+
+    @Override
+    public String outputUnitsPart1() {
+        return "total winnings";
+    }
+
+    @Override
+    public String outputUnitsPart2() {
+        return outputUnitsPart1();
+    }
+
     record Hand(String cards, long bid, int rank) {
-        public Hand(String hand, long bid) {
-            this(hand, bid, -1);
-        }
     }
 }

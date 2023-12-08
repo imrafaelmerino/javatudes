@@ -16,6 +16,8 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 OUTPUT="$DIR/classes"
 
+LIB_DIR="$DIR/libs"
+
 
 
 # Validate the number of parameters
@@ -61,7 +63,7 @@ if ! [[ "$times" =~ ^[1-9][0-9]*$ ]]; then
 fi
 
 
-java -classpath $OUTPUT advent_of_code._${year}._${year} $day $times
+java -classpath "$OUTPUT:$LIB_DIR/*" advent_of_code._${year}._${year} $day $times
 
 }
 

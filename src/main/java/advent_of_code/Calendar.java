@@ -47,7 +47,7 @@ public interface Calendar {
 
 
     default void printDaySolutions(int day, int times) {
-        var title = new StringBuilder("Advent of Code %s @ %s\n".formatted(year(), link()));
+        var title = new StringBuilder("Advent of Code %s @ %s\n\n".formatted(year(), link()));
 
         var puzzle = findPuzzle(day);
         var timing1 = new Timing<>(() -> {
@@ -65,19 +65,24 @@ public interface Calendar {
             }
         }, times);
         String s = """
+                
                 - Day %s: %s
-                  . Part 1: %s %s (%s)
-                  . Part 2: %s %s (%s)
+                  . Part 1: 
+                       Solution: %s %s
+                       Stats: %s
+                  . Part 2: 
+                       Solution: %s %s
+                       Stats: %s
                 """;
         System.out.println(title.append(s.formatted(puzzle.day(),
                                                     puzzle.name(),
                                                     timing1.get(),
-                                                    puzzle.outputUnits(),
+                                                    puzzle.outputUnitsPart1(),
                                                     times == 1 ?
                                                             timing1.stats.getAccTime() :
                                                             timing1.getTimeStats(),
                                                     timing2.get(),
-                                                    puzzle.outputUnits(),
+                                                    puzzle.outputUnitsPart2(),
                                                     times == 1 ?
                                                             timing2.stats.getAccTime() :
                                                             timing2.getTimeStats()
@@ -86,7 +91,7 @@ public interface Calendar {
 
 
     default void printDayPartSolution(int day, int part, int times) {
-        var title = new StringBuilder("Advent of Code %s @ %s\n".formatted(year(), link()));
+        var title = new StringBuilder("Advent of Code %s @ %s\n\n".formatted(year(), link()));
 
         var puzzle = findPuzzle(day);
         var timing = new Timing<>(() -> {
@@ -99,13 +104,17 @@ public interface Calendar {
 
         System.out.println(title.append("""
                                                  - Day %s: %s
-                                                   . Part %s: %s %s (%s)
+                                                   . Part %s: 
+                                                        Solution: %s %s
+                                                        Stats: %s
                                                 """
                                                 .formatted(day,
                                                            puzzle.name(),
                                                            part,
                                                            timing.get(),
-                                                           puzzle.outputUnits(),
+                                                           part == 1 ?
+                                                                   puzzle.outputUnitsPart1() :
+                                                                   puzzle.outputUnitsPart2(),
                                                            times == 1 ?
                                                                    timing.stats.getAccTime() :
                                                                    timing.getTimeStats())));
@@ -115,7 +124,7 @@ public interface Calendar {
 
 
     default void printAllSolutions(int times) {
-        var title = new StringBuilder("Advent of Code %s @ %s\n".formatted(year(), link()));
+        var title = new StringBuilder("Advent of Code %s @ %s\n\n".formatted(year(), link()));
         for (var puzzle : getPuzzles()) {
             var timing1 = new Timing<>(() -> {
                 try {
@@ -133,17 +142,22 @@ public interface Calendar {
             }, times);
             title.append("""
                                  - Day %s: %s
-                                   . Part 1: %s %s (%s)
-                                   . Part 2: %s %s (%s)
+                                   . Part 1:
+                                        Solution: %s %s 
+                                        Stats: %s
+                                   . Part 2: 
+                                        Solution: %s %s 
+                                        Stats: %s
+                                        
                                  """.formatted(puzzle.day(),
                                                puzzle.name(),
                                                timing1.get(),
-                                               puzzle.outputUnits(),
+                                               puzzle.outputUnitsPart1(),
                                                times == 1 ?
                                                        timing1.stats.getAccTime() :
                                                        timing1.getTimeStats(),
                                                timing2.get(),
-                                               puzzle.outputUnits(),
+                                               puzzle.outputUnitsPart2(),
                                                times == 1 ?
                                                        timing2.stats.getAccTime() :
                                                        timing2.getTimeStats()
