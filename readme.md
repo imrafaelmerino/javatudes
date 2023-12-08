@@ -20,6 +20,90 @@ Python :)
 - **[2022 (in Java)](https://adventofcode.com/2022)**
 - **[2023 (in Java)](https://adventofcode.com/2023)**
 
+Beginning in 2023, I've incorporated statistics and scripts to facilitate the compilation and execution of puzzles from
+any specific day or the entire calendar. For instance, by running the following commands:
+
+```shell
+
+./compile.sh
+./aoc.sh --year 2023 --day all --times 100
+
+```
+
+You will obtain results for all puzzles released up to today, which is the 8th of December. Consequently, this covers a
+total of 8 published puzzles.
+
+```text
+
+Advent of Code 2023 @ https://adventofcode.com/2023
+
+- Day 1: Trebuchet?!
+  . Part 1:
+       Solution: 55260 calibration values
+       Stats: avg: 4,263 ms | min: 2,528 ms | max: 49,551 ms | acc: 426,285 ms | times: 100
+  . Part 2:
+       Solution: 55123 calibration values
+       Stats: avg: 1,141 ms | min: 864,250 µs | max: 7,589 ms | acc: 114,082 ms | times: 100
+
+- Day 2: Cube Conundrum
+  . Part 1:
+       Solution: 2207 sum of IDs
+       Stats: avg: 656,942 µs | min: 546,958 µs | max: 6,943 ms | acc: 65,694 ms | times: 100
+  . Part 2:
+       Solution: 62241 cubes
+       Stats: avg: 906,395 µs | min: 481,459 µs | max: 4,224 ms | acc: 90,640 ms | times: 100
+
+- Day 3: Gear Ratios
+  . Part 1:
+       Solution: 507214 sum of all of the part numbers
+       Stats: avg: 8,694 ms | min: 4,430 ms | max: 86,502 ms | acc: 869,395 ms | times: 100
+  . Part 2:
+       Solution: 72553319 sum of all of the gear ratios
+       Stats: avg: 3,168 ms | min: 2,700 ms | max: 7,075 ms | acc: 316,796 ms | times: 100
+
+- Day 4: ScratchCards
+  . Part 1:
+       Solution: 27845 points
+       Stats: avg: 1,913 ms | min: 911,500 µs | max: 12,262 ms | acc: 191,268 ms | times: 100
+  . Part 2:
+       Solution: 9496801 scratchcards
+       Stats: avg: 162,952 ms | min: 158,211 ms | max: 213,829 ms | acc: 16,295 sg | times: 100
+
+- Day 5: If You Give A Seed A Fertilizer
+  . Part 1:
+       Solution: 196167384 lowest location number
+       Stats: avg: 555,529 µs | min: 294,208 µs | max: 7,868 ms | acc: 55,553 ms | times: 100
+  . Part 2:
+       Solution: 125742456 lowest location number
+       Stats: avg: 541,970 µs | min: 379,917 µs | max: 9,169 ms | acc: 54,197 ms | times: 100
+
+- Day 6: Wait For it
+  . Part 1:
+       Solution: 275724 product of the number of ways you can beat the record
+       Stats: avg: 66,302 µs | min: 30,000 µs | max: 2,316 ms | acc: 6,630 ms | times: 100
+  . Part 2:
+       Solution: 37286485 product of the number of ways you can beat the record
+       Stats: avg: 33,116 ms | min: 32,414 ms | max: 85,364 ms | acc: 3,312 sg | times: 100
+
+- Day 7: Camel Cards
+  . Part 1:
+       Solution: 256448566 total winnings
+       Stats: avg: 4,433 ms | min: 2,976 ms | max: 14,966 ms | acc: 443,333 ms | times: 100
+  . Part 2:
+       Solution: 254412181 total winnings
+       Stats: avg: 6,533 ms | min: 4,830 ms | max: 16,636 ms | acc: 653,290 ms | times: 100
+
+- Day 8: Haunted Wasteland
+  . Part 1:
+       Solution: 20569 steps
+       Stats: avg: 7,581 ms | min: 6,610 ms | max: 27,098 ms | acc: 758,054 ms | times: 100
+  . Part 2:
+       Solution: 21366921060721 steps
+       Stats: avg: 9,832 ms | min: 8,869 ms | max: 23,431 ms | acc: 983,159 ms | times: 100
+
+
+```
+
 [Advent of Code](https://adventofcode.com/) is an annual coding event with daily programming puzzles.
 
 # Javatudes
