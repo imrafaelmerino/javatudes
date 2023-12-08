@@ -20,15 +20,13 @@ public final class ScratchCards implements Puzzle {
                                           Map<Long, Card> cards,
                                           Card card
                                          ) {
+        for (var id = card.number + 1; id < card.number + 1 + card.winningIHave.size(); id++) {
+            var next = cards.get(id);
+            counters.compute(next,
+                             (c, n) -> n + 1
+                            );
+            updateCardCounter(counters, cards, next);
 
-        if (!card.winningIHave.isEmpty()) {
-            for (var id = card.number + 1; id < card.number + 1 + card.winningIHave.size(); id++) {
-                var next = cards.get(id);
-                counters.compute(next,
-                                 (c, n) -> n + 1
-                                );
-                updateCardCounter(counters, cards, next);
-            }
         }
     }
 
@@ -82,9 +80,13 @@ public final class ScratchCards implements Puzzle {
                                                      )
                                     );
 
-        counters.forEach((card, n) -> updateCardCounter(counters,
-                                                        cardsByNumber,
-                                                        card));
+        counters.forEach((card, n) -> {
+            if (!card.winningIHave.isEmpty()) {
+                updateCardCounter(counters,
+                                  cardsByNumber,
+                                  card);
+            }
+        });
         return counters.values()
                        .stream()
                        .reduce(0L,
