@@ -110,5 +110,10 @@ public final class Trebuchet implements Puzzle {
         return "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code/_2023/day1/input.txt";
     }
 
+    @Override
+    public String outputUnits() {
+        return "calibration values";
+    }
+
 
 }

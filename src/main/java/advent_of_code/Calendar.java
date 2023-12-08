@@ -10,27 +10,31 @@ import static java.util.Objects.requireNonNull;
 public interface Calendar {
 
 
-    static void mainProgram(Calendar calendar, String[] args) throws Exception {
+    static void mainProgram(Calendar calendar, String[] args) {
         String str = String.join(" ", requireNonNull(args))
                            .trim();
 
-        var allPattern = Pattern.compile("^all$");
-        var dayPartPattern = Pattern.compile("^(?<day>\\d?\\d) +(?<part>[1-2])$");
-        var dayPattern = Pattern.compile("^\\d\\d?$");
+        var allPattern = Pattern.compile("^all(?<times> \\d+)?$");
+        var dayPartPattern = Pattern.compile("^(?<day>\\d?\\d) +(?<part>[1-2])(?<times> \\d+)$");
+        var dayPattern = Pattern.compile("^\\d\\d?(?<times> \\d+)$");
 
         var allMatcher = allPattern.matcher(str);
         var dayPartMatcher = dayPartPattern.matcher(str);
         var dayMatcher = dayPattern.matcher(str);
 
-        if (allMatcher.matches())
-            calendar.printAllSolutions();
-        else if (dayMatcher.matches())
-            calendar.printDaySolutions(Integer.parseInt(str));
-        else if (dayPartMatcher.matches()) {
+
+        if (allMatcher.matches()) {
+            var times = allMatcher.group("times") != null ? Integer.parseInt(allMatcher.group("times").trim()) : 1;
+            calendar.printAllSolutions(times);
+        } else if (dayMatcher.matches()) {
+            var times = dayMatcher.group("times") != null ? Integer.parseInt(dayMatcher.group("times").trim()) : 1;
+            calendar.printDaySolutions(Integer.parseInt(str), times);
+        } else if (dayPartMatcher.matches()) {
+            var times = dayPartMatcher.group("times") != null ? Integer.parseInt(dayPartMatcher.group("times").trim()) : 1;
             var day = Integer.parseInt(dayPartMatcher.group("day"));
             var part = Integer.parseInt(dayPartMatcher.group("part"));
-            calendar.printDayPartSolution(day, part);
-        } else throw new IllegalArgumentException("%s is not valid. Use all | [1-24] | [1-24] [1-2]".formatted(str));
+            calendar.printDayPartSolution(day, part, times);
+        } else throw new IllegalArgumentException("`%s` is not valid.".formatted(str));
     }
 
     List<Puzzle> getPuzzles();
@@ -41,14 +45,8 @@ public interface Calendar {
                            .orElseThrow(() -> new RuntimeException("day %d not found".formatted(day)));
     }
 
-    default Puzzle findPuzzle(String name) {
-        return getPuzzles().stream().filter(it -> it.name().equals(name))
-                           .findFirst()
-                           .orElseThrow(() -> new RuntimeException("name %s not found".formatted(name)));
-    }
 
-
-    default void printDaySolutions(int day) {
+    default void printDaySolutions(int day, int times) {
         var title = new StringBuilder("Advent of Code %s @ %s\n".formatted(year(), link()));
 
         var puzzle = findPuzzle(day);
@@ -58,27 +56,36 @@ public interface Calendar {
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-        }, 1);
+        }, times);
         var timing2 = new Timing<>(() -> {
             try {
                 return puzzle.solveSecond();
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-        }, 1);
+        }, times);
         String s = """
                 - Day %s: %s
-                  . Part 1: %s in %s
-                  . Part 2: %s in %s
+                  . Part 1: %s %s (%s)
+                  . Part 2: %s %s (%s)
                 """;
         System.out.println(title.append(s.formatted(puzzle.day(),
                                                     puzzle.name(),
-                                                    timing1.get(), Timing.formatTime(timing1.stats.accTime),
-                                                    timing2.get(), Timing.formatTime(timing2.stats.accTime)
+                                                    timing1.get(),
+                                                    puzzle.outputUnits(),
+                                                    times == 1 ?
+                                                            timing1.stats.getAccTime() :
+                                                            timing1.getTimeStats(),
+                                                    timing2.get(),
+                                                    puzzle.outputUnits(),
+                                                    times == 1 ?
+                                                            timing2.stats.getAccTime() :
+                                                            timing2.getTimeStats()
                                                    )));
     }
 
-    default void printDayPartSolution(int day, int part) {
+
+    default void printDayPartSolution(int day, int part, int times) {
         var title = new StringBuilder("Advent of Code %s @ %s\n".formatted(year(), link()));
 
         var puzzle = findPuzzle(day);
@@ -88,22 +95,26 @@ public interface Calendar {
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-        }, 1);
+        }, times);
 
         System.out.println(title.append("""
                                                  - Day %s: %s
-                                                   . Part %s: %s in %s
+                                                   . Part %s: %s %s (%s)
                                                 """
                                                 .formatted(day,
                                                            puzzle.name(),
                                                            part,
                                                            timing.get(),
-                                                           Timing.formatTime(timing.stats.accTime))));
+                                                           puzzle.outputUnits(),
+                                                           times == 1 ?
+                                                                   timing.stats.getAccTime() :
+                                                                   timing.getTimeStats())));
 
 
     }
 
-    default void printAllSolutions() {
+
+    default void printAllSolutions(int times) {
         var title = new StringBuilder("Advent of Code %s @ %s\n".formatted(year(), link()));
         for (var puzzle : getPuzzles()) {
             var timing1 = new Timing<>(() -> {
@@ -112,24 +123,31 @@ public interface Calendar {
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
-            }, 1);
+            }, times);
             var timing2 = new Timing<>(() -> {
                 try {
                     return puzzle.solveSecond();
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
-            }, 1);
-            String s = """
-                    - Day %s: %s
-                      . Part 1: %s in %s
-                      . Part 2: %s in %s
-                    """;
-            title = title.append(s.formatted(puzzle.day(),
-                                             puzzle.name(),
-                                             timing1.get(), Timing.formatTime(timing1.stats.accTime),
-                                             timing2.get(), Timing.formatTime(timing2.stats.accTime)
-                                            ));
+            }, times);
+            title.append("""
+                                 - Day %s: %s
+                                   . Part 1: %s %s (%s)
+                                   . Part 2: %s %s (%s)
+                                 """.formatted(puzzle.day(),
+                                               puzzle.name(),
+                                               timing1.get(),
+                                               puzzle.outputUnits(),
+                                               times == 1 ?
+                                                       timing1.stats.getAccTime() :
+                                                       timing1.getTimeStats(),
+                                               timing2.get(),
+                                               puzzle.outputUnits(),
+                                               times == 1 ?
+                                                       timing2.stats.getAccTime() :
+                                                       timing2.getTimeStats()
+                                              ));
 
         }
         System.out.println(title);
