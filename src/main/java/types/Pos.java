@@ -6,14 +6,23 @@ import java.util.List;
 public record Pos(int x, int y) {
 
     /**
-     * todo poner examples
+     * Generates a line of positions between the specified start and end points.
      *
-     * @param start
-     * @param end
-     * @return
+     * @param start The starting position.
+     * @param end   The ending position.
+     * @return A list of positions representing the line from start to end.
      */
     public static List<Pos> line(Pos start, Pos end) {
-        return line(start, end, new ArrayList<>());
+        var result = new ArrayList<Pos>();
+        result.add(start);
+        while (!start.equals(end)) {
+            if (start.x() > end.x()) start = start.left();
+            else if (start.x() < end.x()) start = start.right();
+            else if (start.y() > end.y()) start = start.down();
+            else start = start.up();
+            result.add(start);
+        }
+        return result;
     }
 
     /**
@@ -38,7 +47,7 @@ public record Pos(int x, int y) {
      * @return a list of positions
      */
     public static List<Pos> columns(IntRange xs, IntRange ys) {
-        List<Pos> positions = new ArrayList<>();
+        var positions = new ArrayList<Pos>();
         for (var x = xs.min(); x <= xs.max(); x++)
             for (var y = ys.min(); y <= ys.max(); y++)
                 positions.add(new Pos(x,
@@ -51,14 +60,14 @@ public record Pos(int x, int y) {
      * Returns the cartesian product of the given ranges xs and ys:
      * <pre>
      *
-     *     xs = (0,2)
+     *     xs = (0,3)
      *     ys = (0,2)
      *
-     *     p00  p10  p20
-     *     p01  p11  p21
-     *     p02  p12  p22
+     *     p00  p10  p20  p30
+     *     p01  p11  p21  p31
+     *     p02  p12  p22  p32
      *
-     *     result = [ p00, p10, p20, p01, p11, p21, p02, p12, p22]
+     *     result = [ p00, p10, p20, p30, p01, p11, p21, p31, p02, p12, p22, p32]
      *
      *
      * </pre>
@@ -70,88 +79,83 @@ public record Pos(int x, int y) {
     public static List<Pos> rows(IntRange xs,
                                  IntRange ys
                                 ) {
-        List<Pos> positions = new ArrayList<>();
+        var positions = new ArrayList<Pos>();
         for (var y = ys.min(); y <= ys.max(); y++)
             for (var x = xs.min(); x <= xs.max(); x++)
                 positions.add(new Pos(x, y));
         return positions;
     }
-
 
     /**
-     * Returns the cartesian product of the given ranges xs and ys.
+     * Adds another Pos to this Pos and returns the result.
      *
-     * @param xs x range
-     * @param ys y range
-     * @return a set of positions
-     * <p>
-     * Example:
-     * <pre>
-     *     Range xs = new Range(0, 2);
-     *     Range ys = new Range(0, 2);
-     *     List<Pos> result = Range.cartesian_product(xs, ys);
-     * </pre>
-     * @see #rows(IntRange, IntRange) to return the positions arranged in rows ( → ): 00 10 20 01 11 21 02 12 22
-     * @see #rows(IntRange, IntRange) to return the positions arranged in columns ( ↓ ) : 00 01 02 10 11 12 20 21 22
+     * @param other The Pos to be added.
+     * @return A new Pos representing the sum of this Pos and the other Pos.
      */
-    public static List<Pos> cartesian_product(IntRange xs, IntRange ys) {
-        List<Pos> positions = new ArrayList<>();
-        for (var y = ys.min(); y <= ys.max(); y++)
-            for (var x = xs.min(); x <= xs.max(); x++)
-                positions.add(new Pos(x, y));
-        return positions;
-    }
-
-    static List<Pos> line(Pos start, Pos end, List<Pos> result) {
-        result.add(start);
-        if (start.equals(end)) return result;
-        if (start.x() > end.x()) {
-            result.add(start.left());
-            return line(start.left(), end, result);
-        } else if (start.x() < end.x()) {
-            result.add(start.right());
-            return line(start.right(), end, result);
-        } else if (start.y() > end.y()) {
-            result.add(start.down());
-            return line(start.down(), end, result);
-        }
-
-        result.add(start.up());
-        return line(start.up(), end,
-                    result
-                   );
-
-
-    }
-
     public Pos plus(Pos other) {
         return new Pos(x + other.x, y + other.y);
     }
 
+    /**
+     * Subtracts another Pos from this Pos and returns the result.
+     *
+     * @param other The Pos to be subtracted.
+     * @return A new Pos representing the difference between this Pos and the other Pos.
+     */
     public Pos minus(Pos other) {
         return new Pos(x - other.x, y - other.y);
     }
 
+    /**
+     * Returns the position to the left of this Pos.
+     *
+     * @return A new Pos to the left of this Pos.
+     */
     public Pos left() {
         return this.minus(new Pos(1, 0));
     }
 
+    /**
+     * Returns the position to the right of this Pos.
+     *
+     * @return A new Pos to the right of this Pos.
+     */
     public Pos right() {
         return this.plus(new Pos(1, 0));
     }
 
+    /**
+     * Swaps the x and y coordinates of this Pos.
+     *
+     * @return A new Pos with swapped x and y coordinates.
+     */
     public Pos swap() {
         return new Pos(y, x);
     }
 
+    /**
+     * Returns the position above this Pos.
+     *
+     * @return A new Pos above this Pos.
+     */
     public Pos up() {
         return this.plus(new Pos(0, 1));
     }
 
+    /**
+     * Returns the position below this Pos.
+     *
+     * @return A new Pos below this Pos.
+     */
     public Pos down() {
         return this.minus(new Pos(0, 1));
     }
 
+    /**
+     * Returns a list of neighboring positions, including diagonal neighbors.
+     *
+     * @return A list of neighboring positions.
+     */
     public List<Pos> getNeighbors() {
         return List.of(right(),
                        left(),
@@ -164,6 +168,11 @@ public record Pos(int x, int y) {
                       );
     }
 
+    /**
+     * Returns a list of neighboring positions in vertical and horizontal directions only.
+     *
+     * @return A list of neighboring positions in vertical and horizontal directions.
+     */
     public List<Pos> neighborsVH() {
         return List.of(right(),
                        left(),
@@ -172,18 +181,42 @@ public record Pos(int x, int y) {
                       );
     }
 
+    /**
+     * Multiplies the coordinates of this Pos by a scalar value.
+     *
+     * @param s The scalar value.
+     * @return A new Pos with coordinates multiplied by the scalar value.
+     */
     public Pos multiply(int s) {
         return new Pos(x * s, y * s);
     }
 
+    /**
+     * Divides the coordinates of this Pos by a scalar value.
+     *
+     * @param s The scalar value.
+     * @return A new Pos with coordinates divided by the scalar value.
+     */
     public Pos divide(int s) {
         return new Pos(x / s, y / s);
     }
 
+    /**
+     * Calculates the Manhattan distance between this Pos and another Pos.
+     *
+     * @param other The other Pos.
+     * @return The Manhattan distance between this Pos and the other Pos.
+     */
     public int manhattanDistance(Pos other) {
         return Math.abs(x - other.x) + Math.abs(y - other.y);
     }
 
+    /**
+     * Calculates the Euclidean distance between this Pos and another Pos.
+     *
+     * @param other The other Pos.
+     * @return The Euclidean distance between this Pos and the other Pos.
+     */
     public double euclideanDistance(Pos other) {
         return Math.sqrt(Math.pow(x - other.x, 2) + Math.pow(y - other.y, 2));
     }

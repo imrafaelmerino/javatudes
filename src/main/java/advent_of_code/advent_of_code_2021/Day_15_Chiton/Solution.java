@@ -13,7 +13,7 @@ public class Solution {
 
     public static void main(String[] args) {
 
-        //part1();
+        part1();
         part2();
 
     }
@@ -88,13 +88,15 @@ public class Solution {
                                                             );
         System.out.println(pathCost.cost());
 
-        grid.color(
-                    ControlChar.RED,
-                    (pos, val) -> pathCost.path()
-                                          .states()
-                                          .contains(pos)
-                  )
-            .printRows();
+//        grid.color(
+//                    ControlChar.RED,
+//                    (pos, val) -> pathCost.path()
+//                                          .states()
+//                                          .contains(pos)
+//                  )
+//            .printRows();
 
     }
+
+
 }

@@ -93,7 +93,7 @@ public class Day17_2 {
             if (i == first) {
                 BigInteger max = new BigInteger("1000000000000");
                 String heights = incs.stream().map(it -> it + "").collect(Collectors.joining());
-                Pair<Integer, String> repetition = StrFun.findRepetition(heights);
+                Pair<Integer, String> repetition = StrFun.findLongestRepetition(heights);
                 var index = repetition.first();
                 var period = repetition.second();
                 var rest = max.subtract(BigInteger.valueOf(index));

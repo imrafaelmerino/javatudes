@@ -19,10 +19,10 @@ public class Seeds {
         var path = "/Users/rmerino/Projects/javatudes/src/main/java/advent_of_code/advent_of_code_2023/day5/input.txt";
 
         List<List<String>> groupsOfLines = FileParsers.toGroupsOfLines(path);
-        var seeds = StrFun.toListOfLong(groupsOfLines.get(0)
-                                                     .get(0)
-                                                     .split(":")[1]
-                                       );
+        var seeds = StrFun.parseSpacedLongs(groupsOfLines.get(0)
+                                                         .get(0)
+                                                         .split(":")[1]
+                                           );
 
         var stages = IntStream.rangeClosed(1, 7)
                               .mapToObj(n -> getBlockTxs(groupsOfLines, n))
@@ -62,7 +62,7 @@ public class Seeds {
     private static Map<LongRange, LongRange> getBlockTxs(List<List<String>> groupsOfLines, int index) {
         return ListFun.tail(groupsOfLines.get(index))
                       .stream()
-                      .map(StrFun::toListOfLong)
+                      .map(StrFun::parseSpacedLongs)
                       .collect(Collectors.toMap(ns -> new LongRange(ns.get(1),
                                                                 ns.get(1) + ns.get(2) - 1),
                                                 ns -> new LongRange(ns.get(0),
