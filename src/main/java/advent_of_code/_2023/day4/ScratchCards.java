@@ -9,34 +9,26 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import java.util.stream.LongStream;
 
 public final class ScratchCards implements Puzzle {
 
     static final Pattern LINE =
             Pattern.compile("Card\\s+(?<id>\\d+): (?<winning>[\\s\\d]+) \\| (?<numbers>[\\s\\d]+)");
 
-    private static Long getPileSize(Map<Card, Long> counters, Map<Long, Card> cards) {
 
-        counters.forEach((card, n) -> updateCardCounter(counters,
-                                                        cards,
-                                                        card));
-        return counters.values()
-                       .stream()
-                       .reduce(0L, Long::sum);
-    }
-
-    private static void updateCardCounter(Map<Card, Long> counters, Map<Long, Card> cards, Card card) {
+    private static void updateCardCounter(Map<Card, Long> counters,
+                                          Map<Long, Card> cards,
+                                          Card card
+                                         ) {
 
         if (!card.winningIHave.isEmpty()) {
-            for (var wonCard : LongStream.range(card.number + 1,
-                                                card.number + 1 + card.winningIHave.size())
-                                         .mapToObj(cards::get)
-                                         .toList()) {
-                counters.compute(wonCard, (c, n) -> n + 1);
-                updateCardCounter(counters, cards, wonCard);
+            for (var id = card.number + 1; id < card.number + 1 + card.winningIHave.size(); id++) {
+                var next = cards.get(id);
+                counters.compute(next,
+                                 (c, n) -> n + 1
+                                );
+                updateCardCounter(counters, cards, next);
             }
-
         }
     }
 
@@ -46,8 +38,6 @@ public final class ScratchCards implements Puzzle {
         var id = Integer.parseInt(matcher.group("id"));
         var numbers = toListOfInt(matcher.group("numbers"));
         var winning = toListOfInt(matcher.group("winning"));
-
-
         return new Card(id,
                         winning.stream().filter(numbers::contains).toList());
     }
@@ -68,7 +58,8 @@ public final class ScratchCards implements Puzzle {
 
         return cards.stream()
                     .map(card -> ((long) Math.pow(2, card.winningIHave.size() - 1)))
-                    .reduce(0L, Long::sum);
+                    .reduce(0L,
+                            Long::sum);
 
     }
 
@@ -80,11 +71,25 @@ public final class ScratchCards implements Puzzle {
                                .toList();
 
         var cardsByNumber = cards.stream()
-                                 .collect(Collectors.toMap(e -> e.number, e -> e));
+                                 .collect(Collectors.toMap(e -> e.number,
+                                                           e -> e
+                                                          )
+                                         );
 
-        var counters = cards.stream().collect(Collectors.toMap(c -> c, c -> 1L));
+        var counters = cards.stream()
+                            .collect(Collectors.toMap(c -> c,
+                                                      c -> 1L
+                                                     )
+                                    );
 
-        return getPileSize(counters, cardsByNumber);
+        counters.forEach((card, n) -> updateCardCounter(counters,
+                                                        cardsByNumber,
+                                                        card));
+        return counters.values()
+                       .stream()
+                       .reduce(0L,
+                               Long::sum);
+
     }
 
     @Override

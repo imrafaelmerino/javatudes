@@ -16,7 +16,7 @@ public interface Calendar {
 
         var allPattern = Pattern.compile("^all(?<times> \\d+)?$");
         var dayPartPattern = Pattern.compile("^(?<day>\\d?\\d) +(?<part>[1-2])(?<times> \\d+)$");
-        var dayPattern = Pattern.compile("^\\d\\d?(?<times> \\d+)$");
+        var dayPattern = Pattern.compile("^(?<day>\\d?\\d)(?<times> \\d+)$");
 
         var allMatcher = allPattern.matcher(str);
         var dayPartMatcher = dayPartPattern.matcher(str);
@@ -28,7 +28,8 @@ public interface Calendar {
             calendar.printAllSolutions(times);
         } else if (dayMatcher.matches()) {
             var times = dayMatcher.group("times") != null ? Integer.parseInt(dayMatcher.group("times").trim()) : 1;
-            calendar.printDaySolutions(Integer.parseInt(str), times);
+            var day = Integer.parseInt(dayMatcher.group("day"));
+            calendar.printDaySolutions(day, times);
         } else if (dayPartMatcher.matches()) {
             var times = dayPartMatcher.group("times") != null ? Integer.parseInt(dayPartMatcher.group("times").trim()) : 1;
             var day = Integer.parseInt(dayPartMatcher.group("day"));
@@ -65,7 +66,6 @@ public interface Calendar {
             }
         }, times);
         String s = """
-                
                 - Day %s: %s
                   . Part 1: 
                        Solution: %s %s

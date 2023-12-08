@@ -27,7 +27,8 @@ public class _2023 implements Calendar {
                        new Seeds(),
                        new WaitForIt(),
                        new CamelCard(),
-                       new HauntedWasteland());
+                       new HauntedWasteland()
+                      );
     }
 
     @Override
