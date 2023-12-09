@@ -10,6 +10,7 @@ import advent_of_code._2023.day5.Seeds;
 import advent_of_code._2023.day6.WaitForIt;
 import advent_of_code._2023.day7.CamelCard;
 import advent_of_code._2023.day8.HauntedWasteland;
+import advent_of_code._2023.day9.MirageMaintenance;
 
 import java.util.List;
 
@@ -27,7 +28,8 @@ public class _2023 implements Calendar {
                        new Seeds(),
                        new WaitForIt(),
                        new CamelCard(),
-                       new HauntedWasteland()
+                       new HauntedWasteland(),
+                       new MirageMaintenance()
                       );
     }
 

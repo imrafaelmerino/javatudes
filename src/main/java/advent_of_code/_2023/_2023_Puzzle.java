@@ -9,4 +9,9 @@ public interface _2023_Puzzle extends Puzzle {
 
         return InputDir.getPath("2023", day());
     }
+
+    default String getTestInputPath() {
+
+        return InputDir.getTestPath("2023", day());
+    }
 }

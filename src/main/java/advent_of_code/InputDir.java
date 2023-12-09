@@ -16,4 +16,10 @@ public final class InputDir {
                                                                                year,
                                                                                day);
     }
+
+    public static String getTestPath(String year, int day) {
+        return "%s/src/main/java/advent_of_code/_%s/day%s/input_test.txt".formatted(InputDir.PATH,
+                                                                                    year,
+                                                                                    day);
+    }
 }

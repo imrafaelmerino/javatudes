@@ -7,6 +7,9 @@ import java.util.stream.Collectors;
 
 public class StrFun {
 
+    public static List<Integer> toListOfInt(String str){
+        return Arrays.stream(str.split("\\s+")).map(Integer::parseInt).collect(Collectors.toList());
+    }
     public static List<Pair<Integer, String>> findRepetitions(String input) {
         List<Pair<Integer, String>> all = new ArrayList<>();
         for (int i = 2; i < input.length() / 2; i++) {
