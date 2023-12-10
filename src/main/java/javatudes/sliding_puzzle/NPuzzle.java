@@ -17,12 +17,14 @@ import java.util.stream.Stream;
 
 public class NPuzzle {
 
-    private static BiFunction<Long, List<Long>, Long> countNumberInversions = (n, seq) -> seq.stream().filter(i -> i < n).count();
-    private static Function<String, Grid<String>> parseBoard = str -> {
+    private static final BiFunction<Long, List<Long>, Long> countNumberInversions =
+            (n, seq) -> seq.stream().filter(i -> i < n).count();
+    private static final Function<String, Grid<String>> parseBoard = str -> {
         List<List<String>> rows = Arrays.stream(str.split("\\|"))
                                         .toList()
                                         .stream()
-                                        .map(row -> Arrays.stream(row.split("\s")).toList())
+                                        .map(row -> Arrays.stream(row.split(" "))
+                                                          .toList())
                                         .collect(Collectors.toList());
 
         return PersistentGrid.fromRows(rows);
@@ -59,13 +61,7 @@ public class NPuzzle {
             var spaceRow = getEmptySquare(board).y();
             return (nRows - spaceRow) % 2 == 0 ? n_inversions % 2 == 1 : n_inversions % 2 == 0;
         } else return n_inversions % 2 == 0;
-    }    private static Function<List<Long>, Long> countAllInversions =
-            seq -> {
-                if (seq.isEmpty()) return 0L;
-                var head = ListFun.head(seq);
-                var tail = ListFun.tail(seq);
-                return countNumberInversions.apply(head, tail) + NPuzzle.countAllInversions.apply(tail);
-            };
+    }
 
     private Pos getEmptySquare(Grid<String> p_board) {
         return p_board.findOne((pos, val) -> val.equals("X")).pos();
@@ -94,7 +90,13 @@ public class NPuzzle {
 
     }
 
-
+    private static final Function<List<Long>, Long> countAllInversions =
+            seq -> {
+                if (seq.isEmpty()) return 0L;
+                var head = seq.getFirst();
+                var tail = ListFun.tail(seq);
+                return countNumberInversions.apply(head, tail) + NPuzzle.countAllInversions.apply(tail);
+            };
 
 
 }

@@ -80,7 +80,7 @@ public class Solution {
     BiFunction<Grid<String>, Pos, Boolean> isPlacedAtHome =
             (grid, pos) -> {
                 var amphipod = map.get(grid.getVal(pos));
-                var homeBottom = ListFun.last(amphipod.home);
+                var homeBottom = amphipod.home.getLast();
                 return amphipod.home.contains(pos)
                        && lineBetween.apply(pos, homeBottom)
                                      .stream()
@@ -180,7 +180,7 @@ public class Solution {
 
         yHallway = hallway.get(0).y();
         xHallway = new IntRange(hallway.get(0).x(),
-                                ListFun.last(hallway).x()
+                                hallway.getLast().x()
         );
 
         var amphipods = burrow.getCellsSet()

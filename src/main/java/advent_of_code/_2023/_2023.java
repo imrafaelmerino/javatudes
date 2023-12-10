@@ -3,6 +3,7 @@ package advent_of_code._2023;
 import advent_of_code.Calendar;
 import advent_of_code.Puzzle;
 import advent_of_code._2023.day1.Trebuchet;
+import advent_of_code._2023.day10.PipeMaze;
 import advent_of_code._2023.day2.CubeConundrum;
 import advent_of_code._2023.day3.GearRatios;
 import advent_of_code._2023.day4.ScratchCards;
@@ -29,7 +30,8 @@ public class _2023 implements Calendar {
                        new WaitForIt(),
                        new CamelCard(),
                        new HauntedWasteland(),
-                       new MirageMaintenance()
+                       new MirageMaintenance(),
+                       new PipeMaze()
                       );
     }
 

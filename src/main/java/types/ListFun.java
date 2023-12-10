@@ -31,14 +31,6 @@ public final class ListFun {
                            );
     }
 
-    public static <T> T head(List<T> list) {
-        return requireNonNull(list).get(0);
-    }
-
-    public static <T> T last(List<T> list) {
-        return requireNonNull(list).get(list.size() - 1);
-    }
-
 
     public static <T> List<T> mutableOf(T a, T... others) {
         var list = new ArrayList<T>();

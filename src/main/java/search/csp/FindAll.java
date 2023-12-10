@@ -36,7 +36,7 @@ public class FindAll<Variable, Value> {
                                                       Map<Variable, Value> assignments
                                                      ) {
         if (vars.isEmpty()) return Stream.empty();
-        Variable head = ListFun.head(vars);
+        Variable head = vars.getFirst();
 
 
         return assignVariable(head,

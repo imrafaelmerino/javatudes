@@ -20,8 +20,8 @@ public final class Trebuchet implements _2023_Puzzle {
      */
     private static int getNumberPart2(String line) {
         var digits = findAllDigitsIncludingOverlaps(line);
-        String result = "%d%d".formatted(ListFun.head(digits),
-                                         ListFun.last(digits)
+        String result = "%d%d".formatted(digits.getFirst(),
+                                         digits.getLast()
                                         );
 
         return Integer.parseInt(result);

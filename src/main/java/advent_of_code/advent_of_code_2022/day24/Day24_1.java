@@ -84,13 +84,13 @@ public class Day24_1 {
                                           grid
                                                   .remove((p, v) -> v.equals(EMPTY) || v.equals(WALL))
                                                   .mapValues((p, x) -> ListFun.mutableOf(x))),
-                                  m -> m.first().equals(endPos)
+                                  m -> m.equals(endPos)
                                  );
 
         var result1 = bb.findFirst(Pair.of(endPos,
                                            result.last().state().second()
                                           ),
-                                   m -> m.first().equals(startPos)
+                                   m -> m.equals(startPos)
                                   );
 
         var result2 = bb.findFirst(Pair.of(startPos,

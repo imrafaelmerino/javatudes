@@ -57,7 +57,7 @@ public class MirageMaintenance implements _2023_Puzzle {
         var lines = FileParsers.toListOfLines(getInputPath());
 
         return lines.stream()
-                    .map(StrFun::toListOfInt)
+                    .map(StrFun::parseSpacedInts)
                     .map(MirageMaintenance::getNextSeqNumber)
                     .reduce(0, Integer::sum);
     }
@@ -67,7 +67,7 @@ public class MirageMaintenance implements _2023_Puzzle {
         var lines = FileParsers.toListOfLines(getInputPath());
 
         return lines.stream()
-                    .map(StrFun::toListOfInt)
+                    .map(StrFun::parseSpacedInts)
                     .map(MirageMaintenance::getNextSeqNumberPartII)
                     .reduce(0, Integer::sum);
     }

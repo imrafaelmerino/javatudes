@@ -65,7 +65,7 @@ public final class DepthSearch<State> extends Search<State> {
     private Stream<SearchPath<State>> rec(List<SearchPath<State>> xs,
                                          BiPredicate<SearchPath<State>, State> predicate) {
         if (xs.isEmpty()) return Stream.empty();
-        var sp = ListFun.head(xs);
+        var sp = xs.getFirst();
         return Stream.of(stream(sp, predicate),
                          rec(ListFun.tail(xs), predicate)
                         )

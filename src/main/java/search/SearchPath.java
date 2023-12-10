@@ -72,7 +72,11 @@ public final class SearchPath<State> implements Iterable<Action<State>>{
     }
 
     public Action<State> last() {
-        return path.get(path.size() - 1);
+        return path.getLast();
+    }
+
+    public Action<State> first() {
+        return path.getFirst();
     }
 
     public int size() {

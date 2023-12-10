@@ -2,6 +2,7 @@ package types;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 public record Pos(int x, int y) {
 
@@ -220,6 +221,9 @@ public record Pos(int x, int y) {
     public double euclideanDistance(Pos other) {
         return Math.sqrt(Math.pow(x - other.x, 2) + Math.pow(y - other.y, 2));
     }
+
+
+
 
 
 }

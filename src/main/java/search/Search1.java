@@ -2,16 +2,15 @@ package search;
 
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-abstract class Search<State> {
+abstract class Search1<State> {
 
     public abstract SearchPath<State> findFirst(State initial,
-                                                Predicate<State> isGoal
+                                                Predicate<SearchPath<State>> isGoal
                                                );
 
     /**
@@ -23,29 +22,24 @@ abstract class Search<State> {
      * @return the first path to a solution of the problem
      */
     protected SearchPath<State> findFirst(State initial,
-                                          Function<State, List<Action<State>>> getSuccessors,
-                                          Predicate<State> isGoal,
+                                          Function<SearchPath<State>, List<Action<State>>> getSuccessors,
+                                          Predicate<SearchPath<State>> isGoal,
                                           BiConsumer<List<SearchPath<State>>, SearchPath<State>> addPathToFrontier
                                          ) {
         var initialPath = SearchPath.of(new Action<>("", initial));
-        if (isGoal.test(initial)) return initialPath;
-        var explored = new HashSet<State>();
+        if (isGoal.test(initialPath)) return initialPath;
         var frontier = new ArrayList<SearchPath<State>>();
         frontier.add(initialPath);
         //TODO add explored inital y ver en breathserach lo mismo
         while (!frontier.isEmpty()) {
             var path = frontier.remove(0);
-            var last = path.last();
-            var successors = getSuccessors.apply(last.state());
+            var successors = getSuccessors.apply(path);
             for (var successor : successors) {
-                if (!explored.contains(successor.state())) {
-                    explored.add(successor.state());
-                    var path1 = path.append(successor);
-                    if (isGoal.test(successor.state())) return path1;
-                    addPathToFrontier.accept(frontier,
-                                             path1
-                                            );
-                }
+                var path1 = path.append(successor);
+                if (isGoal.test(path1)) return path1;
+                addPathToFrontier.accept(frontier,
+                                         path1
+                                        );
             }
         }
         return SearchPath.empty();

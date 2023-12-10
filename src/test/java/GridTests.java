@@ -94,9 +94,12 @@ public class GridTests {
     @Test
     public void merge() {
 
-        PersistentGrid.fromGen(new LongRange(0, 2), new LongRange(0, 2), pos -> Optional.of(1))
-                      .merge(PersistentGrid.fromGen(new LongRange(0, 2),
-                                                    new LongRange(3, 5),
+        PersistentGrid.fromGen(new IntRange(0, 2),
+                               new IntRange(0, 2),
+                               pos -> Optional.of(1)
+                              )
+                      .merge(PersistentGrid.fromGen(new IntRange(0, 2),
+                                                    new IntRange(3, 5),
                                                     e -> Optional.of(2)
                                                    )
                             )
@@ -149,10 +152,14 @@ public class GridTests {
                                              )
                                      );
 
-        Assert.assertEquals(List.of(1, 2, 3), xs.getBottomBorder().stream().map(Cell::value).collect(Collectors.toList()));
-        Assert.assertEquals(List.of(4, 5, 6), xs.getTopBorder().stream().map(Cell::value).collect(Collectors.toList()));
-        Assert.assertEquals(List.of(1, 2, 3, 4), xs.getLeftBorder().stream().map(Cell::value).collect(Collectors.toList()));
-        Assert.assertEquals(List.of(3, 4, 5, 6), xs.getRightBorder().stream().map(Cell::value).collect(Collectors.toList()));
+        Assert.assertEquals(List.of(1, 2, 3), xs.getBottomBorder()
+                                                .stream().map(Cell::value).toList());
+        Assert.assertEquals(List.of(4, 5, 6), xs.getTopBorder()
+                                                .stream().map(Cell::value).toList());
+        Assert.assertEquals(List.of(1, 2, 3, 4), xs.getLeftBorder()
+                                                   .stream().map(Cell::value).toList());
+        Assert.assertEquals(List.of(3, 4, 5, 6), xs.getRightBorder()
+                                                   .stream().map(Cell::value).toList());
 
 
     }

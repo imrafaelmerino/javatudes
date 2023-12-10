@@ -19,7 +19,7 @@ public final class Seeds implements _2023_Puzzle {
     private static long txAllStages(long input, List<Map<LongRange, LongRange>> txss) {
         if (txss.isEmpty()) return input;
         return txAllStages(txStage(input,
-                                   ListFun.head(txss)),
+                                   txss.getFirst()),
                            ListFun.tail(txss));
     }
 
@@ -46,7 +46,7 @@ public final class Seeds implements _2023_Puzzle {
 
     private static List<LongRange> txAllStages(List<LongRange> inputs, List<Map<LongRange, LongRange>> stages) {
         if (stages.isEmpty()) return inputs;
-        var stage = ListFun.head(stages);
+        var stage = stages.getFirst();
         return txAllStages(txStage(inputs,
                                    new ArrayList<>(),
                                    stage
