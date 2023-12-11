@@ -123,16 +123,16 @@ public class PipeMaze implements _2023_Puzzle {
     @Override
     public Object solveSecond() throws Exception {
         //var grid = MutableGrid.fromFile(getInputPath());
-        Grid<String> grid = MutableGrid.fromString(input2);
-        var start = grid.findOne((pos, sym) -> sym.equals("S"));
-        var pipes = CONNECTIONS.keySet();
-        var vertex = new ArrayList<Pos>();
-        for (var pipe : pipes) {
-            var path = findLoop(grid.put(start.pos(), pipe), new Cell<>(start.pos(), pipe));
-            if (!path.isEmpty()) {
-                return null;
-            }
-        }
+//        Grid<String> grid = MutableGrid.fromString(input2);
+//        var start = grid.findOne((pos, sym) -> sym.equals("S"));
+//        var pipes = CONNECTIONS.keySet();
+//        var vertex = new ArrayList<Pos>();
+//        for (var pipe : pipes) {
+//            var path = findLoop(grid.put(start.pos(), pipe), new Cell<>(start.pos(), pipe));
+//            if (!path.isEmpty()) {
+//                return null;
+//            }
+//        }
 
         throw new RuntimeException("Sorry, you didn't find the loop!");
 

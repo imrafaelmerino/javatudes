@@ -2,6 +2,7 @@ package search;
 
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
@@ -27,19 +28,23 @@ abstract class Search1<State> {
                                           BiConsumer<List<SearchPath<State>>, SearchPath<State>> addPathToFrontier
                                          ) {
         var initialPath = SearchPath.of(new Action<>("", initial));
-        if (isGoal.test(initialPath)) return initialPath;
+        var explored = new HashSet<State>();
         var frontier = new ArrayList<SearchPath<State>>();
         frontier.add(initialPath);
-        //TODO add explored inital y ver en breathserach lo mismo
         while (!frontier.isEmpty()) {
             var path = frontier.remove(0);
+            System.out.println(path);
+            var last = path.last();
+            if (isGoal.test(path)) return path;
+            if(!last.state().equals(initial))explored.add(last.state());
             var successors = getSuccessors.apply(path);
             for (var successor : successors) {
-                var path1 = path.append(successor);
-                if (isGoal.test(path1)) return path1;
-                addPathToFrontier.accept(frontier,
-                                         path1
-                                        );
+                if (!explored.contains(successor.state())) {
+                    var path1 = path.append(successor);
+                    addPathToFrontier.accept(frontier,
+                                             path1
+                                            );
+                }
             }
         }
         return SearchPath.empty();

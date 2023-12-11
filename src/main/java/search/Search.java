@@ -32,7 +32,6 @@ abstract class Search<State> {
         var explored = new HashSet<State>();
         var frontier = new ArrayList<SearchPath<State>>();
         frontier.add(initialPath);
-        //TODO add explored inital y ver en breathserach lo mismo
         while (!frontier.isEmpty()) {
             var path = frontier.remove(0);
             var last = path.last();
