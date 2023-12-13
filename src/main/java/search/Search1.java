@@ -33,7 +33,6 @@ abstract class Search1<State> {
         frontier.add(initialPath);
         while (!frontier.isEmpty()) {
             var path = frontier.remove(0);
-            System.out.println(path);
             var last = path.last();
             if (isGoal.test(path)) return path;
             if(!last.state().equals(initial))explored.add(last.state());
