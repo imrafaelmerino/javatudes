@@ -17,6 +17,8 @@ public sealed interface Grid<T> extends Iterable<Cell<T>> permits MutableGrid, P
 
     Grid<T> put(Pos pos, T t);
 
+    Grid<T> transpose();
+
     default Grid<T> put(BiPredicate<Pos, T> p, BiFunction<Pos, T, T> fn) {
         Grid<T> result = this;
         var iter = getCells().stream()

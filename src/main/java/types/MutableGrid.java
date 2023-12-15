@@ -149,6 +149,15 @@ public final class MutableGrid<T> implements Grid<T> {
     }
 
     @Override
+    public Grid<T> transpose() {
+        return new MutableGrid<>(grid.entrySet()
+                                     .stream()
+                                     .collect(Collectors.toMap(e -> new Pos(e.getKey().y(),
+                                                                            e.getKey().x()),
+                                                               Map.Entry::getValue)));
+    }
+
+    @Override
     public boolean containsValue(T value) {
         return grid.containsValue(value);
     }

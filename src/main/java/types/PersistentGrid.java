@@ -145,6 +145,12 @@ public final class PersistentGrid<T> implements Grid<T> {
     }
 
     @Override
+    public Grid<T> transpose() {
+        return new PersistentGrid<>(grid.map((a,b)->new Tuple2<>(new Pos(a.y(),a.x()),b)));
+
+    }
+
+    @Override
     public boolean containsValue(T value) {
         return grid.containsValue(value);
     }

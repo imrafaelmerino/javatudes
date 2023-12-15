@@ -2,10 +2,13 @@ package advent_of_code._2023;
 
 import advent_of_code.Calendar;
 import advent_of_code.Puzzle;
-import advent_of_code._2023.day11.CosmicExpansion;
 import advent_of_code._2023.day1.Trebuchet;
 import advent_of_code._2023.day10.PipeMaze;
+import advent_of_code._2023.day11.CosmicExpansion;
 import advent_of_code._2023.day12.HotSprings;
+import advent_of_code._2023.day13.PointOfIncidence;
+import advent_of_code._2023.day14.ParabolicReflectorDish;
+import advent_of_code._2023.day15.LensLibrary;
 import advent_of_code._2023.day2.CubeConundrum;
 import advent_of_code._2023.day3.GearRatios;
 import advent_of_code._2023.day4.ScratchCards;
@@ -35,7 +38,10 @@ public class _2023 implements Calendar {
                        new MirageMaintenance(),
                        new PipeMaze(),
                        new CosmicExpansion(),
-                       new HotSprings()
+                       new HotSprings(),
+                       new PointOfIncidence(),
+                       //new ParabolicReflectorDish()
+                       new LensLibrary()
                       );
     }
 
