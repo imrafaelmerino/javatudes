@@ -9,6 +9,7 @@ import advent_of_code._2023.day12.HotSprings;
 import advent_of_code._2023.day13.PointOfIncidence;
 import advent_of_code._2023.day14.ParabolicReflectorDish;
 import advent_of_code._2023.day15.LensLibrary;
+import advent_of_code._2023.day16.TheFloorWillBeLava;
 import advent_of_code._2023.day2.CubeConundrum;
 import advent_of_code._2023.day3.GearRatios;
 import advent_of_code._2023.day4.ScratchCards;
@@ -41,7 +42,8 @@ public class _2023 implements Calendar {
                        new HotSprings(),
                        new PointOfIncidence(),
                        //new ParabolicReflectorDish()
-                       new LensLibrary()
+                       new LensLibrary(),
+                       new TheFloorWillBeLava()
                       );
     }
 

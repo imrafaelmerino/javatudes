@@ -5,7 +5,6 @@ import fun.tuple.Pair;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -36,25 +35,25 @@ public final class ListFun {
 
     public static <T> List<T> mutableOf(T a, T... others) {
         var list = new ArrayList<T>();
-        list.add(Objects.requireNonNull(a));
-        list.addAll(Arrays.asList(Objects.requireNonNull(others)));
+        list.add(requireNonNull(a));
+        list.addAll(Arrays.asList(requireNonNull(others)));
         return list;
     }
 
     public static <T> List<T> append(List<T> list, T a, T... others) {
-        list.add(Objects.requireNonNull(a));
-        list.addAll(Arrays.asList(Objects.requireNonNull(others)));
+        list.add(requireNonNull(a));
+        list.addAll(Arrays.asList(requireNonNull(others)));
         return list;
     }
 
     public static <T> List<T> prepend(List<T> list, T a, T... others) {
-        list.addAll(0,Arrays.asList(Objects.requireNonNull(others)));
-        list.add(0,Objects.requireNonNull(a));
+        list.addAll(0, Arrays.asList(requireNonNull(others)));
+        list.add(0, requireNonNull(a));
         return list;
     }
 
     public static <T> List<T> appendAll(List<T> list, List<T> a, List<T>... others) {
-        list.addAll(Objects.requireNonNull(a));
+        list.addAll(requireNonNull(a));
         for (List<T> other : others) list.addAll(other);
         return list;
     }
@@ -80,7 +79,7 @@ public final class ListFun {
             for (int i = j + 1; i < list.size(); i++) {
                 List<T> e = new ArrayList<>();
                 e.add(list.get(j));
-                   e.add(list.get(i));
+                e.add(list.get(i));
                 result.add(e);
             }
         }
@@ -103,7 +102,7 @@ public final class ListFun {
         return result;
     }
 
-    public static List<Integer> toListOfInt(List<String> input){
+    public static List<Integer> toListOfInt(List<String> input) {
         return input.stream().map(Integer::parseInt).collect(Collectors.toList());
     }
 
@@ -112,10 +111,16 @@ public final class ListFun {
     }
 
 
-    public static <T> List<Pair<T,T>> zip(List<T> lefts, List<T> rights) {
-        var result = new ArrayList<Pair<T,T>>();
-        int min = Math.min(lefts.size(),rights.size());
-        for (int i = 0; i < min; i++) result.add(Pair.of(lefts.get(i),rights.get(i)));
+    public static <T> List<Pair<T, T>> zip(List<T> lefts, List<T> rights) {
+        var result = new ArrayList<Pair<T, T>>();
+        int min = Math.min(lefts.size(), rights.size());
+        for (int i = 0; i < min; i++) result.add(Pair.of(lefts.get(i), rights.get(i)));
         return result;
+    }
+
+    public static <T> List<T> prependAll(List<T> list, List<T> a, List<T>... others) {
+        list.addAll(0, requireNonNull(a));
+        for (List<T> other : others) list.addAll(0, requireNonNull(other));
+        return list;
     }
 }
