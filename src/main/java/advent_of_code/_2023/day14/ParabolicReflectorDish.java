@@ -4,12 +4,13 @@ import advent_of_code._2023._2023_Puzzle;
 import types.*;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 
 /**
  * TODO, use matrix instead of grid and rotate. Optimize and refactor!
+ * calculate solution programmatically instead printing and working out the offset and period...
  */
 
 public class ParabolicReflectorDish implements _2023_Puzzle {
@@ -37,19 +38,7 @@ public class ParabolicReflectorDish implements _2023_Puzzle {
                 var column = grid.getColumns().get(x);
                 var symbol = column.get(y).value();
                 if (symbol.equals("O")) {
-                    boolean seen = false;
-                    Integer best = null;
-                    for (int i = 0; i < y; i++) {
-                        Cell<String> c = column.get(i);
-                        if (SYMBOLS.contains(c.value())) {
-                            Integer integer = c.pos().y() + 1;
-                            if (!seen || integer.compareTo(best) > 0) {
-                                seen = true;
-                                best = integer;
-                            }
-                        }
-                    }
-                    int to = seen ? best : 0;
+                    int to = getNextNorthPos(y, column);
                     if (to != y) {
                         grid = grid.put(new Pos(x, to), symbol);
                         grid = grid.put(new Pos(x, y), ".");
@@ -58,6 +47,22 @@ public class ParabolicReflectorDish implements _2023_Puzzle {
             }
         }
         return grid;
+    }
+
+    private static int getNextNorthPos(int y, List<Cell<String>> column) {
+        boolean seen = false;
+        Integer best = null;
+        for (int i = 0; i < y; i++) {
+            Cell<String> c = column.get(i);
+            if (SYMBOLS.contains(c.value())) {
+                Integer integer = c.pos().y() + 1;
+                if (!seen || integer.compareTo(best) > 0) {
+                    seen = true;
+                    best = integer;
+                }
+            }
+        }
+        return seen ? best : 0;
     }
 
     private static Grid<String> tiltEast(Grid<String> grid) {
@@ -98,19 +103,7 @@ public class ParabolicReflectorDish implements _2023_Puzzle {
                 var row = rows.get(y);
                 var symbol = row.get(x).value();
                 if (symbol.equals("O")) {
-                    boolean seen = false;
-                    Integer best = null;
-                    for (int i = 0; i < x; i++) {
-                        Cell<String> c = row.get(i);
-                        if (SYMBOLS.contains(c.value())) {
-                            Integer integer = c.pos().x() + 1;
-                            if (!seen || integer.compareTo(best) > 0) {
-                                seen = true;
-                                best = integer;
-                            }
-                        }
-                    }
-                    int to = seen ? best : 0;
+                    int to = getNextWestPos(x, row);
                     if (to != x) {
                         grid = grid.put(new Pos(to, y), symbol);
                         grid = grid.put(new Pos(x, y), ".");
@@ -119,6 +112,22 @@ public class ParabolicReflectorDish implements _2023_Puzzle {
             }
         }
         return grid;
+    }
+
+    private static int getNextWestPos(int x, List<Cell<String>> row) {
+        boolean seen = false;
+        Integer best = null;
+        for (int i = 0; i < x; i++) {
+            Cell<String> c = row.get(i);
+            if (SYMBOLS.contains(c.value())) {
+                Integer integer = c.pos().x() + 1;
+                if (!seen || integer.compareTo(best) > 0) {
+                    seen = true;
+                    best = integer;
+                }
+            }
+        }
+        return seen ? best : 0;
     }
 
 
@@ -130,19 +139,7 @@ public class ParabolicReflectorDish implements _2023_Puzzle {
                 var column = grid.getColumns().get(x);
                 var symbol = column.get(y).value();
                 if (symbol.equals("O")) {
-                    boolean seen = false;
-                    Integer best = null;
-                    for (int i = y + 1; i <= ymax; i++) {
-                        Cell<String> c = column.get(i);
-                        if (SYMBOLS.contains(c.value())) {
-                            Integer integer = c.pos().y() - 1;
-                            if (!seen || integer.compareTo(best) < 0) {
-                                seen = true;
-                                best = integer;
-                            }
-                        }
-                    }
-                    int to = seen ? best : ymax;
+                    int to = getNextSouthPos(y, ymax, column);
                     if (to != y) {
                         grid = grid.put(new Pos(x, to), symbol);
                         grid = grid.put(new Pos(x, y), ".");
@@ -153,6 +150,21 @@ public class ParabolicReflectorDish implements _2023_Puzzle {
         return grid;
     }
 
+    private static int getNextSouthPos(int y, int ymax, List<Cell<String>> column) {
+        boolean seen = false;
+        Integer best = null;
+        for (int i = y + 1; i <= ymax; i++) {
+            Cell<String> c = column.get(i);
+            if (SYMBOLS.contains(c.value())) {
+                Integer integer = c.pos().y() - 1;
+                if (!seen || integer.compareTo(best) < 0) {
+                    seen = true;
+                    best = integer;
+                }
+            }
+        }
+        return seen ? best : ymax;
+    }
 
 
     @Override
@@ -161,16 +173,15 @@ public class ParabolicReflectorDish implements _2023_Puzzle {
         Grid<String> grid = MutableGrid.fromFile(getInputPath());
         var i=1;
         var loads = new ArrayList<String>();
-        while (true) {
+        do {
             grid = tiltEast(tiltSouth(tiltWest(tiltNorth(grid))));
             var load = getLoad(grid);
-            System.out.println("%s, %s".formatted(i,load));
-            i=i+1;
-            loads.add(load+"");
-            if(i==1000)break;
-        }
+            System.out.println("%s, %s".formatted(i, load));
+            i = i + 1;
+            loads.add(load + "");
+        } while (i != 1000);
 
-        var result = StrFun.findLongestRepetition(loads.stream().collect(Collectors.joining(",")));
+        var result = StrFun.findLongestRepetition(String.join(",", loads));
 
         System.out.println(result);
         return result;
