@@ -1,5 +1,7 @@
 package types;
 
+import fun.tuple.Pair;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -110,4 +112,10 @@ public final class ListFun {
     }
 
 
+    public static <T> List<Pair<T,T>> zip(List<T> lefts, List<T> rights) {
+        var result = new ArrayList<Pair<T,T>>();
+        int min = Math.min(lefts.size(),rights.size());
+        for (int i = 0; i < min; i++) result.add(Pair.of(lefts.get(i),rights.get(i)));
+        return result;
+    }
 }

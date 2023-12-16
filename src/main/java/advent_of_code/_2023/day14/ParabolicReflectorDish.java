@@ -8,6 +8,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 
+/**
+ * TODO, use matrix instead of grid and rotate. Optimize and refactor!
+ */
 
 public class ParabolicReflectorDish implements _2023_Puzzle {
 
