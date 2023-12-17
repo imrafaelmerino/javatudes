@@ -6,6 +6,7 @@ import types.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.IntStream;
 
 
 /**
@@ -27,7 +28,7 @@ public class ParabolicReflectorDish implements _2023_Puzzle {
 
     @Override
     public Object solveFirst() throws Exception {
-        var grid = MutableGrid.fromFile(getTestInputPath());
+        var grid = MutableGrid.fromFile(getInputPath());
         return getLoad(tiltNorth(grid));
     }
 
@@ -38,7 +39,12 @@ public class ParabolicReflectorDish implements _2023_Puzzle {
                 var column = grid.getColumns().get(x);
                 var symbol = column.get(y).value();
                 if (symbol.equals("O")) {
-                    int to = getNextNorthPos(y, column);
+                    int to = IntStream.range(0, y)
+                                      .mapToObj(column::get)
+                                      .filter(c -> SYMBOLS.contains(c.value()))
+                                      .map(c -> c.pos().y() + 1)
+                                      .max(Integer::compareTo)
+                                      .orElse(0);
                     if (to != y) {
                         grid = grid.put(new Pos(x, to), symbol);
                         grid = grid.put(new Pos(x, y), ".");
@@ -49,143 +55,16 @@ public class ParabolicReflectorDish implements _2023_Puzzle {
         return grid;
     }
 
-    private static int getNextNorthPos(int y, List<Cell<String>> column) {
-        boolean seen = false;
-        Integer best = null;
-        for (int i = 0; i < y; i++) {
-            Cell<String> c = column.get(i);
-            if (SYMBOLS.contains(c.value())) {
-                Integer integer = c.pos().y() + 1;
-                if (!seen || integer.compareTo(best) > 0) {
-                    seen = true;
-                    best = integer;
-                }
-            }
-        }
-        return seen ? best : 0;
-    }
-
-    private static Grid<String> tiltEast(Grid<String> grid) {
-        for (int y = 0; y < grid.getRows().size(); y++) {
-            for (int x = grid.xmax()-1; x >= 0; x--) {
-                var rows = grid.getRows();
-                var row = rows.get(y);
-                var symbol = row.get(x).value();
-                if (symbol.equals("O")) {
-                    boolean seen = false;
-                    Integer best = null;
-                    int bound = grid.xmax();
-                    for (int i = x + 1; i <= bound; i++) {
-                        Cell<String> c = row.get(i);
-                        if (SYMBOLS.contains(c.value())) {
-                            Integer integer = c.pos().x() - 1;
-                            if (!seen || integer.compareTo(best) < 0) {
-                                seen = true;
-                                best = integer;
-                            }
-                        }
-                    }
-                    int to = seen ? best : grid.xmax();
-                    if (to != x) {
-                        grid = grid.put(new Pos(to, y), symbol);
-                        grid = grid.put(new Pos(x, y), ".");
-                    }
-                }
-            }
-        }
-        return grid;
-    }
-
-    private static Grid<String> tiltWest(Grid<String> grid) {
-        for (int y = 0; y < grid.getRows().size(); y++) {
-            for (int x = 1; x < grid.getColumns().size(); x++) {
-                var rows = grid.getRows();
-                var row = rows.get(y);
-                var symbol = row.get(x).value();
-                if (symbol.equals("O")) {
-                    int to = getNextWestPos(x, row);
-                    if (to != x) {
-                        grid = grid.put(new Pos(to, y), symbol);
-                        grid = grid.put(new Pos(x, y), ".");
-                    }
-                }
-            }
-        }
-        return grid;
-    }
-
-    private static int getNextWestPos(int x, List<Cell<String>> row) {
-        boolean seen = false;
-        Integer best = null;
-        for (int i = 0; i < x; i++) {
-            Cell<String> c = row.get(i);
-            if (SYMBOLS.contains(c.value())) {
-                Integer integer = c.pos().x() + 1;
-                if (!seen || integer.compareTo(best) > 0) {
-                    seen = true;
-                    best = integer;
-                }
-            }
-        }
-        return seen ? best : 0;
-    }
 
 
-    private static Grid<String> tiltSouth(Grid<String> grid) {
-        var columns = grid.getColumns();
-        var ymax = grid.ymax();
-        for (int x = 0; x < columns.size(); x++) {
-            for (int y = ymax-1; y >= 0; y--) {
-                var column = grid.getColumns().get(x);
-                var symbol = column.get(y).value();
-                if (symbol.equals("O")) {
-                    int to = getNextSouthPos(y, ymax, column);
-                    if (to != y) {
-                        grid = grid.put(new Pos(x, to), symbol);
-                        grid = grid.put(new Pos(x, y), ".");
-                    }
-                }
-            }
-        }
-        return grid;
-    }
 
-    private static int getNextSouthPos(int y, int ymax, List<Cell<String>> column) {
-        boolean seen = false;
-        Integer best = null;
-        for (int i = y + 1; i <= ymax; i++) {
-            Cell<String> c = column.get(i);
-            if (SYMBOLS.contains(c.value())) {
-                Integer integer = c.pos().y() - 1;
-                if (!seen || integer.compareTo(best) < 0) {
-                    seen = true;
-                    best = integer;
-                }
-            }
-        }
-        return seen ? best : ymax;
-    }
+
 
 
     @Override
     public Object solveSecond() throws Exception {
 
-        Grid<String> grid = MutableGrid.fromFile(getInputPath());
-        var i=1;
-        var loads = new ArrayList<String>();
-        do {
-            grid = tiltEast(tiltSouth(tiltWest(tiltNorth(grid))));
-            var load = getLoad(grid);
-            System.out.println("%s, %s".formatted(i, load));
-            i = i + 1;
-            loads.add(load + "");
-        } while (i != 1000);
-
-        var result = StrFun.findLongestRepetition(String.join(",", loads));
-
-        System.out.println(result);
-        return result;
-
+       return null;
 
     }
 
