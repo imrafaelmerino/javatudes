@@ -35,6 +35,7 @@ public class LavaductLagoon implements _2023_Puzzle {
             vertices.add(next);
         }
 
+        //shoelace + Pick's theorem
         return Polygon.internalPoints(Polygon.area(vertices), perimeter) + perimeter;
     }
 
@@ -48,11 +49,9 @@ public class LavaductLagoon implements _2023_Puzzle {
         for (var line : lines) {
             var tokens = line.split(" ");
             var color = tokens[2];
-            color = color.substring(2, color.length() - 1);
+            color = color.substring(2, color.length() - 1); //remove parenthesis
             String dir = color.substring(color.length() - 1);
-            System.out.println(dir);
-            var n = Integer.parseInt(color.substring(0, color.length() - 1), 16);
-            System.out.println(n);
+            var n = Integer.parseInt(color.substring(0, color.length() - 1), 16); //from hex to decimal
             perimeter += n;
             Pos next = null;
             switch (dir) {
@@ -61,7 +60,6 @@ public class LavaductLagoon implements _2023_Puzzle {
                 case "0" -> next = last.plus(new Pos(n, 0));
                 case "2" -> next = last.minus(new Pos(n, 0));
                 default -> {
-                    System.out.println(dir);
                     assert false;
                 }
             }
@@ -69,6 +67,7 @@ public class LavaductLagoon implements _2023_Puzzle {
             vertices.add(next);
         }
 
+        //shoelace + Pick's theorem
         return Polygon.internalPoints(Polygon.area(vertices), perimeter) + perimeter;
     }
 
