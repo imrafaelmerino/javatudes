@@ -7,7 +7,7 @@ echo ""
 echo "Executing script:$0 $@"
 echo ""
 usage() {
-    echo "Usage: $0 --year <2022|2203> --day <1-24> --times <positive_integer>"
+    echo "Usage: $0 --year <2022|2203> --day <1-24> --times <positive_integer> [-ea]"
     exit 1
 }
 main() {
@@ -18,10 +18,13 @@ OUTPUT="$DIR/classes"
 
 LIB_DIR="$DIR/libs"
 
+ENABLE_ASSERTIONS=false  # Default value
+
+
 
 
 # Validate the number of parameters
-if [ "$#" -ne 6 ]; then
+if [ "$#" -lt 6 ] || [ "$#" -gt 7 ]; then
     usage
 fi
 
@@ -39,6 +42,10 @@ while [ "$#" -gt 0 ]; do
         --times)
             times="$2"
             shift 2
+            ;;
+        -ea)
+            ENABLE_ASSERTIONS=true
+            shift
             ;;
         *)
             usage
@@ -62,8 +69,13 @@ if ! [[ "$times" =~ ^[1-9][0-9]*$ ]]; then
     exit 1
 fi
 
+# Enable assertions if the -ea flag is passed
+if [ "$ENABLE_ASSERTIONS" = true ]; then
+    JAVA_OPTS="$JAVA_OPTS -ea"
+fi
 
-java -classpath "$OUTPUT:$LIB_DIR/*" advent_of_code._${year}._${year} $day $times
+
+java $JAVA_OPTS -classpath "$OUTPUT:$LIB_DIR/*" advent_of_code._${year}._${year} $day $times
 
 }
 
