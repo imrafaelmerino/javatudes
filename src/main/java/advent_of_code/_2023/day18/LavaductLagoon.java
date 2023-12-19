@@ -55,10 +55,10 @@ public class LavaductLagoon implements _2023_Puzzle {
             perimeter += n;
             Pos next = null;
             switch (dir) {
-                case "3" -> next = last.minus(new Pos(0, n));
-                case "1" -> next = last.plus(new Pos(0, n));
-                case "0" -> next = last.plus(new Pos(n, 0));
-                case "2" -> next = last.minus(new Pos(n, 0));
+                case "3" -> next = last.minus(new Pos(0, n)); //up
+                case "1" -> next = last.plus(new Pos(0, n));  //down
+                case "0" -> next = last.plus(new Pos(n, 0));  //right
+                case "2" -> next = last.minus(new Pos(n, 0)); //left
                 default -> {
                     assert false;
                 }
