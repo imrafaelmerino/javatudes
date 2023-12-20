@@ -188,9 +188,10 @@ public class Aplenty implements _2023_Puzzle {
         var inter = ruleRange.intersection(inputRange);
         if (inter == null) return sumAllCombinations(workflowMap, defaultOutput, ranges, ListFun.tail(rules));
 
-        List<LongRange> difference = inputRange.difference(inter);
-
-        return sumAllCombinations(workflowMap, MapFun.copyAndPut(ranges, rule.category, inter), rule.output) +
+        var difference = inputRange.difference(inter);
+        return sumAllCombinations(workflowMap,
+                                  MapFun.copyAndPut(ranges, rule.category, inter),
+                                  rule.output) +
                difference
                        .stream()
                        .map(xs -> sumAllCombinations(workflowMap,

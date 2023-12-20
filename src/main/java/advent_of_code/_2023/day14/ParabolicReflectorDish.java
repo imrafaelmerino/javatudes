@@ -3,8 +3,7 @@ package advent_of_code._2023.day14;
 import advent_of_code._2023._2023_Puzzle;
 import types.*;
 
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.Set;
 import java.util.stream.IntStream;
 
@@ -28,6 +27,7 @@ public class ParabolicReflectorDish implements _2023_Puzzle {
 
     @Override
     public Object solveFirst() throws Exception {
+        Matrix.fromFile(getTestInputPath());
         var grid = MutableGrid.fromFile(getInputPath());
         return getLoad(tiltNorth(grid));
     }

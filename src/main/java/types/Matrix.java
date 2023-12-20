@@ -1,5 +1,8 @@
 package types;
 
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -52,6 +55,26 @@ public class Matrix<T> {
 
     public static <T> Matrix<T> fromRows(List<List<T>> rows) {
         return new Matrix<>(rows);
+    }
+
+    public static Matrix<String> fromFile(String testInputPath) {
+
+        //var lines = Files.readAllLines(Path.of(testInputPath), StandardCharsets.UTF_8);
+        return null;
+    }
+
+    private void put(Pos pos, T t) {
+        rows.get(pos.y())
+            .set(pos.x(), t);
+    }
+
+    private T get(Pos pos) {
+        return rows.get(pos.y())
+                   .get(pos.x());
+    }
+
+    private T get(int x, int y) {
+        return rows.get(y).get(x);
     }
 
     public List<List<T>> getColumns() {

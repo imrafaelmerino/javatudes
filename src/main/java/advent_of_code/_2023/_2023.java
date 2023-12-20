@@ -14,6 +14,7 @@ import advent_of_code._2023.day17.ClumsyCrucible;
 import advent_of_code._2023.day18.LavaductLagoon;
 import advent_of_code._2023.day19.Aplenty;
 import advent_of_code._2023.day2.CubeConundrum;
+import advent_of_code._2023.day20.PulsePropagation;
 import advent_of_code._2023.day3.GearRatios;
 import advent_of_code._2023.day4.ScratchCards;
 import advent_of_code._2023.day5.Seeds;
@@ -22,7 +23,6 @@ import advent_of_code._2023.day7.CamelCard;
 import advent_of_code._2023.day8.HauntedWasteland;
 import advent_of_code._2023.day9.MirageMaintenance;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class _2023 implements Calendar {
@@ -50,7 +50,8 @@ public class _2023 implements Calendar {
                        new TheFloorWillBeLava(),
                        new ClumsyCrucible(),
                        new LavaductLagoon(),
-                       new Aplenty()
+                       new Aplenty(),
+                       new PulsePropagation()
                       );
     }
 
