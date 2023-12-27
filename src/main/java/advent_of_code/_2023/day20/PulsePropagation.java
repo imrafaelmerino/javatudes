@@ -33,25 +33,31 @@ public class PulsePropagation implements _2023_Puzzle {
                 if (pulse.signal == 1) high += 1;
                 else low += 1;
                 if (pulse.source == null)
-                    nodes.get(Broadcaster.INSTANCE).forEach(mod -> pulses.add(new Pulse(Broadcaster.INSTANCE,
-                                                                                        mod,
-                                                                                        pulse.signal)));
+                    nodes.get(Broadcaster.INSTANCE)
+                         .forEach(mod -> pulses.add(new Pulse(Broadcaster.INSTANCE,
+                                                              mod,
+                                                              pulse.signal)));
                 else {
                     switch (pulse.target) {
                         case FlipFlop ff -> {
                             if (pulse.signal == 0) {
                                 ff.status = !ff.status;
-                                nodes.get(ff).forEach(mod -> pulses.add(new Pulse(ff, mod, ff.status ? 1 : 0)));
+                                nodes.get(ff)
+                                     .forEach(mod -> pulses.add(new Pulse(ff, mod, ff.status ? 1 : 0)));
                             }
                         }
                         case Conjunction con -> {
                             con.memory.put(pulse.source, pulse.signal == 1);
-                            if (con.memory.values().stream().allMatch(it -> it))
+                            if (con.memory.values()
+                                          .stream()
+                                          .allMatch(it -> it))
                                 nodes.get(con).forEach(mod -> pulses.add(new Pulse(con, mod, 0)));
-                            else nodes.get(con).forEach(mod -> pulses.add(new Pulse(con, mod, 1)));
+                            else nodes.get(con)
+                                      .forEach(mod -> pulses.add(new Pulse(con, mod, 1)));
                         }
 
-                        case Unknown unknown -> {}
+                        case Unknown unknown -> {
+                        }
 
                         default -> throw new IllegalStateException("Unexpected value: " + pulse.target);
                     }

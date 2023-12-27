@@ -41,7 +41,8 @@ public interface Calendar {
     List<Puzzle> getPuzzles();
 
     default Puzzle findPuzzle(int day) {
-        return getPuzzles().stream().filter(it -> it.day() == day)
+        return getPuzzles().stream()
+                           .filter(it -> it.day() == day)
                            .findFirst()
                            .orElseThrow(() -> new RuntimeException("day %d not found".formatted(day)));
     }

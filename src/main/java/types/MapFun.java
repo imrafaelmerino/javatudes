@@ -10,4 +10,9 @@ public final class MapFun {
           copy.put(k,v);
           return copy;
     }
+
+    public static <K, V> Map<K, V> put(Map<K, V> result, K k, V v) {
+        result.put(k,v);
+        return result;
+    }
 }

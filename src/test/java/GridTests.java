@@ -11,15 +11,24 @@ public class GridTests {
     @Test
     public void tiles() {
 
-        var grid = PersistentGrid.fromRows(List.of(List.of(1, 1), List.of(2, 2)));
+        var grid = MutableGrid.fromRows(List.of(List.of(1, 1), List.of(2, 2)));
 
         var grid1 =
                 grid.tiles(List.of(new Pos(0, 0),
                                    new Pos(0, 1),
                                    new Pos(1, 0),
-                                   new Pos(1, 1)
+                                   new Pos(1, 1),
+                                   new Pos(0, -1),
+                                   new Pos(-1, 0),
+                                   new Pos(-1, -1),
+                                   new Pos(1,-1),
+                                   new Pos(-1,1)
                                   )
                           );
+
+        grid1.printRows();
+
+        System.out.println(grid1.getPositions());
 
         Assert.assertEquals(PersistentGrid.fromRows(
                                     List.of(List.of(1, 1, 1, 1),

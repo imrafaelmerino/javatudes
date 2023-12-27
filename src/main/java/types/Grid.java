@@ -1,7 +1,9 @@
 package types;
 
 import java.util.*;
-import java.util.function.*;
+import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public sealed interface Grid<T> extends Iterable<Cell<T>> permits MutableGrid, PersistentGrid {
@@ -123,6 +125,7 @@ public sealed interface Grid<T> extends Iterable<Cell<T>> permits MutableGrid, P
                 .filter(p -> p.x() == pos.x() || p.y() == pos.y())
                 .collect(Collectors.toList());
     }
+
 
     default List<Integer> ys() {
 
@@ -304,8 +307,7 @@ public sealed interface Grid<T> extends Iterable<Cell<T>> permits MutableGrid, P
             List<String> row = new ArrayList<>();
             for (int x = xmin; x <= xmax; x++) {
                 var pos = new Pos(x, y);
-                row.add(
-                        containsPos(pos) ?
+                row.add(containsPos(pos) ?
                                 getVal(pos) != null ? getVal(pos).toString() : defaultChar :
                                 defaultChar
                        );
@@ -333,11 +335,13 @@ public sealed interface Grid<T> extends Iterable<Cell<T>> permits MutableGrid, P
                                  ) {
         return reduceRows(l -> l.stream()
                                 .map(toStr)
-                                .collect(Collectors.joining(separator)));
+                                .collect(Collectors.joining(separator))
+                         );
     }
 
     default List<String> joinRows() {
-        return joinRows("", c -> c.value().toString());
+        return joinRows("",
+                        c -> c.value().toString());
     }
 
     default List<String> joinColumns(String separator,
@@ -353,9 +357,7 @@ public sealed interface Grid<T> extends Iterable<Cell<T>> permits MutableGrid, P
     }
 
     default Iterator<Cell<T>> iterator() {
-        return getCells()
-                .stream()
-                .iterator();
+        return getCells().stream().iterator();
     }
 
 
@@ -427,7 +429,8 @@ public sealed interface Grid<T> extends Iterable<Cell<T>> permits MutableGrid, P
     }
 
     default Grid<T> tiles(Iterable<Pos> centers) {
-        return tiles(centers, (center, translated) -> translated.value());
+        return tiles(centers,
+                     (center, translated) -> translated.value());
     }
 
 

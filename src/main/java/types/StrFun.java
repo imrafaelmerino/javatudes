@@ -8,6 +8,17 @@ import java.util.stream.Collectors;
 public class StrFun {
 
 
+    public static List<Integer> allIndexes(String input, char targetChar) {
+        List<Integer> indexes = new ArrayList<>();
+
+        for (int i = 0; i < input.length(); i++) {
+            if (input.charAt(i) == targetChar) {
+                indexes.add(i);
+            }
+        }
+
+        return indexes;
+    }
     public static List<Pair<Integer, String>> findRepetitions(String input) {
         List<Pair<Integer, String>> all = new ArrayList<>();
         for (int i = 2; i < input.length() / 2; i++) {

@@ -32,6 +32,12 @@ public final class ListFun {
                            );
     }
 
+    public static <T> List<T> init(List<T> list) {
+        return list.subList(0,
+                            list.size() -  1
+                           );
+    }
+
 
     public static <T> List<T> mutableOf(T a, T... others) {
         var list = new ArrayList<T>();
@@ -72,6 +78,12 @@ public final class ListFun {
         for (T t : obj) list.remove(t);
         return list;
     }
+
+    public static <T> T getBeforeLast(List<T> list){
+        return list.get(list.size()-2);
+    }
+
+
 
     public static <T> List<List<T>> allPairs(List<T> list) {
         List<List<T>> result = new ArrayList<>();

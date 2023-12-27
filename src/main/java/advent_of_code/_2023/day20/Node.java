@@ -5,7 +5,7 @@ public interface Node {
         if (name.equals("broadcaster")) return Broadcaster.INSTANCE;
         if (name.startsWith("%")) return new FlipFlop(name.substring(1));
         if (name.startsWith("&")) return new Conjunction(name.substring(1));
-        throw new RuntimeException("unkown: " + name);
+        throw new RuntimeException("unknown: " + name);
     }
 
     String name();

@@ -15,6 +15,9 @@ import advent_of_code._2023.day18.LavaductLagoon;
 import advent_of_code._2023.day19.Aplenty;
 import advent_of_code._2023.day2.CubeConundrum;
 import advent_of_code._2023.day20.PulsePropagation;
+import advent_of_code._2023.day21.StepCounter;
+import advent_of_code._2023.day22.SandSlabs;
+import advent_of_code._2023.day23.ALongWalk;
 import advent_of_code._2023.day3.GearRatios;
 import advent_of_code._2023.day4.ScratchCards;
 import advent_of_code._2023.day5.Seeds;
@@ -51,7 +54,10 @@ public class _2023 implements Calendar {
                        new ClumsyCrucible(),
                        new LavaductLagoon(),
                        new Aplenty(),
-                       new PulsePropagation()
+                       new PulsePropagation(),
+                       new StepCounter(),
+                       new SandSlabs(),
+                       new ALongWalk()
                       );
     }
 
